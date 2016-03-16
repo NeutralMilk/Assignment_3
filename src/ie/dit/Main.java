@@ -14,6 +14,8 @@ public class Main extends PApplet
 	AudioInput in;
 	float min;
 	float max;
+	
+	Hero hero;
 	                         
 	int sampleRate = 44100;
 	
@@ -23,6 +25,7 @@ public class Main extends PApplet
 	float y;
 	float easing;
 	
+	
 	public void settings() 
 	{
 		fullScreen();
@@ -31,6 +34,7 @@ public class Main extends PApplet
 	public void setup()
 	{
 		smooth();
+		hero = new Hero (this);
 		minim = new Minim(this);
 		charX = 0;
 		charY = height/2-width/100;
@@ -46,29 +50,7 @@ public class Main extends PApplet
 		stroke(50,255,100);
 		rect(0,height/2,width, height/2);
 		stroke(255);		
-		float targetX = charX+10;
-	    float dx = targetX - x;
-	    x += dx * easing;
-	    
-	    if(y < height/2-width/100 - 50)
-	    {
-		    float targetY = charY;
-		    float dy = targetY - y;
-		    y += dy * easing;
-	    }//end if
-	    
-	    /*if(y == height/2-width/100 - 50)
-	    {
-	    	float targetY = height/2-width/100;
-		    float dy = targetY - y;
-		    y += dy * easing;
-	    }*/
-	    
-	    fill(255);
-		rect(x, y, width/100, width/100);
 		
-		//charY = height/2-width/100;
-
 	}
 	
 	public void keyPressed()
