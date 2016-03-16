@@ -25,6 +25,8 @@ public class Main extends PApplet
 	float y;
 	float easing;
 	
+	boolean[] keys = new boolean[512];
+	
 	
 	public void settings() 
 	{
@@ -49,25 +51,22 @@ public class Main extends PApplet
 		fill(50,255,100);
 		stroke(50,255,100);
 		rect(0,height/2,width, height/2);
-		stroke(255);		
+		stroke(255);	
+		
+		hero.update();
+		hero.render();
 		
 	}
 	
+	
 	public void keyPressed()
 	{	  
-	  if (key == 'd') 
-	  {	  
-		charX += 10;
-	  }//end if
-	  
-	  if (key == 'a') 
-	  {	  
-		charX -= 10;
-	  }//end if
-	  if (key == ' ') 
-	  {
-	    charY -=50;
-	  }
+		keys[keyCode] = true;
+	}
+	
+	public void keyReleased()
+	{
+		keys[keyCode] = false;
 	}
 		
 	public static void main(String[] args)
