@@ -17,6 +17,12 @@ public class Main extends PApplet
 	                         
 	int sampleRate = 44100;
 	
+	float charX;
+	float charY;
+	float x;
+	float y;
+	float easing;
+	
 	public void settings() 
 	{
 		fullScreen();
@@ -26,14 +32,13 @@ public class Main extends PApplet
 	{
 		smooth();
 		minim = new Minim(this);
-		
+		charX = 0;
+		charY = height/2-width/100;
+		x = 0;
+		y = height/2-width/100;
+		easing = 0.05f;
 	}
-
-	float charX = 0;
-	float charY = height/2-width/100;
-	float x = 0;
-	float y = 0;
-	float easing = 0.05f;
+	
 	public void draw()
 	{
 		background(51,204,255);
@@ -41,22 +46,29 @@ public class Main extends PApplet
 		stroke(50,255,100);
 		rect(0,height/2,width, height/2);
 		stroke(255);		
-		
 		float targetX = charX+10;
 	    float dx = targetX - x;
 	    x += dx * easing;
 	    
-	    float targetY = charY;
-	    float dy = targetY - y;
-	    y += dy * easing;
+	    if(y < height/2-width/100 - 50)
+	    {
+		    float targetY = charY;
+		    float dy = targetY - y;
+		    y += dy * easing;
+	    }//end if
 	    
-	    println(y);
+	    /*if(y == height/2-width/100 - 50)
+	    {
+	    	float targetY = height/2-width/100;
+		    float dy = targetY - y;
+		    y += dy * easing;
+	    }*/
 	    
 	    fill(255);
 		rect(x, y, width/100, width/100);
+		
+		//charY = height/2-width/100;
 
-
-	    
 	}
 	
 	public void keyPressed()
