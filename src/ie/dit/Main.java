@@ -13,19 +13,13 @@ public class Main extends PApplet
 	Minim minim;
 	AudioInput in;
 	float min;
-	float max;
-	
+	float max;	
 	Hero hero;
+	int nrKeys;
 	                         
 	int sampleRate = 44100;
 	
-	float charX;
-	float charY;
-	float x;
-	float y;
-	float easing;
-	
-	boolean[] keys = new boolean[512];
+	boolean[] keys = new boolean[3];
 	
 	
 	public void settings() 
@@ -37,12 +31,14 @@ public class Main extends PApplet
 	{
 		smooth();
 		hero = new Hero (this);
-		minim = new Minim(this);
-		charX = 0;
-		charY = height/2-width/100;
-		x = 0;
-		y = height/2-width/100;
-		easing = 0.05f;
+		hero.position = new PVector(400, hero.ground);
+		hero.direction = 1;
+		hero.velocity = new PVector(0, 0);
+		hero.jumpSpeed = 10;
+		hero.walkSpeed = 4;
+
+		//frameRate(120);
+		
 	}
 	
 	public void draw()
@@ -53,21 +49,106 @@ public class Main extends PApplet
 		rect(0,height/2,width, height/2);
 		stroke(255);	
 		
+		nrKeys = 0;
+		
 		hero.update();
+		pushMatrix();
+		   
+		translate(hero.position.x, hero.position.y);
+		   
+		  // Always scale after translate and rotate.
+		  // We're using oldGuy.direction because a -1 scale flips the image in that direction.
+		scale(hero.direction, 1);
+		   
 		hero.render();
+		
+		   
+		popMatrix();
+		
+		
+		
+		
 		
 	}
 	
-	
 	public void keyPressed()
+	{
+	  if (key == 'd')
+	  {
+	    hero.r = 1;
+	    hero.direction = -1;
+	  }
+	  if (key == 'a')
+	  {
+		  hero.l = -1;
+	      hero.direction = 1;
+	  }
+	  if (key == ' ')
+	  {
+		  hero.up = -1;
+	  }
+	  if (key == 's')
+	  {
+		  hero.down = 1;
+	  }
+	}
+	 
+	public void keyReleased()
+	{
+	  if (key == 'd')
+	  {
+		  hero.r = 0;
+	  }
+	  if (key == 'a')
+	  {
+		  hero.l = 0;
+	  }
+	  if (key == ' ')
+	  {
+		  hero.up = 0;
+	  }
+	  if (key == 's')
+	  {
+		  hero.down = 0;
+	  }
+	}
+
+	
+	/*public void keyPressed()
 	{	  
-		keys[keyCode] = true;
+		if (key == 'd') 
+		{	  
+			keys[0]=true;
+		}//end if
+		  
+		if (key == 'a') 
+		{	  
+			keys[1]=true;
+		}//end if
+		
+		if (key == ' ') 
+		{
+			keys[2]=true;
+		}
 	}
 	
 	public void keyReleased()
 	{
-		keys[keyCode] = false;
-	}
+		if (key == 'd') 
+		{	  
+			keys[0] = false;
+		}//end if
+		  
+		if (key == 'a') 
+		{	  
+			keys[1] = false;
+		}//end if
+		
+		if (key == ' ') 
+		{
+			keys[2] = false;
+		}
+	}*/
 		
 	public static void main(String[] args)
 	{		
