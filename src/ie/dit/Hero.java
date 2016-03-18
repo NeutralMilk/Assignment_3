@@ -13,8 +13,8 @@ public class Hero extends PApplet
 	float charX;
 	float charY;
 	float easing;
-	boolean jumped = false;
-	boolean down = false;
+	float speed = 2;
+	float theta = 0.0f;
 	
 	public Hero(Main _main)
 	{
@@ -22,59 +22,58 @@ public class Hero extends PApplet
 		charX = 0;
 		charY = main.height/2-main.width/100;
 		pos = new PVector(charX, charY);
-		easing = 0.05f;
-		//image = loadImage("square.png");
+		easing = 0.1f;
+		image = main.loadImage("square.png");
 	}
 
 	public void update()
 	{
-		if(down == true)
-		{
-			charY += main.width/50;
-			jumped = false;
-			down = false;
-		}
+		pos.x = - cos(theta);
+	    pos.y = - sin(theta);
+	    pos.mult(speed);
 		if(main.keyPressed)
 		{
 			
 			if (main.keys[0] == true) 
 			{	  
-				charX += 10;
+				charX += speed;
+				theta += 0.125f;
 			}//end if
 			  
 			if (main.keys[1] == true) 
 			{	  
-				charX -= 10;;
+				charX -= speed;
+				theta -= 0.125f;
 			}//end if
 			
-			if(jumped == false)
-			{
-				if (main.keys[2] == true) 
-				{
-				    charY -= main.width/50;
-				    down = true;    
-				}
-			}
+			if (main.keys[2] == true) 
+			{	  
+				charY -= speed;
+			}//end if
+			
+			if (main.keys[3] == true) 
+			{	  
+				charY += speed;
+			}//end if
 		}
 		
 	}
 	
 	public void render()
 	{
-		easing = .05f;
 		float targetX = charX;
 	    float dx = targetX - pos.x;
 	    pos.x += dx * easing;
 	    
 	    //jumping
 	    
-	    easing = .5f;
 	    float targetY = charY;
-	    float dy = targetY -pos.y;
+	    float dy = targetY - pos.y;
 	    pos.y += dy * easing;
 	    
 	    //if()
 	    main.fill(255);
+	    //main.image(image, pos.x, pos.y);
 		main.rect(pos.x, pos.y, main.width/100, main.width/100);
 	}
 }

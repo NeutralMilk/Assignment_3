@@ -18,7 +18,7 @@ public class Main extends PApplet
 	                         
 	int sampleRate = 44100;
 	
-	boolean[] keys = new boolean[3];
+	boolean[] keys = new boolean[4];
 	
 	
 	public void settings() 
@@ -39,11 +39,29 @@ public class Main extends PApplet
 		background(51,204,255);
 		fill(50,255,100);
 		stroke(50,255,100);
-		rect(0,height/2,width, height/2);
 		stroke(255);			
-		hero.update();
-		   
+		hero.update();	 
 		hero.render();
+		
+		if(hero.pos.x >= width)
+		{
+			hero.charX = width;
+		}
+		
+		if(hero.pos.x <= 0)
+		{
+			hero.charX = 0;
+		}
+		
+		if(hero.pos.y >= height)
+		{
+			hero.charY = height;
+		}
+		
+		if(hero.pos.y <= 0)
+		{
+			hero.charY = 0;
+		}
 	}
 
 	
@@ -59,10 +77,15 @@ public class Main extends PApplet
 			keys[1]=true;
 		}//end if
 		
-		if (key == ' ') 
-		{
+		if (key == 'w') 
+		{	  
 			keys[2]=true;
-		}
+		}//end if
+		
+		if (key == 's') 
+		{	  
+			keys[3]=true;
+		}//end if
 	}
 	
 	public void keyReleased()
@@ -77,11 +100,16 @@ public class Main extends PApplet
 			keys[1] = false;
 		}//end if
 		
-		if (key == ' ') 
-		{
+		if (key == 'w') 
+		{	  
 			keys[2] = false;
-			hero.jumped = false;
-		}
+		}//end if
+		
+		if (key == 's') 
+		{	  
+			keys[3] = false;
+		}//end if
+		
 	}
 		
 	public static void main(String[] args)
