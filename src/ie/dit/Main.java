@@ -15,7 +15,6 @@ public class Main extends PApplet
 	float min;
 	float max;	
 	Hero hero;
-	int nrKeys;
 	                         
 	int sampleRate = 44100;
 	
@@ -30,13 +29,7 @@ public class Main extends PApplet
 	public void setup()
 	{
 		smooth();
-		hero = new Hero (this);
-		hero.position = new PVector(400, hero.ground);
-		hero.direction = 1;
-		hero.velocity = new PVector(0, 0);
-		hero.jumpSpeed = 10;
-		hero.walkSpeed = 4;
-
+		hero = new Hero(this);
 		//frameRate(120);
 		
 	}
@@ -47,74 +40,14 @@ public class Main extends PApplet
 		fill(50,255,100);
 		stroke(50,255,100);
 		rect(0,height/2,width, height/2);
-		stroke(255);	
-		
-		nrKeys = 0;
-		
+		stroke(255);			
 		hero.update();
-		pushMatrix();
-		   
-		translate(hero.position.x, hero.position.y);
-		   
-		  // Always scale after translate and rotate.
-		  // We're using oldGuy.direction because a -1 scale flips the image in that direction.
-		scale(hero.direction, 1);
 		   
 		hero.render();
-		
-		   
-		popMatrix();
-		
-		
-		
-		
-		
-	}
-	
-	public void keyPressed()
-	{
-	  if (key == 'd')
-	  {
-	    hero.r = 1;
-	    hero.direction = -1;
-	  }
-	  if (key == 'a')
-	  {
-		  hero.l = -1;
-	      hero.direction = 1;
-	  }
-	  if (key == ' ')
-	  {
-		  hero.up = -1;
-	  }
-	  if (key == 's')
-	  {
-		  hero.down = 1;
-	  }
-	}
-	 
-	public void keyReleased()
-	{
-	  if (key == 'd')
-	  {
-		  hero.r = 0;
-	  }
-	  if (key == 'a')
-	  {
-		  hero.l = 0;
-	  }
-	  if (key == ' ')
-	  {
-		  hero.up = 0;
-	  }
-	  if (key == 's')
-	  {
-		  hero.down = 0;
-	  }
 	}
 
 	
-	/*public void keyPressed()
+	public void keyPressed()
 	{	  
 		if (key == 'd') 
 		{	  
@@ -147,8 +80,9 @@ public class Main extends PApplet
 		if (key == ' ') 
 		{
 			keys[2] = false;
+			hero.jumped = false;
 		}
-	}*/
+	}
 		
 	public static void main(String[] args)
 	{		
