@@ -41,10 +41,10 @@ public class Main extends PApplet
 		background(51,204,255);
 		//fill(,204,255);
 		strokeWeight(.25f);
-					
+		
+		hero.render();			
 		hero.update();	 
-		hero.render();
-			 
+		
 		battlefield.render();
 		
 		if(hero.pos.x >= width)

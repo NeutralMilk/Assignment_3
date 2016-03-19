@@ -10,30 +10,36 @@ public class Battlefield extends PApplet
 	Main main;
 	int f = color(51,204,255);
 	int s = color(255);
+	int x;
+	int y;
+	int size;
 	boolean[] bits = new boolean[576];
-	int x = 0;
-	int y = 0;
-	int size = main.width/32;
+
 
 	public Battlefield(Main _main)
 	{
 		main = _main;	
+		x = 0;
+		y = 0;
+		size = main.width/32;
 	}
 	
 	public void update()
 	{
 		for (int i = 0 ; i < bits.length ; i ++)
 		  {
-		    //float x = i * size;
-		    //float y = main.height/2;
+		    float x2 = i * size;
+		    float y2 = y;
 		    if (bits[i])
 		    {
-		      f = color(51,100,255);
+		    	f = color(100);
+		    	println("works");
 		    }
 		    else
 		    {
-		      f = color(51,204,255);
+		    	f = color(51,204,255);
 		    }
+		    main.rect(x2,y2, size, size);
 		  }
 	}
 	
