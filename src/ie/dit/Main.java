@@ -15,6 +15,7 @@ public class Main extends PApplet
 	float min;
 	float max;	
 	Hero hero;
+	Battlefield battlefield;
 	                         
 	int sampleRate = 44100;
 	
@@ -30,6 +31,7 @@ public class Main extends PApplet
 	{
 		smooth();
 		hero = new Hero(this);
+		battlefield = new Battlefield(this);
 		//frameRate(120);
 		
 	}
@@ -37,11 +39,13 @@ public class Main extends PApplet
 	public void draw()
 	{
 		background(51,204,255);
-		fill(50,255,100);
-		stroke(50,255,100);
-		stroke(255);			
+		//fill(,204,255);
+		strokeWeight(.25f);
+					
 		hero.update();	 
 		hero.render();
+			 
+		battlefield.render();
 		
 		if(hero.pos.x >= width)
 		{

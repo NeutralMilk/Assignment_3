@@ -20,5 +20,10 @@
 			<type>2</type>
 			<location>C:/Users/Colin/Desktop/data</location>
 		</link>
+		<link>
+			<name>src/data/ship.png</name>
+			<type>1</type>
+			<location>C:/Users/colin/Pictures/Saved Pictures/ship.png</location>
+		</link>
 	</linkedResources>
 </projectDescription>

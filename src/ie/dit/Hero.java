@@ -13,7 +13,7 @@ public class Hero extends PApplet
 	float charX;
 	float charY;
 	float easing;
-	float speed = 2;
+	float speed = 50;
 	float theta = 0.0f;
 	
 	public Hero(Main _main)
@@ -23,7 +23,7 @@ public class Hero extends PApplet
 		charY = main.height/2-main.width/100;
 		pos = new PVector(charX, charY);
 		easing = 0.1f;
-		image = main.loadImage("square.png");
+		image = main.loadImage("ship.png");
 	}
 
 	public void update()
@@ -71,9 +71,9 @@ public class Hero extends PApplet
 	    float dy = targetY - pos.y;
 	    pos.y += dy * easing;
 	    
-	    //if()
-	    main.fill(255);
-	    //main.image(image, pos.x, pos.y);
-		main.rect(pos.x, pos.y, main.width/100, main.width/100);
+	    main.image(image, pos.x, pos.y);
+	    
+	    
+		//main.rect(pos.x, pos.y, main.width/100, main.width/100);
 	}
 }
