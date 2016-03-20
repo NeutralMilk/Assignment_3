@@ -8,7 +8,7 @@ import processing.core.*;
 public class Battlefield extends PApplet
 {
 	Main main;
-	int f = color(51,204,255);
+	int f = color(75,200,255);
 	int s = color(255);
 	int x;
 	int y;
@@ -63,8 +63,9 @@ public class Battlefield extends PApplet
 			main.rect(i * main.width/32, main.height - size, size, size);
 			if(i < images.length)
 			{
+
 				main.image(images[i], i * main.width/32 - size/2, main.height - size/2);
-			}
+			}//end if
 		}
 	}
 }
