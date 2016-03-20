@@ -14,7 +14,8 @@ public class Battlefield extends PApplet
 	int y;
 	int size;
 	boolean[] bits = new boolean[576];
-
+	PImage[] images = new PImage[3];
+	
 
 	public Battlefield(Main _main)
 	{
@@ -22,39 +23,48 @@ public class Battlefield extends PApplet
 		x = 0;
 		y = 0;
 		size = main.width/32;
+		
+		for ( int i = 0; i< images.length; i++ )
+		{
+			images[i] = main.loadImage( i + ".png" );
+		}
 	}
 	
 	public void update()
 	{
-		for (int i = 0 ; i < bits.length ; i ++)
-		  {
-		    float x2 = i * size;
-		    float y2 = y;
-		    if (bits[i])
-		    {
-		    	f = color(100);
-		    	println("works");
-		    }
-		    else
-		    {
-		    	f = color(51,204,255);
-		    }
-		    main.rect(x2,y2, size, size);
-		  }
+
 	}
-	
+		
 	public void render()
 	{
-		
-		
 		for(int i = 0; i < main.width; i += main.width/32)
 		{
-			for(int j = 0; j < main.height; j += main.height/18)
-			{
+			for(int j = 0; j < main.height - main.height/18; j += main.height/18)
+			{		
+				/*if (bits[i] == true)
+			    {
+					f = color(100);
+			    }
+			    else
+			    {
+					f = color(51,204,255);
+			    }*/
 				main.fill(f);
 				main.stroke(s);
 				main.rect(x+i, y+j, size, size);
 			}   
-		}     
+		}  
+		
+		for(int i = 0; i < 32; i ++)
+		{
+			main.imageMode(CENTER);
+			main.fill(255);
+			main.stroke(255);
+			main.rect(i * main.width/32, main.height - size, size, size);
+			if(i < images.length)
+			{
+				main.image(images[i], i * main.width/32 - size/2, main.height - size/2);
+			}
+		}
 	}
 }

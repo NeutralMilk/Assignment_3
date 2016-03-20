@@ -14,7 +14,8 @@ public class Main extends PApplet
 	AudioInput in;
 	float min;
 	float max;	
-	Hero hero;
+	Ship ship;
+	Sub sub;
 	Battlefield battlefield;
 	                         
 	int sampleRate = 44100;
@@ -30,7 +31,8 @@ public class Main extends PApplet
 	public void setup()
 	{
 		smooth();
-		hero = new Hero(this);
+		ship = new Ship(this);
+		sub = new Sub(this);
 		battlefield = new Battlefield(this);
 		//frameRate(120);
 		
@@ -41,80 +43,22 @@ public class Main extends PApplet
 		background(51,204,255);
 		//fill(,204,255);
 		strokeWeight(.25f);
-		
-		hero.render();			
-		hero.update();	 
-		
-		battlefield.render();
-		
-		if(hero.pos.x >= width)
-		{
-			hero.charX = width;
-		}
-		
-		if(hero.pos.x <= 0)
-		{
-			hero.charX = 0;
-		}
-		
-		if(hero.pos.y >= height)
-		{
-			hero.charY = height;
-		}
-		
-		if(hero.pos.y <= 0)
-		{
-			hero.charY = 0;
-		}
-	}
 
-	
-	public void keyPressed()
-	{	  
-		if (key == 'd') 
-		{	  
-			keys[0]=true;
-		}//end if
-		  
-		if (key == 'a') 
-		{	  
-			keys[1]=true;
-		}//end if
+		battlefield.render();
+		battlefield.update();
 		
-		if (key == 'w') 
-		{	  
-			keys[2]=true;
-		}//end if
-		
-		if (key == 's') 
-		{	  
-			keys[3]=true;
-		}//end if
+		ship.render();			
+		ship.update();	
+		sub.render();			
+		sub.update();
 	}
 	
-	public void keyReleased()
+	boolean press = false;
+	public void mousePressed()
 	{
-		if (key == 'd') 
-		{	  
-			keys[0] = false;
-		}//end if
-		  
-		if (key == 'a') 
-		{	  
-			keys[1] = false;
-		}//end if
-		
-		if (key == 'w') 
-		{	  
-			keys[2] = false;
-		}//end if
-		
-		if (key == 's') 
-		{	  
-			keys[3] = false;
-		}//end if
-		
+		press = true;
 	}
+	
 		
 	public static void main(String[] args)
 	{		
