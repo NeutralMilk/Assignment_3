@@ -13,7 +13,7 @@ public class Battlefield extends PApplet
 	int x;
 	int y;
 	int size;
-	boolean[] bits = new boolean[576];
+	boolean[] bits = new boolean[543];
 	PImage[] images = new PImage[3];
 	
 

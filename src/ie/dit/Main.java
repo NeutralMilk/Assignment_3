@@ -22,6 +22,9 @@ public class Main extends PApplet
 	int numSubs = 0;
 	int sampleRate = 44100;	
 	
+	//center position of each tile
+	PVector[] cPos = new PVector[2];
+	
 	//variables for making the ships
 	boolean[] types = new boolean[2];
 	boolean[] keys = new boolean[4];
@@ -35,7 +38,17 @@ public class Main extends PApplet
 	public void setup()
 	{
 		smooth();
-		battlefield = new Battlefield(this);		
+		battlefield = new Battlefield(this);	
+
+		for(int i = 0; i < 31; i ++)
+		{
+			for(int j = 0; j < 16; j ++)
+			{		
+				int a = (i * width/32) + width/64;
+				int b = (i * height/18) + height/36;
+				cPos[i] = new PVector(a,b);
+			}   
+		}  
 	}
 	
 	public void draw()
@@ -47,12 +60,14 @@ public class Main extends PApplet
 		battlefield.render();
 		battlefield.update();
 		
+		//spawn ships
 		for(int i = 0; i < ships.size(); i++)
 		{
 			ships.get(i).render();			
 			ships.get(i).update();
 		}
 		
+		//spawn subs
 		for(int i = 0; i < subs.size(); i++)
 		{
 			subs.get(i).render();			
@@ -118,8 +133,15 @@ public class Main extends PApplet
 		{
 			if(ships.get(i).spawn == true)
 			{
-				println("works 2");
 				ships.get(i).spawn = false;
+				break;
+			}
+		}
+		for(int i = 0; i < subs.size(); i++)
+		{
+			if(subs.get(i).spawn == true)
+			{
+				subs.get(i).spawn = false;
 				break;
 			}
 		}
