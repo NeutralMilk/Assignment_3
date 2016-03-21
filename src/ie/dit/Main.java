@@ -23,7 +23,9 @@ public class Main extends PApplet
 	int sampleRate = 44100;	
 	
 	//center position of each tile
-	PVector[] cPos = new PVector[2];
+	//PVector[] cPos = new PVector[2];
+	int[] cPosX;
+	int[] cPosY;
 	
 	//variables for making the ships
 	boolean[] types = new boolean[2];
@@ -40,13 +42,15 @@ public class Main extends PApplet
 		smooth();
 		battlefield = new Battlefield(this);	
 
-		for(int i = 0; i < 31; i ++)
+		for(int i = 0; i < 32; i ++)
 		{
-			for(int j = 0; j < 16; j ++)
+			for(int j = 0; j < 17; j ++)
 			{		
 				int a = (i * width/32) + width/64;
-				int b = (i * height/18) + height/36;
-				cPos[i] = new PVector(a,b);
+				int b = (j * height/18) + height/36;
+				println(a,b);
+				cPosX[i] = a;
+				cPosY[j] = b;
 			}   
 		}  
 	}

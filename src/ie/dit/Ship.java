@@ -50,14 +50,22 @@ public class Ship extends PApplet
 		
 		if(spawn == false)
 		{
-			for(int i = 0; i < 543; i++)
+			for(int i = 0; i < 32; i++)
 			{
-				if(pos.x == main.cPos[i].x)
+				for(int j = 0; j < 17; j++)
 				{
+					if(pos.x < (main.cPosX[i] + main.width/32) && pos.x > main.cPosX[i])
+					{
+						pos.x = main.cPosX[i] + main.width/32;
+					}
 					
+					if(pos.y < (main.cPosY[j] + main.height/18) && pos.y > main.cPosY[j])
+					{
+						pos.y = main.cPosY[j] + main.height/18;
+					}
 				}
 			}
-			float targetX = ;
+			/*float targetX = ;
 		    float dx = targetX - pos.x;
 		    pos.x += dx * easing;
 		    
@@ -65,7 +73,7 @@ public class Ship extends PApplet
 		    
 		    float targetY = ;
 		    float dy = targetY - pos.y;
-		    pos.y += dy * easing;
+		    pos.y += dy * easing;*/
 		}
 	}
 	
