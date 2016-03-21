@@ -45,8 +45,8 @@ public class Main extends PApplet
 		{
 			for(int j = 0; j < 17; j ++)
 			{		
-				int a = (i * width/32) - width/64;
-				int b = (j * height/18) - height/36;
+				int a = (i * width/32);
+				int b = (j * height/18);
 				println(a,b);
 
 				cPosX[i] = a;
