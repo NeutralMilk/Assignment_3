@@ -23,9 +23,8 @@ public class Main extends PApplet
 	int sampleRate = 44100;	
 	
 	//center position of each tile
-	//PVector[] cPos = new PVector[2];
-	int[] cPosX;
-	int[] cPosY;
+	int[] cPosX = new int[32];
+	int[] cPosY = new int[17];
 	
 	//variables for making the ships
 	boolean[] types = new boolean[2];
@@ -46,9 +45,10 @@ public class Main extends PApplet
 		{
 			for(int j = 0; j < 17; j ++)
 			{		
-				int a = (i * width/32) + width/64;
-				int b = (j * height/18) + height/36;
+				int a = (i * width/32) - width/64;
+				int b = (j * height/18) - height/36;
 				println(a,b);
+
 				cPosX[i] = a;
 				cPosY[j] = b;
 			}   
