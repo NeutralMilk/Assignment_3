@@ -11,76 +11,106 @@ public class Ship extends PApplet
 	Main main;
 	PVector pos;
 	PImage s;
-	float charX;
-	float charY;
 	float easing;
-	float speed = 50;
-	float theta = 0.0f;
-	boolean spawn = false;
+	int move;
 	boolean placed = false;
-	
+
 	public Ship(Main _main)
 	{
 		main = _main;	
 		s = main.loadImage("1.png");
-		charX = 0;
-		charY = main.height/2-main.width/100;
-		pos = new PVector(charX, charY);
+		pos = new PVector();
 		easing = .7f;
 	}
 
 	public void update()
 	{
-		if(spawn == true)
+		switch(move) 
 		{
-			if(main.mousePressed)
-			{
-				float targetX = main.mouseX;
-			    float dx = targetX - pos.x;
-			    pos.x += dx * easing;
-			    
-			    //jumping
-			    
-			    float targetY = main.mouseY;
-			    float dy = targetY - pos.y;
-			    pos.y += dy * easing;
-			}//end if
-		}//end if
-		
-		if(spawn == false)
-		{
-			for(int i = 0; i < 32; i++)
-			{
-				for(int j = 0; j < 17; j++)
-				{
-					if(main.occupied[(1+i)*j] = false)
-					{
-						println("this works");
-						if(pos.x < (main.cPosX[i] + main.width/32 + 1) && pos.x > main.cPosX[i] && pos.y < (main.cPosY[j] + main.height/18 + 1) && pos.y > main.cPosY[j])
-						{
-							pos.x = main.cPosX[i] + main.width/64;
-							pos.y = main.cPosY[j] + main.height/36;
-							main.occupied[i+j] = true;
-						}//end if
-					}//end if
-				}//end for
-			}//end for
-		}//end if
+		  case 0:
+		  {
+			  float targetX = main.mouseX;
+		      float dx = targetX - pos.x;
+		      pos.x += dx * easing;
+		   			    
+		      float targetY = main.mouseY;
+		      float dy = targetY - pos.y;
+		      pos.y += dy * easing;
+		      break;
+		  }//end case 0
+		  
+		  case 1: 
+		  {
+			  for(int i = 0; i < 32; i++)
+			  {
+				  for(int j = 0; j < 17; j++)
+				  {
+					  if(pos.x < (main.cPosX[i] + main.width/32 + 1) && pos.x > main.cPosX[i] && pos.y < (main.cPosY[j] + main.height/18 + 1) && pos.y > main.cPosY[j])
+					  {
+						  if(main.occupied[i*j] == true)
+						  {
+							  break;
+						  }
+						  else
+						  {
+							  pos.x = main.cPosX[i] + main.width/64;
+							  pos.y = main.cPosY[j] + main.height/36;
+							  break;
+						  }
+					  }//end if
+				  }//end for			
+			 }//end for
+		  }//end case 1
+		  
+		  case 2:
+		  {
+			  for(int i = 0; i < 32; i++)
+			  {
+				  for(int j = 0; j < 17; j++)
+				  {
+					  if(pos.x < (main.cPosX[i] + main.width/32 + 1) && pos.x > main.cPosX[i] && pos.y < (main.cPosY[j] + main.height/18 + 1) && pos.y > main.cPosY[j])
+					  {
+						  pos.x = main.cPosX[i] + main.width/64;
+						  pos.y = main.cPosY[j] + main.height/36;
+						  main.occupied[i*j] = true;
+						  break;					  
+					  }//end if
+				  }//end for			
+			 }//end for
+		  }//end case 2
+		  
+		}
 	}//end update()
 	
 	public void render()
 	{
 		
-		if(spawn == true)
+		switch(move) 
 		{
-			main.imageMode(CENTER);
-		    main.image(s, main.mouseX, main.mouseY);
-		}//end if
+		  case 0:
+		  {
+			  main.imageMode(CENTER);
+			  main.image(s, main.mouseX, main.mouseY);
+			  break;
+		  }
+		  
+		  case 1: 
+		  {
+			  main.imageMode(CENTER);			
+			  main.image(s, pos.x, pos.y);
+			  break;
+		  }
+		  
+		  case 2: 
+		  {
+			  main.imageMode(CENTER);
+			  main.image(s, main.mouseX, main.mouseY);
+			  break;
+		  }
+		}
+
 		
-		if(spawn == false)
-		{
-			main.imageMode(CENTER);
-		    main.image(s, pos.x, pos.y);
-		}//end if
+
+
 	}
 }

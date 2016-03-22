@@ -22,6 +22,7 @@ public class Main extends PApplet
 	int numSubs = 0;
 	int sampleRate = 44100;	
 	boolean[] occupied = new boolean[543];
+	boolean move = false;
 	
 	//center position of each tile
 	int[] cPosX = new int[32];
@@ -30,6 +31,7 @@ public class Main extends PApplet
 	//variables for making the ships
 	boolean[] types = new boolean[2];
 	boolean[] keys = new boolean[4];
+	boolean release = false;
 	
 	
 	public void settings() 
@@ -105,11 +107,9 @@ public class Main extends PApplet
 		int i = numShips;
 		Ship ship = new Ship(this);
 		ships.add(ship); 
-		ships.get(i).spawn = true;
+		ships.get(i).move = 0;
 		numShips++;
-		types[0] = false;
-
-		
+		types[0] = false;	
 	}
 	
 	public void subCreate()
@@ -134,32 +134,52 @@ public class Main extends PApplet
 				break;
 			}//end if
 		}//end for
+		
+		if(move == true)
+		{
+			for(int i = 0; i < occupied.length; i++)
+			{		
+	
+				if(occupied[i] = true)
+				{
+					for(int j = 0; i < ships.size(); i++)
+					{
+						ships.get(i).move = 2;
+					}
+					move = false;
+				}
+			}
+		}
 	}
 	
 	public void mouseReleased()
 	{
-		
-		for(int i = 0; i < ships.size(); i++)
+		for(int i = 0; i < occupied.length; i++)
 		{
-			
-			if(ships.get(i).spawn == true)
+			if(occupied[i] == false)
 			{
-
-				ships.get(i).spawn = false;
-				break;
-
-			}//end if		
-		}//end for
-				
-		for(int i = 0; i < subs.size(); i++)
-		{
-			if(subs.get(i).spawn == true)
-			{
-				subs.get(i).spawn = false;
-				break;
+				for(int j = 0; j < ships.size(); j++)
+				{
+					if(ships.get(j).move == 0)
+					{
+						ships.get(j).move = 1;
+						occupied[i] = true;
+						move = true;
+						break;			
+					}//end if	
+					
+					if(ships.get(j).move == 2)
+					{
+						ships.get(j).move = 0;
+						occupied[i] = false;
+						move = true;
+						break;			
+					}//end if
+					
+				}//end for
 			}//end if
-		}//end for
-	}
+		}//end for	
+	}//end mouseReleased()
 	
 		
 	public static void main(String[] args)
