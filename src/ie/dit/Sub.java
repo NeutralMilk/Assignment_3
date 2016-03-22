@@ -46,7 +46,22 @@ public class Sub extends PApplet
 			    pos.y += dy * easing;
 			}//end if
 		}//end if
-	}
+		
+		if(spawn == false)
+		{
+			for(int i = 0; i < 32; i++)
+			{
+				for(int j = 0; j < 17; j++)
+				{
+					if(pos.x < (main.cPosX[i] + main.width/32) && pos.x > main.cPosX[i] && pos.y < (main.cPosY[j] + main.height/18) && pos.y > main.cPosY[j])
+					{
+						pos.x = main.cPosX[i] + main.width/64;
+						pos.y = main.cPosY[j] + main.height/36;
+					}//end if
+				}//end for
+			}//end for
+		}//end if
+	}//end update()
 	
 	public void render()
 	{

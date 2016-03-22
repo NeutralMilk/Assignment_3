@@ -21,6 +21,7 @@ public class Main extends PApplet
 	int numShips = 0;	 
 	int numSubs = 0;
 	int sampleRate = 44100;	
+	boolean[] occupied = new boolean[543];
 	
 	//center position of each tile
 	int[] cPosX = new int[32];
@@ -34,6 +35,7 @@ public class Main extends PApplet
 	public void settings() 
 	{
 		fullScreen();
+		//size(1280,720);
 	}
 	
 	public void setup()
@@ -47,12 +49,17 @@ public class Main extends PApplet
 			{		
 				int a = (i * width/32);
 				int b = (j * height/18);
-				println(a,b);
 
 				cPosX[i] = a;
 				cPosY[j] = b;
-			}   
-		}  
+			}//end for   
+		}  //end for
+		
+		
+		for ( int i = 0; i < 543; i++ )
+		{
+			occupied[i] = false;
+		}//end for
 	}
 	
 	public void draw()
@@ -69,14 +76,14 @@ public class Main extends PApplet
 		{
 			ships.get(i).render();			
 			ships.get(i).update();
-		}
+		}//end for
 		
 		//spawn subs
 		for(int i = 0; i < subs.size(); i++)
 		{
 			subs.get(i).render();			
 			subs.get(i).update();
-		}
+		}//end for
 			
 		//sub.render();			
 		//sub.update();
@@ -84,25 +91,24 @@ public class Main extends PApplet
 		if(types[0] == true)
 		{
 			shipCreate();
-		}
+		}//end if
 		
 		if(types[1] == true)
 		{
 			subCreate();
-		}
+		}//end if
 		
 	}
 	
 	public void shipCreate()
 	{
-		
 		int i = numShips;
 		Ship ship = new Ship(this);
 		ships.add(ship); 
 		ships.get(i).spawn = true;
 		numShips++;
 		types[0] = false;
-		
+
 		
 	}
 	
@@ -125,30 +131,34 @@ public class Main extends PApplet
 			if(mouseX < i * battlefield.size && mouseX > i-1 * battlefield.size && mouseY < height && mouseY > height - battlefield.size)
 			{	
 				types[i-1] = true;
-				println(types[i-1]);
 				break;
-			}
-		}
+			}//end if
+		}//end for
 	}
 	
 	public void mouseReleased()
 	{
+		
 		for(int i = 0; i < ships.size(); i++)
 		{
+			
 			if(ships.get(i).spawn == true)
 			{
+
 				ships.get(i).spawn = false;
 				break;
-			}
-		}
+
+			}//end if		
+		}//end for
+				
 		for(int i = 0; i < subs.size(); i++)
 		{
 			if(subs.get(i).spawn == true)
 			{
 				subs.get(i).spawn = false;
 				break;
-			}
-		}
+			}//end if
+		}//end for
 	}
 	
 		

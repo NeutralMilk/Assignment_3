@@ -27,7 +27,6 @@ public class Ship extends PApplet
 		charY = main.height/2-main.width/100;
 		pos = new PVector(charX, charY);
 		easing = .7f;
-		int w = (int)((s.width)*(1920/2560));
 	}
 
 	public void update()
@@ -54,23 +53,20 @@ public class Ship extends PApplet
 			{
 				for(int j = 0; j < 17; j++)
 				{
-					if(pos.x < (main.cPosX[i] + main.width/32) && pos.x > main.cPosX[i] && pos.y < (main.cPosY[j] + main.height/18) && pos.y > main.cPosY[j])
+					if(main.occupied[(1+i)*j] = false)
 					{
-						pos.x = main.cPosX[i] + main.width/64;
-						pos.y = main.cPosY[j] + main.height/36;
-					}
-				}
-			}
-			
-			float targetX = pos.x;
-		    float dx = targetX - pos.x;
-		    pos.x += dx * easing;
-		    		    
-		    float targetY = pos.y;
-		    float dy = targetY - pos.y;
-		    pos.y += dy * easing;
-		}
-	}
+						println("this works");
+						if(pos.x < (main.cPosX[i] + main.width/32 + 1) && pos.x > main.cPosX[i] && pos.y < (main.cPosY[j] + main.height/18 + 1) && pos.y > main.cPosY[j])
+						{
+							pos.x = main.cPosX[i] + main.width/64;
+							pos.y = main.cPosY[j] + main.height/36;
+							main.occupied[i+j] = true;
+						}//end if
+					}//end if
+				}//end for
+			}//end for
+		}//end if
+	}//end update()
 	
 	public void render()
 	{
