@@ -10,6 +10,7 @@ public class Ship extends PApplet
 	//PImage image;
 	Main main;
 	PVector pos;
+	PVector mouseBox;
 	PImage s;
 	float easing;
 	int move;
@@ -23,6 +24,7 @@ public class Ship extends PApplet
 		main = _main;	
 		s = main.loadImage("1.png");
 		pos = new PVector();
+		mouseBox = new PVector();
 		easing = .7f;
 	}
 
@@ -76,8 +78,14 @@ public class Ship extends PApplet
 						  pos.x = main.cPosX[i] + main.width/64;
 						  pos.y = main.cPosY[j] + main.height/36;
 						  main.occupied[i*j] = true;
-						  break;					  
-					  }//end if
+					  }//end if 
+					  
+					  if(main.mouseX < (main.cPosX[i] + main.width/32) && main.mouseX > main.cPosX[i] && main.mouseY < (main.cPosY[j] + main.height/18) && main.mouseY > main.cPosY[j])
+					  {
+						  println("works");
+						  mouseBox.x = main.cPosX[i] + main.width/64;
+						  mouseBox.y = main.cPosY[j] + main.height/36;
+					  }//end if	
 				  }//end for			
 			 }//end for
 		  }//end case 2
@@ -113,7 +121,7 @@ public class Ship extends PApplet
 		  case 2: 
 		  {
 			  main.pushMatrix();
-			  angle = atan2(-(pos.x-main.mouseX), -(pos.y-main.mouseY));
+			  angle = atan2(-(pos.x - mouseBox.x), -(pos.y - mouseBox.y));
 			  main.translate(pos.x, pos.y);
 			  main.rotate(-angle+PI);
 			  main.imageMode(CENTER);			
