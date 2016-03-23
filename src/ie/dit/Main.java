@@ -37,8 +37,7 @@ public class Main extends PApplet
 	public void settings() 
 	{
 		fullScreen();
-		//size(1280,720);
-	}
+	}//end settings
 	
 	public void setup()
 	{
@@ -62,7 +61,7 @@ public class Main extends PApplet
 		{
 			occupied[i] = false;
 		}//end for
-	}
+	}//end setup
 	
 	public void draw()
 	{
@@ -102,11 +101,15 @@ public class Main extends PApplet
 		
 	}
 	
+	//creates a ship
 	public void shipCreate()
 	{
+		//increase the number of ships
 		int i = numShips;
+		//create a ship
 		Ship ship = new Ship(this);
 		ships.add(ship); 
+		//set it so that the ship follows the mouse
 		ships.get(i).move = 0;
 		numShips++;
 		types[0] = false;	
@@ -126,6 +129,7 @@ public class Main extends PApplet
 	
 	public void mousePressed()
 	{
+		//choose which one to spawn
 		for(int i = 1; i < 3; i ++)
 		{
 			if(mouseX < i * battlefield.size && mouseX > i-1 * battlefield.size && mouseY < height && mouseY > height - battlefield.size)
@@ -135,22 +139,22 @@ public class Main extends PApplet
 			}//end if
 		}//end for
 		
+		
 		if(move == true)
 		{
 			for(int i = 0; i < occupied.length; i++)
 			{		
-	
 				if(occupied[i] = true)
 				{
-					for(int j = 0; i < ships.size(); i++)
+					for(int j = 0; j < ships.size(); j++)
 					{
-						ships.get(i).move = 2;
-					}
-					move = false;
-				}
-			}
-		}
-	}
+						ships.get(j).move = 2;
+						move = false;
+					}//end for					
+				}//end if
+			}//end for
+		}//end if
+	}//end mousePressed
 	
 	public void mouseReleased()
 	{
@@ -166,20 +170,11 @@ public class Main extends PApplet
 						occupied[i] = true;
 						move = true;
 						break;			
-					}//end if	
-					
-					if(ships.get(j).move == 2)
-					{
-						ships.get(j).move = 0;
-						occupied[i] = false;
-						move = true;
-						break;			
-					}//end if
-					
+					}//end if					
 				}//end for
 			}//end if
 		}//end for	
-	}//end mouseReleased()
+	}//end mouseReleased
 	
 		
 	public static void main(String[] args)

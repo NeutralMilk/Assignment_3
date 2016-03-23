@@ -14,6 +14,9 @@ public class Ship extends PApplet
 	float easing;
 	int move;
 	boolean placed = false;
+	
+	float angle = 0;
+	float oldAngle = 0;
 
 	public Ship(Main _main)
 	{
@@ -89,25 +92,39 @@ public class Ship extends PApplet
 		{
 		  case 0:
 		  {
+			  main.pushMatrix();
+			  main.translate(main.mouseX, main.mouseY);
 			  main.imageMode(CENTER);
-			  main.image(s, main.mouseX, main.mouseY);
+			  main.image(s, 0, 0);
+			  main.popMatrix();
 			  break;
 		  }
 		  
 		  case 1: 
 		  {
+			  main.pushMatrix();
+			  main.translate(pos.x, pos.y);
 			  main.imageMode(CENTER);			
-			  main.image(s, pos.x, pos.y);
+			  main.image(s, 0, 0);
+			  main.popMatrix();
 			  break;
 		  }
 		  
 		  case 2: 
 		  {
-			  main.imageMode(CENTER);
-			  main.image(s, main.mouseX, main.mouseY);
+			  main.pushMatrix();
+			  angle = atan2(-(pos.x-main.mouseX), -(pos.y-main.mouseY));
+			  main.translate(pos.x, pos.y);
+			  main.rotate(-angle+PI);
+			  main.imageMode(CENTER);			
+			  main.image(s, 0, 0);
+
+			  main.popMatrix();
+			  
+			  
 			  break;
 		  }
-		}
+		}//end switch
 
 		
 
