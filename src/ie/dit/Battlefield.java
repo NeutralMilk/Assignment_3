@@ -13,8 +13,9 @@ public class Battlefield extends PApplet
 	int x;
 	int y;
 	int size;
-	boolean[] bits = new boolean[543];
+	boolean[] placeOil = new boolean[544];
 	PImage[] images = new PImage[3];
+	PImage oil = new PImage();
 	
 	
 
@@ -25,6 +26,21 @@ public class Battlefield extends PApplet
 		y = 0;
 		size = main.width/32;
 		
+		for(int i = 0; i < placeOil.length; i++)
+		{
+			int ran = (int)random(1,30);
+			if(ran == 1)
+			{
+				placeOil[i] = true;
+			}
+			else
+			{
+				placeOil[i] = false;
+			}
+			println(placeOil[i]);
+		}
+		oil = main.loadImage("oil.png");
+
 		for ( int i = 0; i< images.length; i++ )
 		{
 			images[i] = main.loadImage( i + ".png" );
@@ -45,6 +61,10 @@ public class Battlefield extends PApplet
 					main.fill(f);
 					main.rect(main.cPosX[i], main.cPosY[j], size, size);
 					s = color(255);
+					if(placeOil[i*j] == true)
+					{
+						main.image(oil, i*main.width/32 + main.width/64, j*main.height/18 + main.height/36);
+					}//end if
 				}//end if
 			}//end for
 		}//end for
@@ -52,21 +72,19 @@ public class Battlefield extends PApplet
 		
 	public void render()
 	{
-		for(int i = 0; i < main.width; i += main.width/32)
+		for(int i = 0; i < 32; i ++)
 		{
-			for(int j = 0; j < main.height - main.height/18; j += main.height/18)
+			for(int j = 0; j < 17; j ++)
 			{		
-				/*if (bits[i] == true)
-			    {
-					f = color(100);
-			    }
-			    else
-			    {
-					f = color(51,204,255);
-			    }*/
+
 				main.fill(f);
 				main.stroke(s);
-				main.rect(x+i, y+j, size, size);
+				main.rect(i*main.width/32, j*main.height/18, size, size);
+				main.imageMode(CENTER);
+				if(placeOil[i*j] == true)
+				{
+					main.image(oil, i*main.width/32 + main.width/64, j*main.height/18 + main.height/36);
+				}//end if
 				
 			}//end for
 		}//end for

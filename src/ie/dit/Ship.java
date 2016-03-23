@@ -86,11 +86,23 @@ public class Ship extends PApplet
 						  mouseBox.x = main.cPosX[i] + main.width/64;
 						  mouseBox.y = main.cPosY[j] + main.height/36;
 					  }//end if	
+					  
+					  if(main.mousePressed)
+					  {
+						  easing = .05f;
+						  float targetX = mouseBox.x;
+					      float dx = targetX - pos.x;
+					      pos.x += dx * easing;
+					   			    
+					      float targetY = mouseBox.y;
+					      float dy = targetY - pos.y;
+					      pos.y += dy * easing;
+					      easing = .7f;
+					  }
 				  }//end for			
 			 }//end for
 		  }//end case 2
-		  
-		}
+		}//end switch
 	}//end update()
 	
 	public void render()
@@ -126,16 +138,10 @@ public class Ship extends PApplet
 			  main.rotate(-angle+PI);
 			  main.imageMode(CENTER);			
 			  main.image(s, 0, 0);
-
 			  main.popMatrix();
-			  
-			  
 			  break;
 		  }
+
 		}//end switch
-
-		
-
-
 	}
 }

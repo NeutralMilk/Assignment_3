@@ -23,6 +23,7 @@ public class Main extends PApplet
 	int sampleRate = 44100;	
 	boolean[] occupied = new boolean[543];
 	boolean move = false;
+	boolean moveAgain = false;
 	
 	//center position of each tile
 	int[] cPosX = new int[32];
