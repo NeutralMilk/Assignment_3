@@ -37,6 +37,7 @@ public class Battlefield extends PApplet
 			{
 				placeOil[i] = false;
 			}
+			println(placeOil[i]);
 		}
 		oil = main.loadImage("oil.png");
 
@@ -54,11 +55,23 @@ public class Battlefield extends PApplet
 			{
 				if(main.mouseX < (main.cPosX[i] + main.width/32) && main.mouseX > main.cPosX[i] && main.mouseY < (main.cPosY[j] + main.height/18) && main.mouseY > main.cPosY[j])
 				{
-					s = color(0,255,0);
+					for(int k = 0; k < main.ships.size(); k++)
+					{
+						if(main.ships.get(k).validTiles() == true)
+						{
+							s = color(0,255,0);
+						}//end if
+						
+						else
+						{
+							s = color(255,0,0);
+						}//end else
+					}//end for
 					main.stroke(s);
 					main.strokeWeight(3);
 					main.fill(f);
 					main.rect(main.cPosX[i], main.cPosY[j], size, size);
+					
 					s = color(255);
 					if(placeOil[i*j] == true)
 					{

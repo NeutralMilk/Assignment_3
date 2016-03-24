@@ -64,6 +64,7 @@ public class Main extends PApplet
 	
 	public void draw()
 	{
+		println(ships.size());
 		background(51,120,255);
 		//fill(,204,255);
 		strokeWeight(.25f);
@@ -73,16 +74,8 @@ public class Main extends PApplet
 		
 		if(mousePressed)
 		{
-			//choose which one to spawn
-			for(int i = 1; i < 2; i ++)
-			{
-				if(mouseX < i * battlefield.size && mouseX > i-1 * battlefield.size && mouseY < height && mouseY > height - battlefield.size)
-				{	
-					types[i-1] = true;
-					break;
-				}//end if
-			}//end for
-		}
+				
+		}//end if
 		
 		//spawn ships
 		for(int i = 0; i < ships.size(); i++)
@@ -95,6 +88,7 @@ public class Main extends PApplet
 		{
 			shipCreate();
 		}//end if
+
 		
 	}
 	
@@ -111,46 +105,73 @@ public class Main extends PApplet
 		numShips++;
 		types[0] = false;	
 	}
+
+	boolean clicked;
 	
-	public void mousePressed()
+	public void mouseDragged()
 	{
 		
+	}
+	public void mouseClicked()
+	{		
+		//choose which one to spawn
+		if(clicked == false)
+		{
+			for(int i = 1; i < 3; i ++)
+			{
+				if(mouseX < i * battlefield.size && mouseX > i-1 * battlefield.size && mouseY < height && mouseY > height - battlefield.size)
+				{	
+					types[i-1] = true;
+					clicked = true;
+					break;
+				}//end if
+			}//end for	
+		}//end if
+		
+		if(clicked == true)
+		{
+			for(int i = 0; i < occupied.length; i++)
+			{
+				if(occupied[i] == false)
+				{
+					for(int j = 0; j < ships.size(); j++)
+					{
+						if(ships.get(j).move == 0)
+						{
+							ships.get(j).move = 1;
+							occupied[i] = true;
+							clicked = false;
+							break;			
+						}//end if					
+					}//end for
+				}//end if
+			}//end for	
+		}
+		//allow the ships to rotate
+		/*if(clicked == true)
+		{
+			for(int i = 0; i < occupied.length; i++)
+			{		
+				if(occupied[i] == true)
+				{
+					for(int j = 0; j < ships.size(); j++)
+					{
+						ships.get(j).move = 2;
+						clicked = false;
+						break;
+					}//end for					
+				}//end if
+			}//end for
+		}//end if*/
+		
+	
 	}//end mousePressed
 	
-	public void mouseReleased()
+	/*public void mouseReleased()
 	{
 		
-		for(int i = 0; i < occupied.length; i++)
-		{
-			if(occupied[i] == false)
-			{
-				for(int j = 0; j < ships.size(); j++)
-				{
-					if(ships.get(j).move == 0)
-					{
-						ships.get(j).move = 1;
-						occupied[i] = true;
-						move = true;
-						break;			
-					}//end if					
-				}//end for
-			}//end if
-			if(occupied[i] == true)
-			{
-				for(int j = 0; j < ships.size(); j++)
-				{
-					if(ships.get(j).release == 0)
-					{
-						println("works release");
-					}
-				}
-			}
-		}//end for
 		
-		
-		
-		
-	}//end mouseReleased
+	}//end mouseReleased*/
 	
 		
 	public static void main(String[] args)
