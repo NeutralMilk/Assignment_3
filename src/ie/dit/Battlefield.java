@@ -37,7 +37,6 @@ public class Battlefield extends PApplet
 			{
 				placeOil[i] = false;
 			}
-			println(placeOil[i]);
 		}
 		oil = main.loadImage("oil.png");
 

@@ -15,8 +15,6 @@ public class Main extends PApplet
 	float min;
 	float max;	
 	ArrayList<Ship> ships = new ArrayList<Ship>();
-	ArrayList<Sub> subs = new ArrayList<Sub>();
-	Sub sub;
 	Battlefield battlefield;	
 	int numShips = 0;	 
 	int numSubs = 0;
@@ -73,6 +71,19 @@ public class Main extends PApplet
 		battlefield.render();
 		battlefield.update();
 		
+		if(mousePressed)
+		{
+			//choose which one to spawn
+			for(int i = 1; i < 2; i ++)
+			{
+				if(mouseX < i * battlefield.size && mouseX > i-1 * battlefield.size && mouseY < height && mouseY > height - battlefield.size)
+				{	
+					types[i-1] = true;
+					break;
+				}//end if
+			}//end for
+		}
+		
 		//spawn ships
 		for(int i = 0; i < ships.size(); i++)
 		{
@@ -80,24 +91,9 @@ public class Main extends PApplet
 			ships.get(i).update();
 		}//end for
 		
-		//spawn subs
-		for(int i = 0; i < subs.size(); i++)
-		{
-			subs.get(i).render();			
-			subs.get(i).update();
-		}//end for
-			
-		//sub.render();			
-		//sub.update();
-		
 		if(types[0] == true)
 		{
 			shipCreate();
-		}//end if
-		
-		if(types[1] == true)
-		{
-			subCreate();
 		}//end if
 		
 	}
@@ -116,46 +112,9 @@ public class Main extends PApplet
 		types[0] = false;	
 	}
 	
-	public void subCreate()
-	{
-		
-		int i = numSubs;
-		Sub sub = new Sub(this);
-		subs.add(sub); 
-		subs.get(i).spawn = true;
-		numSubs++;
-		types[1] = false;
-		
-	}
-	
 	public void mousePressed()
 	{
-		//choose which one to spawn
-		for(int i = 1; i < 3; i ++)
-		{
-			if(mouseX < i * battlefield.size && mouseX > i-1 * battlefield.size && mouseY < height && mouseY > height - battlefield.size)
-			{	
-				types[i-1] = true;
-				break;
-			}//end if
-		}//end for
 		
-		
-		//allow the ships to rotate
-		if(move == true)
-		{
-			for(int i = 0; i < occupied.length; i++)
-			{		
-				if(occupied[i] = true)
-				{
-					for(int j = 0; j < ships.size(); j++)
-					{
-						ships.get(j).move = 2;
-						move = false;
-					}//end for					
-				}//end if
-			}//end for
-		}//end if
 	}//end mousePressed
 	
 	public void mouseReleased()
@@ -176,7 +135,21 @@ public class Main extends PApplet
 					}//end if					
 				}//end for
 			}//end if
-		}//end for	
+			if(occupied[i] == true)
+			{
+				for(int j = 0; j < ships.size(); j++)
+				{
+					if(ships.get(j).release == 0)
+					{
+						println("works release");
+					}
+				}
+			}
+		}//end for
+		
+		
+		
+		
 	}//end mouseReleased
 	
 		
