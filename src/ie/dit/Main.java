@@ -141,6 +141,7 @@ public class Main extends PApplet
 		}//end for
 		
 		
+		//allow the ships to rotate
 		if(move == true)
 		{
 			for(int i = 0; i < occupied.length; i++)
@@ -159,6 +160,7 @@ public class Main extends PApplet
 	
 	public void mouseReleased()
 	{
+		
 		for(int i = 0; i < occupied.length; i++)
 		{
 			if(occupied[i] == false)

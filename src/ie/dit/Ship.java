@@ -87,7 +87,7 @@ public class Ship extends PApplet
 						  mouseBox.y = main.cPosY[j] + main.height/36;
 					  }//end if	
 					  
-					  if(main.mousePressed)
+					  if(main.mousePressed && validTiles() == true )
 					  {
 						  easing = .05f;
 						  float targetX = mouseBox.x;
@@ -104,6 +104,34 @@ public class Ship extends PApplet
 		  }//end case 2
 		}//end switch
 	}//end update()
+	
+	public boolean validTiles()
+	{
+		boolean validTile;
+		validTile = false;
+		
+		//check for the x values
+		int plusX = (int)pos.x + main.width/32;
+		int plus2X = (int)pos.x + main.width/16;
+		int minX = (int)pos.x - main.width/32;
+		int min2X = (int)pos.x - main.width/16;
+		
+		//check for y values
+		int plusY = (int)pos.y + main.height/18;
+		int plus2Y = (int)pos.y + main.height/9;
+		int minY = (int)pos.y - main.height/18;
+		int min2Y = (int)pos.y - main.height/9;
+		
+		if (mouseBox.x == plusX || mouseBox.x == plus2X || mouseBox.x == minX || mouseBox.x == min2X || mouseBox.x == pos.x)
+		{
+			if (mouseBox.y == plusY || mouseBox.y == plus2Y || mouseBox.y == minY || mouseBox.y == min2Y || mouseBox.y == pos.y)
+			{
+				validTile = true;
+			}//end if
+		}//end if
+		
+		return validTile;
+	}
 	
 	public void render()
 	{
