@@ -19,7 +19,7 @@ public class Main extends PApplet
 	int numShips = 0;	 
 	int numSubs = 0;
 	int sampleRate = 44100;	
-	boolean[] occupied = new boolean[543];
+	boolean[] occupied = new boolean[544];
 	boolean move = false;
 	boolean moveAgain = false;
 	
@@ -56,7 +56,7 @@ public class Main extends PApplet
 		}  //end for
 		
 		
-		for ( int i = 0; i < 543; i++ )
+		for( int i = 0; i < occupied.length; i++ )
 		{
 			occupied[i] = false;
 		}//end for
@@ -64,13 +64,18 @@ public class Main extends PApplet
 	
 	public void draw()
 	{
-		println(ships.size());
+		for( int i = 0; i < occupied.length; i++ )
+		{
+			println(i, occupied[i]);
+		}//end for
 		background(51,120,255);
 		//fill(,204,255);
 		strokeWeight(.25f);
 
 		battlefield.render();
 		battlefield.update();
+		
+		
 		
 		if(mousePressed)
 		{
@@ -106,65 +111,88 @@ public class Main extends PApplet
 		types[0] = false;	
 	}
 
-	boolean clicked;
+	int clicked;
 	
 	public void mouseDragged()
 	{
 		
 	}
 	public void mouseClicked()
-	{		
-		//choose which one to spawn
-		if(clicked == false)
+	{			
+		for(int i = 0; i < occupied.length; i++)
 		{
-			for(int i = 1; i < 3; i ++)
+			if(occupied[i] == true)
 			{
-				if(mouseX < i * battlefield.size && mouseX > i-1 * battlefield.size && mouseY < height && mouseY > height - battlefield.size)
-				{	
-					types[i-1] = true;
-					clicked = true;
-					break;
-				}//end if
-			}//end for	
-		}//end if
-		
-		if(clicked == true)
-		{
-			for(int i = 0; i < occupied.length; i++)
-			{
-				if(occupied[i] == false)
+				for(int j = 0; j < ships.size(); j++)
 				{
-					for(int j = 0; j < ships.size(); j++)
+					if(ships.get(j).move == 0)
 					{
-						if(ships.get(j).move == 0)
-						{
-							ships.get(j).move = 1;
-							occupied[i] = true;
-							clicked = false;
-							break;			
-						}//end if					
-					}//end for
-				}//end if
-			}//end for	
-		}
-		//allow the ships to rotate
-		/*if(clicked == true)
+						ships.get(j).move = 1;
+						occupied[i] = true;
+						clicked = 2;
+						break;			
+					}//end if					
+				}//end for
+			}//end if
+		}//end for	
+		
+ 		switch(clicked)
 		{
-			for(int i = 0; i < occupied.length; i++)
-			{		
-				if(occupied[i] == true)
+			//choose which one to spawn
+			case 0:
+			{
+				for(int i = 1; i < 3; i ++)
 				{
-					for(int j = 0; j < ships.size(); j++)
+					if(mouseX < i * battlefield.size && mouseX > i-1 * battlefield.size && mouseY < height && mouseY > height - battlefield.size)
+					{	
+						types[i-1] = true;
+						clicked = 1;
+						break;
+					}//end if
+				}//end for	
+				
+				/*for(int i = 1; i < ships.size(); i ++)
+				{
+					if(ships.get(i).pos.x == mouseX && ships.get(i).pos.y == mouseY)
+					{	
+						ships.get(i).move = 2;
+					}//end if
+				}//end for*/
+			}//end case 0
+			
+			case 1:
+			{
+				for(int i = 0; i < occupied.length; i++)
+				{
+					if(occupied[i] == false)
+					{
+						for(int j = 0; j < ships.size(); j++)
+						{
+							if(ships.get(j).move == 0)
+							{
+								ships.get(j).move = 1;
+								occupied[i] = true;
+								clicked = 0;
+								break;			
+							}//end if					
+						}//end for
+					}//end if
+				}//end for	
+			}//end case 1
+			
+			case 2:
+			{
+				for(int j = 0; j < ships.size(); j++)
+				{
+					if(ships.get(j).move == 1)
 					{
 						ships.get(j).move = 2;
-						clicked = false;
-						break;
-					}//end for					
-				}//end if
-			}//end for
-		}//end if*/
-		
-	
+						clicked = 0;
+						break;			
+					}//end if					
+				}//end for
+			}//end case 2
+		}//end switch
 	}//end mousePressed
 	
 	/*public void mouseReleased()

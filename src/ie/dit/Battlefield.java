@@ -37,7 +37,6 @@ public class Battlefield extends PApplet
 			{
 				placeOil[i] = false;
 			}
-			println(placeOil[i]);
 		}
 		oil = main.loadImage("oil.png");
 
@@ -55,7 +54,7 @@ public class Battlefield extends PApplet
 			{
 				if(main.mouseX < (main.cPosX[i] + main.width/32) && main.mouseX > main.cPosX[i] && main.mouseY < (main.cPosY[j] + main.height/18) && main.mouseY > main.cPosY[j])
 				{
-					for(int k = 0; k < main.ships.size(); k++)
+					/*for(int k = 0; k < main.ships.size(); k++)
 					{
 						if(main.ships.get(k).validTiles() == true)
 						{
@@ -66,13 +65,29 @@ public class Battlefield extends PApplet
 						{
 							s = color(255,0,0);
 						}//end else
-					}//end for
-					main.stroke(s);
-					main.strokeWeight(3);
-					main.fill(f);
-					main.rect(main.cPosX[i], main.cPosY[j], size, size);
+					}//end for*/
 					
-					s = color(255);
+					for(int k = 0; k < main.occupied.length; k ++)
+					{
+						if(main.occupied[k] == true)
+						{
+							println("colour is red");
+							s = color(255,0,0); 
+							main.stroke(s);
+							main.strokeWeight(3);
+							main.fill(f);
+							main.rect(main.cPosX[i], main.cPosY[j], size, size);
+						}
+						else
+						{
+							s = color(255); 
+							main.stroke(s);
+							main.strokeWeight(3);
+							main.fill(f);
+							main.rect(main.cPosX[i], main.cPosY[j], size, size);
+						}
+					}
+					
 					if(placeOil[i*j] == true)
 					{
 						main.image(oil, i*main.width/32 + main.width/64, j*main.height/18 + main.height/36);
