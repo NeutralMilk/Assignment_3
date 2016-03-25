@@ -109,6 +109,7 @@ public class Ship extends PApplet
 		}//end switch
 	}//end update()
 	
+	//this function checks to see if the mouse is within two boxes up, down, left or right of the unit
 	boolean validTile;
 	public boolean validTiles()
 	{
