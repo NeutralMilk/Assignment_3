@@ -1,7 +1,6 @@
 package ie.dit;
 
 import java.util.ArrayList;
-
 import processing.core.*;
 import ddf.minim.AudioInput;
 import ddf.minim.Minim;
@@ -22,6 +21,8 @@ public class Main extends PApplet
 	boolean[] occupied = new boolean[544];
 	boolean move = false;
 	boolean moveAgain = false;
+
+	int clicked;
 	
 	//center position of each tile
 	int[] cPosX = new int[32];
@@ -62,7 +63,88 @@ public class Main extends PApplet
 		}//end for
 	}//end setup
 	
+	boolean menu = true;
+	boolean firstTime = true;
+	
 	public void draw()
+	{
+		if(menu == true)
+		  {
+		    menu();
+		  }//end if
+		  
+		  if(menu == false)
+		  {
+		    game();
+		  }//end if
+		
+	}
+	
+	public void menu()
+	{
+		  float boxWidth = width/3;
+		  float boxHeight = height/5;
+		  
+		  float x = width/2 - boxWidth/2;
+		  float y = height/2 - boxHeight/2;
+		  
+		  stroke(255);
+		  strokeWeight(5);
+		  
+		  if(firstTime == true)
+		  {
+			fill(68,193,235);
+		    rect(0, 0, width, height);
+		  }//end if
+		  
+		  if(mouseX > x && mouseX < x + boxWidth && mouseY > y - boxHeight/1.5 && mouseY < y + boxHeight/3)
+		  {		    
+		    fill(75,200,255);
+		    if(mousePressed)
+		    {
+		      menu = false;
+		    }//end if
+		  }
+		  else
+		  {
+			  fill(68,193,235);
+		  }//end else
+		  
+		  rect(x, (float) (y - boxHeight/1.5), boxWidth, boxHeight);
+
+		      
+		  if(mouseX > x && mouseX < x + boxWidth && mouseY > y + boxHeight/1.5 && mouseY < y + boxHeight*1.7)
+		  {	    
+		    fill(75,200,255);
+		    if(mousePressed)
+		    {
+		      exit();
+		    }//end if
+		  }
+		  else
+		  {
+			  fill(68,193,235);
+		  }//end else  
+		  
+		  rect(x, (float) (y + boxHeight/1.5), boxWidth, boxHeight);
+		  
+		  textAlign(CENTER);
+		  fill(0);
+		  textSize(width/20);
+		  if(firstTime == true)
+		  {
+		    text("Start Game", width/2, height/2 - boxHeight/2);
+		  }//end if
+		  
+		  else
+		  {
+		    text("Resume", width/2, height/2 - boxHeight/2);
+		  }//end else
+		  
+		  text("Exit Game", width/2, (float) (height/2 + boxHeight/1.25));
+		  strokeWeight(1);
+	}
+	public void game()
 	{
 		for( int i = 0; i < occupied.length; i++ )
 		{
@@ -73,14 +155,7 @@ public class Main extends PApplet
 		strokeWeight(.25f);
 
 		battlefield.render();
-		battlefield.update();
-		
-		
-		
-		if(mousePressed)
-		{
-				
-		}//end if
+		battlefield.update();		
 		
 		//spawn ships
 		for(int i = 0; i < ships.size(); i++)
@@ -93,10 +168,25 @@ public class Main extends PApplet
 		{
 			shipCreate();
 		}//end if
-
-		
 	}
 	
+	public void keyPressed()
+	{	  
+	  if (key == 'm') 
+	  {
+	    firstTime = false;
+	   
+	    if(menu == true)
+	    {
+	      menu = false;
+	    }//end if
+	    
+	    else
+	    {
+	      menu = true;
+	    }//end else
+	  }//end if
+	}
 	//creates a ship
 	public void shipCreate()
 	{
@@ -110,90 +200,88 @@ public class Main extends PApplet
 		numShips++;
 		types[0] = false;	
 	}
-
-	int clicked;
 	
 	public void mouseDragged()
 	{
 		
 	}
+	boolean place = false;
 	public void mouseClicked()
-	{			
-		for(int i = 0; i < occupied.length; i++)
-		{
-			if(occupied[i] == true)
-			{
-				for(int j = 0; j < ships.size(); j++)
-				{
-					if(ships.get(j).move == 0)
-					{
-						ships.get(j).move = 1;
-						occupied[i] = true;
-						clicked = 2;
-						break;			
-					}//end if					
-				}//end for
-			}//end if
-		}//end for	
+	{		
 		
- 		switch(clicked)
-		{
-			//choose which one to spawn
-			case 0:
+		if(place == true)
+		{			
+			for(int i = 0; i < occupied.length; i++)
 			{
-				for(int i = 1; i < 3; i ++)
+				if(occupied[i] == true)
 				{
-					if(mouseX < i * battlefield.size && mouseX > i-1 * battlefield.size && mouseY < height && mouseY > height - battlefield.size)
-					{	
-						types[i-1] = true;
-						clicked = 1;
-						break;
-					}//end if
-				}//end for	
-				
-				/*for(int i = 1; i < ships.size(); i ++)
-				{
-					if(ships.get(i).pos.x == mouseX && ships.get(i).pos.y == mouseY)
-					{	
-						ships.get(i).move = 2;
-					}//end if
-				}//end for*/
-			}//end case 0
-			
-			case 1:
-			{
-				for(int i = 0; i < occupied.length; i++)
-				{
-					if(occupied[i] == false)
+					println("this is working");
+					for(int j = 0; j < ships.size(); j++)
 					{
-						for(int j = 0; j < ships.size(); j++)
+						if(ships.get(j).move == 1)
 						{
-							if(ships.get(j).move == 0)
-							{
-								ships.get(j).move = 1;
-								occupied[i] = true;
-								clicked = 0;
-								break;			
-							}//end if					
-						}//end for
-					}//end if
-				}//end for	
-			}//end case 1
-			
-			case 2:
+							ships.get(j).move = 2;
+							clicked = 0;
+							break;			
+						}//end if					
+					}//end for
+				}//end if
+			}//end for	
+		}//end if
+		
+		if(place == false)
+		{
+			switch(clicked)
 			{
-				for(int j = 0; j < ships.size(); j++)
+				//choose which one to spawn
+				case 0:
 				{
-					if(ships.get(j).move == 1)
+					for(int i = 1; i < 3; i ++)
 					{
-						ships.get(j).move = 2;
-						clicked = 0;
-						break;			
-					}//end if					
-				}//end for
-			}//end case 2
-		}//end switch
-	}//end mousePressed
+						if(mouseX < i * battlefield.size && mouseX > i-1 * battlefield.size && mouseY < height && mouseY > height - battlefield.size)
+						{	
+							types[i-1] = true;
+							clicked = 1;
+							break;
+						}//end if
+					}//end for	
+					
+					/*for(int i = 1; i < ships.size(); i ++)
+					{
+						if(ships.get(i).pos.x == mouseX && ships.get(i).pos.y == mouseY)
+						{	
+							ships.get(i).move = 2;
+						}//end if
+					}//end for*/
+				}//end case 0
+				
+				case 1:
+				{
+					if(mouseY > height * (17/18))
+					{
+						for(int i = 0; i < occupied.length; i++)
+						{
+							if(occupied[i] == false)
+							{
+								for(int j = 0; j < ships.size(); j++)
+								{
+									if(ships.get(j).move == 0)
+									{
+										ships.get(j).move = 1;
+										occupied[i] = true;
+										clicked = 0;
+										place = true;
+										break;			
+									}//end if					
+								}//end for
+							}//end if
+						}//end for	
+					}//end if		
+				}//end case 1
+			}//end switch
+		}//end if 		
+	}//end mouseClicked
+	
 	
 	/*public void mouseReleased()
 	{

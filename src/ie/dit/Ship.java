@@ -88,21 +88,11 @@ public class Ship extends PApplet
 					  
 					  if(main.mousePressed && validTiles() == true )
 					  {
-						  /*easing = .05f;
-						  float targetX = mouseBox.x;
-					      float dx = targetX - pos.x;
-					      pos.x += dx * easing;
-					   			    
-					      float targetY = mouseBox.y;
-					      float dy = targetY - pos.y;
-					      pos.y += dy * easing;
-					      easing = .7f;*/
-					    
 						  pos.x = mouseBox.x;
 						  pos.y = mouseBox.y;
 						  
 					      validTile = false;
-					  }
+					  }//end if
 				  }//end for			
 			 }//end for
 		  }//end case 2
@@ -120,6 +110,7 @@ public class Ship extends PApplet
 		int min2X = (int)pos.x - main.width/16;
 		
 		//check for y values
+		
 		int plusY = (int)pos.y + main.height/18;
 		int plus2Y = (int)pos.y + main.height/9;
 		int minY = (int)pos.y - main.height/18;
@@ -149,7 +140,7 @@ public class Ship extends PApplet
 			  main.image(s, 0, 0);
 			  main.popMatrix();
 			  break;
-		  }
+		  }//end case 0
 		  
 		  case 1: 
 		  {
@@ -159,7 +150,7 @@ public class Ship extends PApplet
 			  main.image(s, 0, 0);
 			  main.popMatrix();
 			  break;
-		  }
+		  }//end case 1
 		  
 		  case 2: 
 		  {
@@ -171,8 +162,8 @@ public class Ship extends PApplet
 			  main.image(s, 0, 0);
 			  main.popMatrix();
 			  break;
-		  }
 
+		  }//end case 2
 		}//end switch
 	}
 }

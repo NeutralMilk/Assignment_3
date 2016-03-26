@@ -8,7 +8,7 @@ import processing.core.*;
 public class Battlefield extends PApplet
 {
 	Main main;
-	int f = color(75,200,255);
+	int f = color(68,193,235);
 	int s = color(255);
 	int x;
 	int y;
@@ -54,11 +54,7 @@ public class Battlefield extends PApplet
 			{
 				//if the mouse position is within the bounds of a box change the colour and keep the oil picture displaying
 				if(main.mouseX < (main.cPosX[i] + main.width/32) && main.mouseX > main.cPosX[i] && main.mouseY < (main.cPosY[j] + main.height/18) && main.mouseY > main.cPosY[j])
-				{		
-					/*s = color(255);
-					
-					*/
-					
+				{							
 					if(main.occupied[i*j] == true)
 					{
 						println("this goes");
