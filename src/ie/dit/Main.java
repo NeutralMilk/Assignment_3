@@ -206,6 +206,7 @@ public class Main extends PApplet
 		
 	}
 	boolean place = false;
+	boolean madeMove = false;
 	public void mouseClicked()
 	{		
 		
@@ -218,16 +219,24 @@ public class Main extends PApplet
 					println("this is working");
 					for(int j = 0; j < ships.size(); j++)
 					{
+						if(madeMove == true)
+						{
+							ships.get(j).move = 1;
+							place = false;
+						}
 						if(ships.get(j).move == 1)
 						{
 							ships.get(j).move = 2;
 							clicked = 0;
+							madeMove = true;
 							break;			
-						}//end if					
+						}//end if							
 					}//end for
 				}//end if
 			}//end for	
 		}//end if
+		
+		
 		
 		if(place == false)
 		{
@@ -245,14 +254,6 @@ public class Main extends PApplet
 							break;
 						}//end if
 					}//end for	
-					
-					/*for(int i = 1; i < ships.size(); i ++)
-					{
-						if(ships.get(i).pos.x == mouseX && ships.get(i).pos.y == mouseY)
-						{	
-							ships.get(i).move = 2;
-						}//end if
-					}//end for*/
 				}//end case 0
 				
 				case 1:
