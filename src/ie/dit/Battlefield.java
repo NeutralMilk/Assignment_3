@@ -57,9 +57,7 @@ public class Battlefield extends PApplet
 				{							
 					if(main.occupied[i*j] == true)
 					{
-						println("this goes");
 						s = color(0,255,0); 
-						
 					}//end if
 								
 					main.stroke(s);

@@ -9,16 +9,14 @@ import ddf.minim.analysis.WindowFunction;
 
 public class Main extends PApplet
 {
-	Minim minim;
-	AudioInput in;
-	float min;
-	float max;	
-	ArrayList<Ship> ships = new ArrayList<Ship>();
+	ArrayList<GameObject> ships = new ArrayList<GameObject>();
 	Battlefield battlefield;	
 	int numShips = 0;	 
 	int numSubs = 0;
 	int sampleRate = 44100;	
 	boolean[] occupied = new boolean[544];
+	int[] shipPos = new int[544];
+	
 	boolean move = false;
 	boolean moveAgain = false;
 
@@ -80,7 +78,7 @@ public class Main extends PApplet
 		
 	}
 	
-	public void menu()
+	private void menu()
 	{
 		  float boxWidth = width/3;
 		  float boxHeight = height/5;
@@ -144,13 +142,13 @@ public class Main extends PApplet
 		  text("Exit Game", width/2, (float) (height/2 + boxHeight/1.25));
 		  strokeWeight(1);
 	}
-	public void game()
+	private void game()
 	{
-		for( int i = 0; i < occupied.length; i++ )
+		/*for( int i = 0; i < occupied.length; i++ )
 		{
 			println(i, occupied[i]);
 		}//end for
-		background(51,120,255);
+*/		background(51,120,255);
 		//fill(,204,255);
 		strokeWeight(.25f);
 
@@ -188,7 +186,7 @@ public class Main extends PApplet
 	  }//end if
 	}
 	//creates a ship
-	public void shipCreate()
+	private void shipCreate()
 	{
 		//increase the number of ships
 		int i = numShips;
@@ -200,13 +198,11 @@ public class Main extends PApplet
 		numShips++;
 		types[0] = false;	
 	}
+
 	
-	public void mouseDragged()
-	{
-		
-	}
 	boolean place = false;
 	boolean madeMove = false;
+	int oldPos;
 	public void mouseClicked()
 	{		
 		
@@ -216,18 +212,22 @@ public class Main extends PApplet
 			{
 				if(occupied[i] == true)
 				{
-					println("this is working");
+					
 					for(int j = 0; j < ships.size(); j++)
 					{
 						if(madeMove == true)
 						{
 							ships.get(j).move = 1;
 							place = false;
-						}
+							println("this");
+						}//end if
+						
 						if(ships.get(j).move == 1)
 						{
+							println("taht");
 							ships.get(j).move = 2;
 							clicked = 0;
+							occupied[oldPos] = false;
 							madeMove = true;
 							break;			
 						}//end if							
@@ -235,9 +235,7 @@ public class Main extends PApplet
 				}//end if
 			}//end for	
 		}//end if
-		
-		
-		
+				
 		if(place == false)
 		{
 			switch(clicked)
@@ -270,6 +268,8 @@ public class Main extends PApplet
 									{
 										ships.get(j).move = 1;
 										occupied[i] = true;
+										oldPos = i;
+										shipPos[i] = j;
 										clicked = 0;
 										place = true;
 										break;			
@@ -281,15 +281,7 @@ public class Main extends PApplet
 				}//end case 1
 			}//end switch
 		}//end if 		
-	}//end mouseClicked
-	
-	
-	/*public void mouseReleased()
-	{
-		
-		
-	}//end mouseReleased*/
-	
+	}//end mouseClicked	
 		
 	public static void main(String[] args)
 	{		

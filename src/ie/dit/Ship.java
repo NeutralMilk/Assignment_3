@@ -5,24 +5,12 @@ import java.util.ArrayList;
 import ddf.minim.Minim;
 import processing.core.*;
 
-public class Ship extends PApplet
+public class Ship extends GameObject
 {
-	//PImage image;
-	Main main;
-	PVector pos;
-	PVector mouseBox;
-	PImage s;
-	float easing;
-	int move;
-	boolean placed = false;
-	
-	float angle = 0;
-	float oldAngle = 0;
-
 	public Ship(Main _main)
-	{
-		main = _main;	
-		s = main.loadImage("1.png");
+	{	
+		super(_main);
+		unit = main.loadImage("1.png");
 		pos = new PVector();
 		mouseBox = new PVector();
 		easing = .7f;
@@ -100,7 +88,6 @@ public class Ship extends PApplet
 	}//end update()
 	
 	//this function checks to see if the mouse is within two boxes up, down, left or right of the unit
-	boolean validTile;
 	public boolean validTiles()
 	{
 		//check for the x values
@@ -137,7 +124,7 @@ public class Ship extends PApplet
 			  main.pushMatrix();
 			  main.translate(main.mouseX, main.mouseY);
 			  main.imageMode(CENTER);
-			  main.image(s, 0, 0);
+			  main.image(unit, 0, 0);
 			  main.popMatrix();
 			  break;
 		  }//end case 0
@@ -147,7 +134,7 @@ public class Ship extends PApplet
 			  main.pushMatrix();
 			  main.translate(pos.x, pos.y);
 			  main.imageMode(CENTER);			
-			  main.image(s, 0, 0);
+			  main.image(unit, 0, 0);
 			  main.popMatrix();
 			  break;
 		  }//end case 1
@@ -159,7 +146,7 @@ public class Ship extends PApplet
 			  main.translate(pos.x, pos.y);
 			  main.rotate(-angle+PI);
 			  main.imageMode(CENTER);			
-			  main.image(s, 0, 0);
+			  main.image(unit, 0, 0);
 			  main.popMatrix();
 			  break;
 
