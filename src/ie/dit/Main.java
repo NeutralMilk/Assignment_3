@@ -16,6 +16,7 @@ public class Main extends PApplet
 	int sampleRate = 44100;	
 	boolean[] occupied = new boolean[544];
 	int[] shipPos = new int[544];
+	PVector mousePos = new PVector(mouseX, mouseY);
 	
 	boolean move = false;
 	boolean moveAgain = false;
@@ -39,6 +40,9 @@ public class Main extends PApplet
 	
 	public void setup()
 	{
+
+
+
 		smooth();
 		battlefield = new Battlefield(this);	
 
@@ -75,7 +79,6 @@ public class Main extends PApplet
 		  {
 		    game();
 		  }//end if
-		
 	}
 	
 	private void menu()
@@ -199,13 +202,33 @@ public class Main extends PApplet
 		types[0] = false;	
 	}
 
-	
+    void checkCollisions()
+    {
+        mousePos.x = mouseX;
+        mousePos.y = mouseY;
+        println(ships.size());
+        for(int i = 0 ; i < ships.size(); i ++)
+        {
+            GameObject go = ships.get(i);
+            println("hello");
+            println(go.pos);
+            println(mousePos);
+            if ((go.pos.x + mousePos.x) < (go.pos.x*2 + width/64) && (go.pos.x + mousePos.x) > (go.pos.x*2 - width/64))
+            {
+                println("hello 2");
+                if((go.pos.y + mousePos.y) < (go.pos.y*2 + height/36) && (go.pos.y + mousePos.y) > (go.pos.y*2 - height/36))
+                {
+                    println("this collision works!");
+                }//end if
+            }//end if
+        }//end for
+    }//end checkCollisions()
 	boolean place = false;
 	boolean madeMove = false;
 	int oldPos;
 	public void mouseClicked()
 	{		
-		
+
 		if(place == true)
 		{			
 			for(int i = 0; i < occupied.length; i++)
@@ -280,7 +303,8 @@ public class Main extends PApplet
 					}//end if		
 				}//end case 1
 			}//end switch
-		}//end if 		
+		}//end if
+        checkCollisions();
 	}//end mouseClicked	
 		
 	public static void main(String[] args)
