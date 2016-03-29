@@ -9,7 +9,7 @@ import ddf.minim.analysis.WindowFunction;
 
 public class Main extends PApplet
 {
-	ArrayList<GameObject> ships = new ArrayList<GameObject>();
+	ArrayList<GameObject> units = new ArrayList<GameObject>();
 	Battlefield battlefield;
 	int numShips = 0;
 	int numSubs = 0;
@@ -19,6 +19,7 @@ public class Main extends PApplet
 
 	boolean move = false;
 	boolean moveAgain = false;
+    PVector mousePos = new PVector(mouseX, mouseY);
 
 	int clicked;
 
@@ -26,7 +27,7 @@ public class Main extends PApplet
 	int[] cPosX = new int[32];
 	int[] cPosY = new int[17];
 
-	//variables for making the ships
+	//variables for making the units
 	boolean[] types = new boolean[2];
 	boolean[] keys = new boolean[4];
 	boolean release = false;
@@ -156,10 +157,10 @@ public class Main extends PApplet
 		battlefield.update();
 
 		//spawn ships
-		for(int i = 0; i < ships.size(); i++)
+		for(int i = 0; i < units.size(); i++)
 		{
-			ships.get(i).render();
-			ships.get(i).update();
+			units.get(i).render();
+			units.get(i).update();
 		}//end for
 
 		if(types[0] == true)
@@ -192,13 +193,34 @@ public class Main extends PApplet
 		int i = numShips;
 		//create a ship
 		Ship ship = new Ship(this);
-		ships.add(ship);
+		units.add(ship);
 		//set it so that the ship follows the mouse
-		ships.get(i).move = 0;
+		units.get(i).move = 0;
 		numShips++;
 		types[0] = false;
 	}
 
+	void checkCollisions()
+	{
+		mousePos.x = mouseX;
+		mousePos.y = mouseY;
+		println(units.size());
+		for(int i = 0 ; i < units.size(); i ++)
+		{
+			GameObject go = units.get(i);
+			println("hello");
+			println(go.pos);
+			println(mousePos);
+			if ((go.pos.x + mousePos.x) < (go.pos.x*2 + width/64) && (go.pos.x + mousePos.x) > (go.pos.x*2 - width/64))
+			{
+				println("hello 2");
+				if((go.pos.y + mousePos.y) < (go.pos.y*2 + height/36) && (go.pos.y + mousePos.y) > (go.pos.y*2 - height/36))
+				{
+					println("this collision works!");
+				}//end if
+			}//end if
+		}//end for
+	}//end checkCollisions()
 
 	boolean place = false;
 	boolean madeMove = false;
@@ -206,6 +228,7 @@ public class Main extends PApplet
 	public void mouseClicked()
 	{
 
+        checkCollisions();
 		if(place == true)
 		{
 			for(int i = 0; i < occupied.length; i++)
@@ -213,19 +236,19 @@ public class Main extends PApplet
 				if(occupied[i] == true)
 				{
 
-					for(int j = 0; j < ships.size(); j++)
+					for(int j = 0; j < units.size(); j++)
 					{
 						if(madeMove == true)
 						{
-							ships.get(j).move = 1;
+							units.get(j).move = 1;
 							place = false;
 							println("this");
 						}//end if
 
-						if(ships.get(j).move == 1)
+						if(units.get(j).move == 1)
 						{
 							println("taht");
-							ships.get(j).move = 2;
+							units.get(j).move = 2;
 							clicked = 0;
 							occupied[oldPos] = false;
 							madeMove = true;
@@ -262,11 +285,11 @@ public class Main extends PApplet
 						{
 							if(occupied[i] == false)
 							{
-								for(int j = 0; j < ships.size(); j++)
+								for(int j = 0; j < units.size(); j++)
 								{
-									if(ships.get(j).move == 0)
+									if(units.get(j).move == 0)
 									{
-										ships.get(j).move = 1;
+										units.get(j).move = 1;
 										occupied[i] = true;
 										oldPos = i;
 										shipPos[i] = j;
