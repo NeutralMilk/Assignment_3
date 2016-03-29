@@ -148,8 +148,17 @@ public class Main extends PApplet
 		/*for( int i = 0; i < occupied.length; i++ )
 		{
 			println(i, occupied[i]);
-		}//end for
-*/		background(51,120,255);
+		}//end for*/
+
+        if(mouseY < height - height/18)
+        {
+            if(mousePressed == true)
+            {
+                checkCollisions();
+            }//end if
+        }//end if
+
+        background(51,120,255);
 		//fill(,204,255);
 		strokeWeight(.25f);
 
@@ -208,16 +217,29 @@ public class Main extends PApplet
 		for(int i = 0 ; i < units.size(); i ++)
 		{
 			GameObject go = units.get(i);
-			println("hello");
-			println(go.pos);
-			println(mousePos);
+
 			if ((go.pos.x + mousePos.x) < (go.pos.x*2 + width/64) && (go.pos.x + mousePos.x) > (go.pos.x*2 - width/64))
 			{
-				println("hello 2");
 				if((go.pos.y + mousePos.y) < (go.pos.y*2 + height/36) && (go.pos.y + mousePos.y) > (go.pos.y*2 - height/36))
 				{
-					println("this collision works!");
-				}//end if
+
+                    if(madeMove == true)
+                    {
+                        units.get(i).move = 1;
+                        place = false;
+                        println("this");
+                    }//end if
+
+                    if(units.get(i).move == 1)
+                    {
+                        println("that");
+                        units.get(i).move = 2;
+                        clicked = 0;
+                        occupied[oldPos] = false;
+                        madeMove = true;
+                        break;
+                    }//end if
+                }//end if
 			}//end if
 		}//end for
 	}//end checkCollisions()
@@ -225,85 +247,54 @@ public class Main extends PApplet
 	boolean place = false;
 	boolean madeMove = false;
 	int oldPos;
+
+    public void mousePressed()
+    {
+        if(clicked == 0)
+        {
+            for(int i = 1; i < 3; i ++)
+            {
+                if(mouseX < i * battlefield.size && mouseX > i-1 * battlefield.size && mouseY < height && mouseY > height - battlefield.size)
+                {
+                    types[i-1] = true;
+                    clicked = 1;
+
+                    println(units.size());
+                }//end if
+            }//end for
+        }
+    }//end mousePressed
+
+    public void mouseReleased()
+    {
+
+        if(clicked == 1)
+        {
+            if(mouseY < height - height/18)
+            {
+
+                        for(int j = 0; j < units.size(); j++)
+                        {
+                            if(units.get(j).move == 0)
+                            {
+                                println("release works");
+                                println(units.get(0).move);
+                                units.get(j).move = 1;
+
+                                clicked = 0;
+                                place = true;
+                                break;
+                            }//end if
+                        }//end for
+
+            }//end if
+        }//end if
+    }//end mouseReleased
+
 	public void mouseClicked()
 	{
 
-        checkCollisions();
-		if(place == true)
-		{
-			for(int i = 0; i < occupied.length; i++)
-			{
-				if(occupied[i] == true)
-				{
 
-					for(int j = 0; j < units.size(); j++)
-					{
-						if(madeMove == true)
-						{
-							units.get(j).move = 1;
-							place = false;
-							println("this");
-						}//end if
-
-						if(units.get(j).move == 1)
-						{
-							println("taht");
-							units.get(j).move = 2;
-							clicked = 0;
-							occupied[oldPos] = false;
-							madeMove = true;
-							break;
-						}//end if
-					}//end for
-				}//end if
-			}//end for
-		}//end if
-
-		if(place == false)
-		{
-			switch(clicked)
-			{
-				//choose which one to spawn
-				case 0:
-				{
-					for(int i = 1; i < 3; i ++)
-					{
-						if(mouseX < i * battlefield.size && mouseX > i-1 * battlefield.size && mouseY < height && mouseY > height - battlefield.size)
-						{
-							types[i-1] = true;
-							clicked = 1;
-							break;
-						}//end if
-					}//end for
-				}//end case 0
-
-				case 1:
-				{
-					if(mouseY > height * (17/18))
-					{
-						for(int i = 0; i < occupied.length; i++)
-						{
-							if(occupied[i] == false)
-							{
-								for(int j = 0; j < units.size(); j++)
-								{
-									if(units.get(j).move == 0)
-									{
-										units.get(j).move = 1;
-										occupied[i] = true;
-										oldPos = i;
-										shipPos[i] = j;
-										clicked = 0;
-										place = true;
-										break;
-									}//end if
-								}//end for
-							}//end if
-						}//end for
-					}//end if
-				}//end case 1
-			}//end switch
-		}//end if
 	}//end mouseClicked
 
 	public static void main(String[] args)
