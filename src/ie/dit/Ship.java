@@ -38,7 +38,10 @@ public class Ship extends GameObject
 			  {
 				  for(int j = 0; j < 17; j++)
 				  {
-					  if(pos.x < (main.cPosX[i] + main.width/32 + 1) && pos.x > main.cPosX[i] && pos.y < (main.cPosY[j] + main.height/18 + 1) && pos.y > main.cPosY[j])
+                      int a = main.cPosX[i];
+                      int b = main.cPosY[j];
+
+					  if(pos.x < (a + main.width/32 + 1) && pos.x > a && pos.y < (b + main.height/18 + 1) && pos.y > b)
 					  {
 						  if(main.occupied[i*j] == true)
 						  {
@@ -61,14 +64,17 @@ public class Ship extends GameObject
 			  {
 				  for(int j = 0; j < 17; j++)
 				  {
-					  if(pos.x < (main.cPosX[i] + main.width/32 + 1) && pos.x > main.cPosX[i] && pos.y < (main.cPosY[j] + main.height/18 + 1) && pos.y > main.cPosY[j])
+                      int a = main.cPosX[i];
+                      int b = main.cPosY[j];
+
+					  if(pos.x < (a + main.width/32 + 1) && pos.x > a && pos.y < (b + main.height/18 + 1) && pos.y > b)
 					  {
 						  pos.x = main.cPosX[i] + main.width/64;
 						  pos.y = main.cPosY[j] + main.height/36;
 						  main.occupied[i*j] = true;
 					  }//end if 
 					  
-					  if(main.mouseX < (main.cPosX[i] + main.width/32) && main.mouseX > main.cPosX[i] && main.mouseY < (main.cPosY[j] + main.height/18) && main.mouseY > main.cPosY[j])
+					  if(main.mouseX < (a + main.width/32) && main.mouseX > a && main.mouseY < (b + main.height/18) && main.mouseY > b)
 					  {
 						  mouseBox.x = main.cPosX[i] + main.width/64;
 						  mouseBox.y = main.cPosY[j] + main.height/36;

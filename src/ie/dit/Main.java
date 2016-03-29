@@ -50,8 +50,8 @@ public class Main extends PApplet
 		{
 			for(int j = 0; j < 17; j ++)
 			{		
-				int a = (i * width/32);
-				int b = (j * height/18);
+				int a = ((i * width/32) + width/64);
+				int b = ((j * height/18) + width/36);
 
 				cPosX[i] = a;
 				cPosY[j] = b;
@@ -83,6 +83,7 @@ public class Main extends PApplet
 	
 	private void menu()
 	{
+          rectMode(CORNER);
 		  float boxWidth = width/3;
 		  float boxHeight = height/5;
 		  

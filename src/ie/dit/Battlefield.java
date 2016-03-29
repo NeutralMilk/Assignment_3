@@ -25,7 +25,7 @@ public class Battlefield extends PApplet
 		x = 0;
 		y = 0;
 		size = main.width/32;
-		
+
 		for(int i = 0; i < placeOil.length; i++)
 		{
 			int ran = (int)random(1,30);
@@ -48,12 +48,15 @@ public class Battlefield extends PApplet
 	
 	public void update()
 	{
+        main.rectMode(CENTER);
 		for(int i = 0; i < 32; i++)
 		{
 			for(int j = 0; j < 17; j++)
 			{
+				int a = main.cPosX[i];
+				int b = main.cPosY[j];
 				//if the mouse position is within the bounds of a box change the colour and keep the oil picture displaying
-				if(main.mouseX < (main.cPosX[i] + main.width/32) && main.mouseX > main.cPosX[i] && main.mouseY < (main.cPosY[j] + main.height/18) && main.mouseY > main.cPosY[j])
+				if(main.mouseX < (a + main.width/32 + 1) && main.mouseX > a && main.mouseY < (b + main.height/18 + 1) && main.mouseY > b)
 				{							
 					if(main.occupied[i*j] == true)
 					{
@@ -75,19 +78,19 @@ public class Battlefield extends PApplet
 		
 	public void render()
 	{
+        main.rectMode(CENTER);
 		for(int i = 0; i < 32; i ++)
 		{
 			for(int j = 0; j < 17; j ++)
-			{		
-
+			{
 				main.fill(f);
 				s = color(255);
 				main.stroke(s);
-				main.rect(i*main.width/32, j*main.height/18, size, size);
+                main.rect(main.cPosX[i], main.cPosY[j], size, size);
 				main.imageMode(CENTER);
 				if(placeOil[i*j] == true)
 				{
-					main.image(oil, i*main.width/32 + main.width/64, j*main.height/18 + main.height/36);
+					main.image(oil, main.cPosX[i] + main.width/64, main.cPosY[j] + main.height/36);
 				}//end if
 				
 			}//end for
@@ -98,7 +101,7 @@ public class Battlefield extends PApplet
 			main.imageMode(CENTER);
 			main.fill(255);
 			main.stroke(255);
-			main.rect(i * main.width/32, main.height - size, size, size);
+			main.rect(main.cPosX[i], main.height - size, size, size);
 			if(i < images.length)
 			{
 				main.image(images[i], i * main.width/32 - size/2, main.height - size/2);
