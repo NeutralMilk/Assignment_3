@@ -145,19 +145,6 @@ public class Main extends PApplet
 	}
 	private void game()
 	{
-		/*for( int i = 0; i < occupied.length; i++ )
-		{
-			println(i, occupied[i]);
-		}//end for*/
-
-        if(mouseY < height - height/18)
-        {
-            if(mousePressed == true)
-            {
-                checkCollisions();
-            }//end if
-        }//end if
-
         background(51,120,255);
 		//fill(,204,255);
 		strokeWeight(.25f);
@@ -166,6 +153,12 @@ public class Main extends PApplet
 		battlefield.update();
 
 		//spawn ships
+
+        if(mouseY < height - height/18)
+        {
+            checkCollisions();
+        }//end if
+
 		for(int i = 0; i < units.size(); i++)
 		{
 			units.get(i).render();
@@ -176,6 +169,8 @@ public class Main extends PApplet
 		{
 			shipCreate();
 		}//end if
+
+
 	}
 
 	public void keyPressed()
@@ -210,39 +205,62 @@ public class Main extends PApplet
 	}
 
 	void checkCollisions()
-	{
-		mousePos.x = mouseX;
-		mousePos.y = mouseY;
-		println(units.size());
-		for(int i = 0 ; i < units.size(); i ++)
-		{
-			GameObject go = units.get(i);
+    {
+        mousePos.x = mouseX;
+        mousePos.y = mouseY;
+        if(mousePressed)
+        {
+            for(int i = 0 ; i < units.size(); i ++)
+            {
+                GameObject go = units.get(i);
 
-			if ((go.pos.x + mousePos.x) < (go.pos.x*2 + width/64) && (go.pos.x + mousePos.x) > (go.pos.x*2 - width/64))
-			{
-				if((go.pos.y + mousePos.y) < (go.pos.y*2 + height/36) && (go.pos.y + mousePos.y) > (go.pos.y*2 - height/36))
-				{
-
-                    if(madeMove == true)
+                if ((go.pos.x + mousePos.x) < (go.pos.x*2 + width/64) && (go.pos.x + mousePos.x) > (go.pos.x*2 - width/64))
+                {
+                    if((go.pos.y + mousePos.y) < (go.pos.y*2 + height/36) && (go.pos.y + mousePos.y) > (go.pos.y*2 - height/36))
                     {
-                        units.get(i).move = 1;
-                        place = false;
-                        println("this");
-                    }//end if
-
-                    if(units.get(i).move == 1)
-                    {
-                        println("that");
-                        units.get(i).move = 2;
-                        clicked = 0;
-                        occupied[oldPos] = false;
-                        madeMove = true;
-                        break;
+                        if(units.get(i).move == 1)
+                        {
+                            units.get(i).move = 2;
+                            clicked = 0;
+                            occupied[oldPos] = false;
+                            break;
+                        }//end if
+                        if(go.pos.x == go.mouseBox.x && go.pos.y == go.mouseBox.y)
+                        {
+                            units.get(i).move = 1;
+                        }//end if
                     }//end if
                 }//end if
-			}//end if
-		}//end for
-	}//end checkCollisions()
+            }//end for
+        }//end if
+
+        //if the mouse hovers over a unit change the square to green
+        for(int i = 0 ; i < units.size(); i ++)
+        {
+            GameObject go = units.get(i);
+
+            for(int j = 0; j < 32; j++)
+            {
+                for(int k = 0; k < 17; k++)
+                {
+                    if ((go.pos.x + mousePos.x) < (go.pos.x*2 + width/64) && (go.pos.x + mousePos.x) > (go.pos.x*2 - width/64))
+                    {
+                        if((go.pos.y + mousePos.y) < (go.pos.y*2 + height/36) && (go.pos.y + mousePos.y) > (go.pos.y*2 - height/36))
+                        {
+                            if(mouseX < (cPosX[j] + width/32) && mouseX > cPosX[j] && mouseY < (cPosY[k] + height/18) && mouseY > cPosY[k])
+                            {
+                                battlefield.highlight = true;
+                            }//end if
+                            else
+                            {
+                                battlefield.highlight = false;
+                            }
+                        }//end if
+                    }//end if
+                }//end for
+            }//end for
+        }//end for
+    }//end checkCollisions()
 
 	boolean place = false;
 	boolean madeMove = false;
@@ -259,7 +277,6 @@ public class Main extends PApplet
                     types[i-1] = true;
                     clicked = 1;
 
-                    println(units.size());
                 }//end if
             }//end for
         }
@@ -277,8 +294,6 @@ public class Main extends PApplet
                         {
                             if(units.get(j).move == 0)
                             {
-                                println("release works");
-                                println(units.get(0).move);
                                 units.get(j).move = 1;
 
                                 clicked = 0;

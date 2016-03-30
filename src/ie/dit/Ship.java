@@ -14,13 +14,12 @@ public class Ship extends GameObject
 		pos = new PVector();
 		mouseBox = new PVector();
 		easing = .7f;
+        madeMove = false;
 	}
 
-	public void update()
-	{
+	public void update() {
 
-		if(move == 0)
-		{
+		if (move == 0) {
 			float targetX = main.mouseX;
 			float dx = targetX - pos.x;
 			pos.x += dx * easing;
@@ -28,59 +27,54 @@ public class Ship extends GameObject
 			float targetY = main.mouseY;
 			float dy = targetY - pos.y;
 			pos.y += dy * easing;
-		}//end case 0
+		}//end if
 
-		if (move == 1)
-		{
-			for(int i = 0; i < 32; i++)
-			{
-				for(int j = 0; j < 17; j++)
-				{
-					if(pos.x < (main.cPosX[i] + main.width/32 + 1) && pos.x > main.cPosX[i] && pos.y < (main.cPosY[j] + main.height/18 + 1) && pos.y > main.cPosY[j])
-					{
-						if(main.occupied[i*j] == true)
-						{
+		if (move == 1) {
+			for (int i = 0; i < 32; i++) {
+				for (int j = 0; j < 17; j++) {
+					if (pos.x < (main.cPosX[i] + main.width / 32 + 1) && pos.x > main.cPosX[i] && pos.y < (main.cPosY[j] + main.height / 18 + 1) && pos.y > main.cPosY[j]) {
+						if (main.occupied[i * j] == true) {
 							break;
-						}
-						else
-						{
-							pos.x = main.cPosX[i] + main.width/64;
-							pos.y = main.cPosY[j] + main.height/36;
+						} else {
+							pos.x = main.cPosX[i] + main.width / 64;
+							pos.y = main.cPosY[j] + main.height / 36;
 						}
 					}//end if
 				}//end for
 			}//end for
-		}//end case 1
+		}//end if
 
-		if(move == 2)
-		{
-			for(int i = 0; i < 32; i++)
-			{
-				for(int j = 0; j < 17; j++)
-				{
-					if(pos.x < (main.cPosX[i] + main.width/32 + 1) && pos.x > main.cPosX[i] && pos.y < (main.cPosY[j] + main.height/18 + 1) && pos.y > main.cPosY[j])
-					{
-						pos.x = main.cPosX[i] + main.width/64;
-						pos.y = main.cPosY[j] + main.height/36;
-						main.occupied[i*j] = true;
+		if (move == 2) {
+			int clickCount = 0;
+			for (int i = 0; i < 32; i++) {
+				for (int j = 0; j < 17; j++) {
+					if (pos.x < (main.cPosX[i] + main.width / 32 + 1) && pos.x > main.cPosX[i] && pos.y < (main.cPosY[j] + main.height / 18 + 1) && pos.y > main.cPosY[j]) {
+						pos.x = main.cPosX[i] + main.width / 64;
+						pos.y = main.cPosY[j] + main.height / 36;
+						main.occupied[i * j] = true;
 					}//end if
 
-					if(main.mouseX < (main.cPosX[i] + main.width/32) && main.mouseX > main.cPosX[i] && main.mouseY < (main.cPosY[j] + main.height/18) && main.mouseY > main.cPosY[j])
-					{
-						mouseBox.x = main.cPosX[i] + main.width/64;
-						mouseBox.y = main.cPosY[j] + main.height/36;
+					if (main.mouseX < (main.cPosX[i] + main.width / 32) && main.mouseX > main.cPosX[i] && main.mouseY < (main.cPosY[j] + main.height / 18) && main.mouseY > main.cPosY[j]) {
+						mouseBox.x = main.cPosX[i] + main.width / 64;
+						mouseBox.y = main.cPosY[j] + main.height / 36;
 					}//end if
 
-					if(main.mousePressed && validTiles() == true)
+					if (main.mousePressed && validTiles() == true)// && hasMoved == false)
 					{
 						pos.x = mouseBox.x;
 						pos.y = mouseBox.y;
 
 						validTile = false;
+						if(clicks  == 4)
+						{
+							hasMoved = true;
+						}
+						clicks++;
 					}//end if
 				}//end for
 			}//end for
-		}//end case 2
+		}//end if
+
 	}//end update()
 
 	//this function checks to see if the mouse is within two boxes up, down, left or right of the unit

@@ -16,6 +16,7 @@ public class Battlefield extends PApplet
 	boolean[] placeOil = new boolean[544];
 	PImage[] images = new PImage[3];
 	PImage oil = new PImage();
+	boolean highlight = false;
 
 
 
@@ -55,19 +56,15 @@ public class Battlefield extends PApplet
 				//if the mouse position is within the bounds of a box change the colour and keep the oil picture displaying
 				if(main.mouseX < (main.cPosX[i] + main.width/32) && main.mouseX > main.cPosX[i] && main.mouseY < (main.cPosY[j] + main.height/18) && main.mouseY > main.cPosY[j])
 				{
-					if(main.occupied[i*j] == true)
-					{
-						s = color(0,255,0);
-					}//end if
+                    if(highlight == true)
+                    {
+                        s = color(0,255,0);
+                    }
 
 					main.stroke(s);
 					main.strokeWeight(3);
-					main.fill(f);
+					main.noFill();
 					main.rect(main.cPosX[i], main.cPosY[j], size, size);
-					if(placeOil[i*j] == true)
-					{
-						main.image(oil, i*main.width/32 + main.width/64, j*main.height/18 + main.height/36);
-					}//end if
 				}//end if
 			}//end for
 		}//end for

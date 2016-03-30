@@ -14,6 +14,10 @@ public abstract class GameObject extends PApplet
 	boolean placed = false;
 	float angle = 0;
 	boolean validTile;
+	boolean madeMove;
+    float health = 100;
+    boolean hasMoved = false;
+	int clicks = 0;
 
     GameObject(Main _main)
     {
