@@ -204,6 +204,7 @@ public class Main extends PApplet
 		types[0] = false;
 	}
 
+    GameObject go;
 	void checkCollisions()
     {
         mousePos.x = mouseX;
@@ -212,23 +213,21 @@ public class Main extends PApplet
         {
             for(int i = 0 ; i < units.size(); i ++)
             {
-                GameObject go = units.get(i);
+                go = units.get(i);
 
                 if ((go.pos.x + mousePos.x) < (go.pos.x*2 + width/64) && (go.pos.x + mousePos.x) > (go.pos.x*2 - width/64))
                 {
                     if((go.pos.y + mousePos.y) < (go.pos.y*2 + height/36) && (go.pos.y + mousePos.y) > (go.pos.y*2 - height/36))
                     {
-                        if(units.get(i).move == 1)
+                        if (go.move == 1)
                         {
-                            units.get(i).move = 2;
+                            go.move = 2;
+
                             clicked = 0;
                             occupied[oldPos] = false;
                             break;
                         }//end if
-                        if(go.pos.x == go.mouseBox.x && go.pos.y == go.mouseBox.y)
-                        {
-                            units.get(i).move = 1;
-                        }//end if
+                        println("move is" + go.move);
                     }//end if
                 }//end if
             }//end for
@@ -262,7 +261,22 @@ public class Main extends PApplet
         }//end for
     }//end checkCollisions()
 
-	boolean place = false;
+    public void mouseClicked()
+    {
+        if(go != null)
+        {
+            if ((go.pos.x + mousePos.x) < (go.pos.x*2 + width/64) && (go.pos.x + mousePos.x) > (go.pos.x*2 - width/64))
+            {
+                if((go.pos.y + mousePos.y) < (go.pos.y*2 + height/36) && (go.pos.y + mousePos.y) > (go.pos.y*2 - height/36))
+                {
+                    go.clicks++;
+                }//end if
+            }//end if
+
+        }//end if
+    }
+
+    boolean place = false;
 	boolean madeMove = false;
 	int oldPos;
 
@@ -290,27 +304,21 @@ public class Main extends PApplet
             if(mouseY < height - height/18)
             {
 
-                        for(int j = 0; j < units.size(); j++)
-                        {
-                            if(units.get(j).move == 0)
-                            {
-                                units.get(j).move = 1;
+                for(int j = 0; j < units.size(); j++)
+                {
+                    if(units.get(j).move == 0)
+                    {
+                        units.get(j).move = 1;
 
-                                clicked = 0;
-                                place = true;
-                                break;
-                            }//end if
-                        }//end for
+                        clicked = 0;
+                        place = true;
+                        break;
+                    }//end if
+                }//end for
 
             }//end if
         }//end if
     }//end mouseReleased
-
-	public void mouseClicked()
-	{
-
-
-	}//end mouseClicked
 
 	public static void main(String[] args)
 	{

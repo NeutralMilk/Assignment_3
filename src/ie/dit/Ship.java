@@ -27,7 +27,7 @@ public class Ship extends GameObject
 			float targetY = main.mouseY;
 			float dy = targetY - pos.y;
 			pos.y += dy * easing;
-		}//end if
+		}//end if 0
 
 		if (move == 1) {
 			for (int i = 0; i < 32; i++) {
@@ -42,39 +42,48 @@ public class Ship extends GameObject
 					}//end if
 				}//end for
 			}//end for
-		}//end if
+		}//end if 1
 
-		if (move == 2) {
-			int clickCount = 0;
-			for (int i = 0; i < 32; i++) {
-				for (int j = 0; j < 17; j++) {
-					if (pos.x < (main.cPosX[i] + main.width / 32 + 1) && pos.x > main.cPosX[i] && pos.y < (main.cPosY[j] + main.height / 18 + 1) && pos.y > main.cPosY[j]) {
+		int clickCount = 0;
+		if (move == 2)
+		{
+
+			for (int i = 0; i < 32; i++)
+			{
+				for (int j = 0; j < 17; j++)
+				{
+					if (pos.x < (main.cPosX[i] + main.width / 32 + 1) && pos.x > main.cPosX[i] && pos.y < (main.cPosY[j] + main.height / 18 + 1) && pos.y > main.cPosY[j])
+					{
 						pos.x = main.cPosX[i] + main.width / 64;
 						pos.y = main.cPosY[j] + main.height / 36;
 						main.occupied[i * j] = true;
 					}//end if
 
-					if (main.mouseX < (main.cPosX[i] + main.width / 32) && main.mouseX > main.cPosX[i] && main.mouseY < (main.cPosY[j] + main.height / 18) && main.mouseY > main.cPosY[j]) {
+					if (main.mouseX < (main.cPosX[i] + main.width / 32) && main.mouseX > main.cPosX[i] && main.mouseY < (main.cPosY[j] + main.height / 18) && main.mouseY > main.cPosY[j])
+					{
 						mouseBox.x = main.cPosX[i] + main.width / 64;
 						mouseBox.y = main.cPosY[j] + main.height / 36;
 					}//end if
 
-					if (main.mousePressed && validTiles() == true)// && hasMoved == false)
+					if (main.mousePressed && validTiles() == true)
 					{
 						pos.x = mouseBox.x;
 						pos.y = mouseBox.y;
 
 						validTile = false;
-						if(clicks  == 4)
-						{
-							hasMoved = true;
-						}
-						clicks++;
+						madeMove = true;
+
+						println("click count is" + clicks);
+                        if(clicks > 1)
+                        {
+                            move = 1;
+                        }
 					}//end if
+
+
 				}//end for
 			}//end for
-		}//end if
-
+		}//end if 2
 	}//end update()
 
 	//this function checks to see if the mouse is within two boxes up, down, left or right of the unit
@@ -141,6 +150,8 @@ public class Ship extends GameObject
 				break;
 
 			}//end case 2
+
+
 		}//end switch
 	}
 }
