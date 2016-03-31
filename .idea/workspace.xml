@@ -4,6 +4,7 @@
     <list default="true" id="faedd3e1-86c7-410c-a64c-b6b22544adaf" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/ie/dit/Main.class" afterPath="$PROJECT_DIR$/bin/ie/dit/Main.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ie/dit/GameObject.java" afterPath="$PROJECT_DIR$/src/ie/dit/GameObject.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ie/dit/Main.java" afterPath="$PROJECT_DIR$/src/ie/dit/Main.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ie/dit/Ship.java" afterPath="$PROJECT_DIR$/src/ie/dit/Ship.java" />
     </list>
@@ -27,23 +28,38 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ie/dit/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="398">
-              <caret line="271" column="32" selection-start-line="271" selection-start-column="32" selection-end-line="271" selection-end-column="32" />
+            <state relative-caret-position="659">
+              <caret line="220" column="40" selection-start-line="220" selection-start-column="40" selection-end-line="220" selection-end-column="40" />
               <folding>
+                <element signature="method#draw#0;class#Main#0" expanded="false" />
                 <element signature="method#menu#0;class#Main#0" expanded="false" />
+                <element signature="method#keyPressed#0;class#Main#0" expanded="false" />
+                <element signature="method#shipCreate#0;class#Main#0" expanded="false" />
+                <element signature="method#mousePressed#0;class#Main#0" expanded="false" />
+                <element signature="method#mouseReleased#0;class#Main#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Ship.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Ship.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ie/dit/Ship.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="861">
-              <caret line="76" column="37" selection-start-line="76" selection-start-column="37" selection-end-line="76" selection-end-column="37" />
+            <state relative-caret-position="-616">
+              <caret line="17" column="19" selection-start-line="17" selection-start-column="19" selection-end-line="17" selection-end-column="19" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Battlefield.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ie/dit/Battlefield.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="571">
+              <caret line="67" column="25" selection-start-line="67" selection-start-column="25" selection-end-line="67" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -53,17 +69,7 @@
         <entry file="file://$PROJECT_DIR$/src/ie/dit/GameObject.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="418">
-              <caret line="19" column="19" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Battlefield.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ie/dit/Battlefield.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="747">
-              <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
+              <caret line="19" column="14" selection-start-line="19" selection-start-column="14" selection-end-line="19" selection-end-column="14" />
               <folding />
             </state>
           </provider>
@@ -84,17 +90,19 @@
       <list>
         <option value="$PROJECT_DIR$/bin/ie/dit/GameObject.class" />
         <option value="$PROJECT_DIR$/src/ie/dit/Battlefield.java" />
+        <option value="$PROJECT_DIR$/bin/ie/dit/Sub.java" />
+        <option value="$PROJECT_DIR$/src/ie/dit/Sub.java" />
         <option value="$PROJECT_DIR$/src/ie/dit/GameObject.java" />
-        <option value="$PROJECT_DIR$/src/ie/dit/Main.java" />
         <option value="$PROJECT_DIR$/src/ie/dit/Ship.java" />
+        <option value="$PROJECT_DIR$/src/ie/dit/Main.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="3191" />
-    <option name="y" value="211" />
-    <option name="width" value="2418" />
-    <option name="height" value="1331" />
+    <option name="x" value="-9" />
+    <option name="y" value="-9" />
+    <option name="width" value="2578" />
+    <option name="height" value="1420" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -137,7 +145,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
+      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -204,8 +213,7 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -493,22 +501,22 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="3191" y="211" width="2418" height="1331" extended-state="6" />
+    <frame x="-9" y="-9" width="2578" height="1420" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32659408" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32581455" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23875" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" x="-22" y="797" width="2560" height="424" />
+      <window_info id="Run" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22382812" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" x="-22" y="797" width="2560" height="424" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13458334" sideWeight="0.5" order="7" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12617187" sideWeight="0.5" order="7" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -535,7 +543,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="1" />
+      <option name="time" value="2" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -546,10 +554,62 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/ie/dit/Main.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3212">
+          <caret line="216" column="18" selection-start-line="216" selection-start-column="18" selection-end-line="216" selection-end-column="18" />
+          <folding>
+            <element signature="method#draw#0;class#Main#0" expanded="false" />
+            <element signature="method#menu#0;class#Main#0" expanded="false" />
+            <element signature="method#keyPressed#0;class#Main#0" expanded="false" />
+            <element signature="method#shipCreate#0;class#Main#0" expanded="false" />
+            <element signature="method#mousePressed#0;class#Main#0" expanded="false" />
+            <element signature="method#mouseReleased#0;class#Main#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ie/dit/Ship.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1078">
+          <caret line="52" column="32" selection-start-line="52" selection-start-column="32" selection-end-line="52" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bin/ie/dit/Sub.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ie/dit/Battlefield.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1408">
+          <caret line="67" column="25" selection-start-line="67" selection-start-column="25" selection-end-line="67" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ie/dit/GameObject.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="19" column="19" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ie/dit/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
+            <element signature="method#draw#0;class#Main#0" expanded="false" />
             <element signature="method#menu#0;class#Main#0" expanded="false" />
+            <element signature="method#keyPressed#0;class#Main#0" expanded="false" />
+            <element signature="method#shipCreate#0;class#Main#0" expanded="false" />
+            <element signature="method#mousePressed#0;class#Main#0" expanded="false" />
+            <element signature="method#mouseReleased#0;class#Main#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -583,7 +643,12 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
+            <element signature="method#draw#0;class#Main#0" expanded="false" />
             <element signature="method#menu#0;class#Main#0" expanded="false" />
+            <element signature="method#keyPressed#0;class#Main#0" expanded="false" />
+            <element signature="method#shipCreate#0;class#Main#0" expanded="false" />
+            <element signature="method#mousePressed#0;class#Main#0" expanded="false" />
+            <element signature="method#mouseReleased#0;class#Main#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -617,7 +682,12 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
+            <element signature="method#draw#0;class#Main#0" expanded="false" />
             <element signature="method#menu#0;class#Main#0" expanded="false" />
+            <element signature="method#keyPressed#0;class#Main#0" expanded="false" />
+            <element signature="method#shipCreate#0;class#Main#0" expanded="false" />
+            <element signature="method#mousePressed#0;class#Main#0" expanded="false" />
+            <element signature="method#mouseReleased#0;class#Main#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -651,7 +721,12 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
+            <element signature="method#draw#0;class#Main#0" expanded="false" />
             <element signature="method#menu#0;class#Main#0" expanded="false" />
+            <element signature="method#keyPressed#0;class#Main#0" expanded="false" />
+            <element signature="method#shipCreate#0;class#Main#0" expanded="false" />
+            <element signature="method#mousePressed#0;class#Main#0" expanded="false" />
+            <element signature="method#mouseReleased#0;class#Main#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -685,7 +760,12 @@
         <state relative-caret-position="990">
           <caret line="53" column="26" selection-start-line="53" selection-start-column="26" selection-end-line="53" selection-end-column="26" />
           <folding>
+            <element signature="method#draw#0;class#Main#0" expanded="false" />
             <element signature="method#menu#0;class#Main#0" expanded="false" />
+            <element signature="method#keyPressed#0;class#Main#0" expanded="false" />
+            <element signature="method#shipCreate#0;class#Main#0" expanded="false" />
+            <element signature="method#mousePressed#0;class#Main#0" expanded="false" />
+            <element signature="method#mouseReleased#0;class#Main#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -719,7 +799,12 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
+            <element signature="method#draw#0;class#Main#0" expanded="false" />
             <element signature="method#menu#0;class#Main#0" expanded="false" />
+            <element signature="method#keyPressed#0;class#Main#0" expanded="false" />
+            <element signature="method#shipCreate#0;class#Main#0" expanded="false" />
+            <element signature="method#mousePressed#0;class#Main#0" expanded="false" />
+            <element signature="method#mouseReleased#0;class#Main#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -753,7 +838,12 @@
         <state relative-caret-position="682">
           <caret line="39" column="19" selection-start-line="39" selection-start-column="19" selection-end-line="39" selection-end-column="19" />
           <folding>
+            <element signature="method#draw#0;class#Main#0" expanded="false" />
             <element signature="method#menu#0;class#Main#0" expanded="false" />
+            <element signature="method#keyPressed#0;class#Main#0" expanded="false" />
+            <element signature="method#shipCreate#0;class#Main#0" expanded="false" />
+            <element signature="method#mousePressed#0;class#Main#0" expanded="false" />
+            <element signature="method#mouseReleased#0;class#Main#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -803,7 +893,12 @@
         <state relative-caret-position="68">
           <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
           <folding>
+            <element signature="method#draw#0;class#Main#0" expanded="false" />
             <element signature="method#menu#0;class#Main#0" expanded="false" />
+            <element signature="method#keyPressed#0;class#Main#0" expanded="false" />
+            <element signature="method#shipCreate#0;class#Main#0" expanded="false" />
+            <element signature="method#mousePressed#0;class#Main#0" expanded="false" />
+            <element signature="method#mouseReleased#0;class#Main#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -830,7 +925,12 @@
         <state relative-caret-position="88">
           <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
           <folding>
+            <element signature="method#draw#0;class#Main#0" expanded="false" />
             <element signature="method#menu#0;class#Main#0" expanded="false" />
+            <element signature="method#keyPressed#0;class#Main#0" expanded="false" />
+            <element signature="method#shipCreate#0;class#Main#0" expanded="false" />
+            <element signature="method#mousePressed#0;class#Main#0" expanded="false" />
+            <element signature="method#mouseReleased#0;class#Main#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -845,10 +945,26 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/bin/ie/dit/Battlefield.class" />
     <entry file="file://$PROJECT_DIR$/bin/ie/dit/GameObject.class" />
+    <entry file="file://$PROJECT_DIR$/bin/ie/dit/Sub.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="16" column="25" selection-start-line="0" selection-start-column="0" selection-end-line="157" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ie/dit/Sub.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1826">
+          <caret line="22" column="8" selection-start-line="22" selection-start-column="8" selection-end-line="22" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/ie/dit/Battlefield.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="747">
-          <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
+        <state relative-caret-position="571">
+          <caret line="67" column="25" selection-start-line="67" selection-start-column="25" selection-end-line="67" selection-end-column="25" />
           <folding />
         </state>
       </provider>
@@ -856,26 +972,31 @@
     <entry file="file://$PROJECT_DIR$/src/ie/dit/GameObject.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="418">
-          <caret line="19" column="19" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
+          <caret line="19" column="14" selection-start-line="19" selection-start-column="14" selection-end-line="19" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ie/dit/Ship.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-616">
+          <caret line="17" column="19" selection-start-line="17" selection-start-column="19" selection-end-line="17" selection-end-column="19" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ie/dit/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="398">
-          <caret line="271" column="32" selection-start-line="271" selection-start-column="32" selection-end-line="271" selection-end-column="32" />
+        <state relative-caret-position="659">
+          <caret line="220" column="40" selection-start-line="220" selection-start-column="40" selection-end-line="220" selection-end-column="40" />
           <folding>
+            <element signature="method#draw#0;class#Main#0" expanded="false" />
             <element signature="method#menu#0;class#Main#0" expanded="false" />
+            <element signature="method#keyPressed#0;class#Main#0" expanded="false" />
+            <element signature="method#shipCreate#0;class#Main#0" expanded="false" />
+            <element signature="method#mousePressed#0;class#Main#0" expanded="false" />
+            <element signature="method#mouseReleased#0;class#Main#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ie/dit/Ship.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="861">
-          <caret line="76" column="37" selection-start-line="76" selection-start-column="37" selection-end-line="76" selection-end-column="37" />
-          <folding />
         </state>
       </provider>
     </entry>

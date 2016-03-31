@@ -15,9 +15,11 @@ public class Ship extends GameObject
 		mouseBox = new PVector();
 		easing = .7f;
         madeMove = false;
+		clicks = 0;
 	}
 
-	public void update() {
+	public void update()
+	{
 
 		if (move == 0) {
 			float targetX = main.mouseX;
@@ -29,16 +31,23 @@ public class Ship extends GameObject
 			pos.y += dy * easing;
 		}//end if 0
 
-		if (move == 1) {
-			for (int i = 0; i < 32; i++) {
-				for (int j = 0; j < 17; j++) {
-					if (pos.x < (main.cPosX[i] + main.width / 32 + 1) && pos.x > main.cPosX[i] && pos.y < (main.cPosY[j] + main.height / 18 + 1) && pos.y > main.cPosY[j]) {
-						if (main.occupied[i * j] == true) {
+		if (move == 1)
+		{
+			for (int i = 0; i < 32; i++)
+			{
+				for (int j = 0; j < 17; j++)
+				{
+					if (pos.x < (main.cPosX[i] + main.width / 32 + 1) && pos.x > main.cPosX[i] && pos.y < (main.cPosY[j] + main.height / 18 + 1) && pos.y > main.cPosY[j])
+					{
+						if (main.occupied[i * j] == true)
+						{
 							break;
-						} else {
+						} //end if
+						else
+						{
 							pos.x = main.cPosX[i] + main.width / 64;
 							pos.y = main.cPosY[j] + main.height / 36;
-						}
+						}//end else
 					}//end if
 				}//end for
 			}//end for
@@ -65,7 +74,7 @@ public class Ship extends GameObject
 						mouseBox.y = main.cPosY[j] + main.height / 36;
 					}//end if
 
-					if (main.mousePressed && validTiles() == true)
+					if (main.mousePressed && validTiles())
 					{
 						pos.x = mouseBox.x;
 						pos.y = mouseBox.y;
@@ -73,10 +82,11 @@ public class Ship extends GameObject
 						validTile = false;
 						madeMove = true;
 
-						println("click count is" + clicks);
+
                         if(clicks > 1)
                         {
                             move = 1;
+							println("click count is" + clicks);
                         }
 					}//end if
 
