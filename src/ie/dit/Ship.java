@@ -83,11 +83,10 @@ public class Ship extends GameObject
 						madeMove = true;
 
 
-                        if(clicks > 1)
+                        if(clicks > 2)
                         {
                             move = 1;
-							println("click count is" + clicks);
-                        }
+                        }//end if
 					}//end if
 
 

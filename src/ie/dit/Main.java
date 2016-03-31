@@ -12,25 +12,17 @@ public class Main extends PApplet
 	ArrayList<GameObject> units = new ArrayList<GameObject>();
 	Battlefield battlefield;
 	int numShips = 0;
-	int numSubs = 0;
-	int sampleRate = 44100;
 	boolean[] occupied = new boolean[544];
-	int[] shipPos = new int[544];
-
-	boolean move = false;
-	boolean moveAgain = false;
     PVector mousePos = new PVector(mouseX, mouseY);
-
 	int clicked;
-
-	//center position of each tile
+    boolean place = false;
+    //center position of each tile
 	int[] cPosX = new int[32];
 	int[] cPosY = new int[17];
-
 	//variables for making the units
 	boolean[] types = new boolean[2];
-	boolean[] keys = new boolean[4];
-	boolean release = false;
+    boolean click = false;
+
 
 
 	public void settings()
@@ -211,10 +203,18 @@ public class Main extends PApplet
             {
                 go = units.get(i);
 
+
                 if ((go.pos.x + mousePos.x) < (go.pos.x*2 + width/64) && (go.pos.x + mousePos.x) > (go.pos.x*2 - width/64))
                 {
                     if((go.pos.y + mousePos.y) < (go.pos.y*2 + height/36) && (go.pos.y + mousePos.y) > (go.pos.y*2 - height/36))
                     {
+                        println(i, "clicks is" + go.clicks);
+                        if(click == true)
+                        {
+                            go.clicks++;
+                            click = false;
+                        }
+
                         if (go.move == 1)
                         {
                             go.move = 2;
@@ -228,21 +228,8 @@ public class Main extends PApplet
 
     public void mouseClicked()
     {
-        if(go != null)
-        {
-            if ((go.pos.x + mousePos.x) < (go.pos.x*2 + width/64) && (go.pos.x + mousePos.x) > (go.pos.x*2 - width/64))
-            {
-                if((go.pos.y + mousePos.y) < (go.pos.y*2 + height/36) && (go.pos.y + mousePos.y) > (go.pos.y*2 - height/36))
-                {
-                    go.clicks++;
-                }//end if
-            }//end if
-        }//end if
+        click = true;
     }//end mouseClicked()
-
-    boolean place = false;
-	boolean madeMove = false;
-	int oldPos;
 
     public void mousePressed()
     {
