@@ -82,7 +82,7 @@ public class Ship extends GameObject
 						validTile = false;
 						madeMove = true;
 
-
+                        //only move once per turn
                         if(clicks > 1)
                         {
                             move = 1;

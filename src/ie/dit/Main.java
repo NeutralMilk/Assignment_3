@@ -195,9 +195,10 @@ public class Main extends PApplet
 
 	void checkClicked()
     {
+
         mousePos.x = mouseX;
         mousePos.y = mouseY;
-        if(mousePressed)
+        if(mousePressed && clicked == 0)
         {
             for(int i = 0 ; i < units.size(); i ++)
             {
@@ -256,6 +257,7 @@ public class Main extends PApplet
             for(int j = 0; j < units.size(); j++)
             {
                 GameObject go = units.get(j);
+                //allow it to be placed on the battlefield
                 if(mouseY < height - height/18)
                 {
                     if(go.move == 0)
@@ -267,14 +269,12 @@ public class Main extends PApplet
                         break;
                     }//end if
                 }//end if
-                else
+                //if you try to place it off the battlefield it will be deleted
+                else if(go.pos.y > height - height/18)
                 {
-                    if(go.pos.y > height - height/18)
-                    {
-                        units.remove(go);
-                        numShips--;
-                        clicked = 0;
-                    }//end if
+                    units.remove(go);
+                    numShips--;
+                    clicked = 0;
                 }//end else
             }//end for
         }//end if
