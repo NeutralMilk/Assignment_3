@@ -146,7 +146,7 @@ public class Main extends PApplet
 
         if(mouseY < height - height/18)
         {
-            checkClicked();
+            checkUnit();
         }//end if
 
 		for(int i = 0; i < units.size(); i++)
@@ -193,9 +193,8 @@ public class Main extends PApplet
 	}//end shipCreate()
 
 
-	void checkClicked()
+	void checkUnit()
     {
-
         mousePos.x = mouseX;
         mousePos.y = mouseY;
         if(mousePressed && clicked == 0)
@@ -203,7 +202,6 @@ public class Main extends PApplet
             for(int i = 0 ; i < units.size(); i ++)
             {
                 GameObject go = units.get(i);
-
 
                 if ((go.pos.x + mousePos.x) < (go.pos.x*2 + width/64) && (go.pos.x + mousePos.x) > (go.pos.x*2 - width/64))
                 {
@@ -214,7 +212,7 @@ public class Main extends PApplet
                         {
                             go.clicks++;
                             click = false;
-                        }
+                        }//end if
 
                         if (go.move == 1)
                         {
@@ -225,14 +223,35 @@ public class Main extends PApplet
                 }//end if
             }//end for
         }//end if
+
+        for(int i = 0 ; i < units.size(); i ++)
+        {
+            GameObject go = units.get(i);
+
+            for(int k = 0; k < 32; k++)
+            {
+                for (int j = 0; j < 17; j++)
+                {
+                    if ((go.pos.x + mousePos.x) < (go.pos.x*2 + width/64) && (go.pos.x + mousePos.x) > (go.pos.x*2 - width/64))
+                    {
+                        if((go.pos.y + mousePos.y) < (go.pos.y*2 + height/36) && (go.pos.y + mousePos.y) > (go.pos.y*2 - height/36))
+                        {
+                            battlefield.colourChange = true;
+                        }//end if
+                    }//end if
+                }//end for
+            }//end for
+        }//end for
     }//end checkCollisions()
 
     public void mouseClicked()
     {
         click = true;
+        println("clicked is" + clicked);
+
     }//end mouseClicked()
 
-    public void mousePressed()
+    public void mouseDragged()
     {
         if(clicked == 0)
         {
@@ -253,7 +272,6 @@ public class Main extends PApplet
 
         if(clicked == 1)
         {
-
             for(int j = 0; j < units.size(); j++)
             {
                 GameObject go = units.get(j);
@@ -266,11 +284,11 @@ public class Main extends PApplet
 
                         clicked = 0;
                         place = true;
-                        break;
+                        go.madeMove = true;
                     }//end if
                 }//end if
                 //if you try to place it off the battlefield it will be deleted
-                else if(go.pos.y > height - height/18)
+                if(go.pos.y > height - height/18)
                 {
                     units.remove(go);
                     numShips--;
@@ -280,6 +298,10 @@ public class Main extends PApplet
         }//end if
     }//end mouseReleased
 
+    public void mouseMoved()
+    {
+        println("you moved the mouse");
+    }
 	public static void main(String[] args)
 	{
 		PApplet.main(Main.class.getName());

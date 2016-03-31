@@ -11,13 +11,12 @@ public abstract class GameObject extends PApplet
 	PImage unit = new PImage();
 	float easing;
 	int move;
-	boolean placed = false;
 	float angle = 0;
 	boolean validTile;
 	boolean madeMove;
     float health = 100;
-    boolean hasMoved = false;
 	int clicks;
+	boolean colourChange = false;
 
     GameObject(Main _main)
     {

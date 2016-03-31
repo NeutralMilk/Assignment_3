@@ -47,6 +47,7 @@ public class Battlefield extends PApplet
 		}//end for
 	}
 
+	boolean colourChange = false;
 	public void update()
 	{
 		for(int i = 0; i < 32; i++)
@@ -56,15 +57,20 @@ public class Battlefield extends PApplet
 				//if the mouse position is within the bounds of a box change the colour and keep the oil picture displaying
 				if(main.mouseX < (main.cPosX[i] + main.width/32) && main.mouseX > main.cPosX[i] && main.mouseY < (main.cPosY[j] + main.height/18) && main.mouseY > main.cPosY[j])
 				{
-                    if(highlight == true)
+                    if(colourChange == true)
                     {
                         s = color(0,255,0);
+                    }
+                    else
+                    {
+                        s = color(255);
                     }
 
 					main.stroke(s);
 					main.strokeWeight(3);
 					main.noFill();
 					main.rect(main.cPosX[i], main.cPosY[j], size, size);
+                    colourChange = false;
 				}//end if
 			}//end for
 		}//end for
