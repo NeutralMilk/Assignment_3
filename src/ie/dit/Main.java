@@ -20,7 +20,7 @@ public class Main extends PApplet
 	int[] cPosX = new int[32];
 	int[] cPosY = new int[17];
 	//variables for making the units
-	boolean[] types = new boolean[2];
+	boolean[] types = new boolean[1];
     boolean click = false;
 
 
@@ -192,7 +192,7 @@ public class Main extends PApplet
 		types[0] = false;
 	}//end shipCreate()
 
-    GameObject go;
+
 	void checkClicked()
     {
         mousePos.x = mouseX;
@@ -201,7 +201,7 @@ public class Main extends PApplet
         {
             for(int i = 0 ; i < units.size(); i ++)
             {
-                go = units.get(i);
+                GameObject go = units.get(i);
 
 
                 if ((go.pos.x + mousePos.x) < (go.pos.x*2 + width/64) && (go.pos.x + mousePos.x) > (go.pos.x*2 - width/64))
@@ -252,21 +252,31 @@ public class Main extends PApplet
 
         if(clicked == 1)
         {
-            if(mouseY < height - height/18)
+
+            for(int j = 0; j < units.size(); j++)
             {
-                for(int j = 0; j < units.size(); j++)
+                GameObject go = units.get(j);
+                if(mouseY < height - height/18)
                 {
-                    if(units.get(j).move == 0)
+                    if(go.move == 0)
                     {
-                        units.get(j).move = 1;
+                        go.move = 1;
 
                         clicked = 0;
                         place = true;
                         break;
                     }//end if
-                }//end for
-
-            }//end if
+                }//end if
+                else
+                {
+                    if(go.pos.y > height - height/18)
+                    {
+                        units.remove(go);
+                        numShips--;
+                        clicked = 0;
+                    }//end if
+                }//end else
+            }//end for
         }//end if
     }//end mouseReleased
 

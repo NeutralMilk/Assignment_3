@@ -83,7 +83,7 @@ public class Ship extends GameObject
 						madeMove = true;
 
 
-                        if(clicks > 2)
+                        if(clicks > 1)
                         {
                             move = 1;
                         }//end if
