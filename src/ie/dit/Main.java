@@ -20,10 +20,10 @@ public class Main extends PApplet
 	int[] cPosX = new int[32];
 	int[] cPosY = new int[17];
 	//variables for making the units
-	boolean[] types = new boolean[1];
+	boolean[] types = new boolean[2];
     boolean click = false;
-
-
+	boolean menu = true;
+	boolean firstTime = true;
 
 	public void settings()
 	{
@@ -53,9 +53,6 @@ public class Main extends PApplet
 			occupied[i] = false;
 		}//end for
 	}//end setup
-
-	boolean menu = true;
-	boolean firstTime = true;
 
 	public void draw()
 	{
@@ -135,6 +132,7 @@ public class Main extends PApplet
 		text("Exit Game", width/2, (float) (height/2 + boxHeight/1.25));
 		strokeWeight(1);
 	}
+
 	private void game()
 	{
         background(51,120,255);
@@ -159,6 +157,20 @@ public class Main extends PApplet
 		{
 			shipCreate();
 		}//end if
+
+        if(types[1] == true)
+        {
+            subCreate();
+        }//end if
+
+        if(mouseX < width && mouseX > width - battlefield.size * 2 && mouseY < height && mouseY > height - battlefield.size)
+        {
+            battlefield.hover = true;
+        }//end if)
+        else
+        {
+            battlefield.hover = false;
+        }
 	}
 
 	public void keyPressed()
@@ -178,6 +190,7 @@ public class Main extends PApplet
 			}//end else
 		}//end if
 	}
+
 	//creates a ship
 	private void shipCreate()
 	{
@@ -192,6 +205,19 @@ public class Main extends PApplet
 		types[0] = false;
 	}//end shipCreate()
 
+    private void subCreate()
+    {
+        //increase the number of ships
+        int i = numShips;
+        //create a ship
+        Sub ship = new Sub(this);
+        units.add(ship);
+        //set it so that the ship follows the mouse
+        units.get(i).move = 0;
+        numShips++;
+        types[1] = false;
+    }//end shipCreate()
+
 
 	void checkUnit()
     {
@@ -203,21 +229,22 @@ public class Main extends PApplet
             {
                 GameObject go = units.get(i);
 
-                if ((go.pos.x + mousePos.x) < (go.pos.x*2 + width/64) && (go.pos.x + mousePos.x) > (go.pos.x*2 - width/64))
+                if ((go.pos.x + mousePos.x) < (go.pos.x*2 + width/64) && (go.pos.x + mousePos.x) > (go.pos.x*2 - width/64) && go.nextTurn == true)
                 {
                     if((go.pos.y + mousePos.y) < (go.pos.y*2 + height/36) && (go.pos.y + mousePos.y) > (go.pos.y*2 - height/36))
                     {
                         println(i, "clicks is" + go.clicks);
-                        if(click == true)
-                        {
-                            go.clicks++;
-                            click = false;
-                        }//end if
 
                         if (go.move == 1)
                         {
                             go.move = 2;
                             clicked = 0;
+                        }//end if
+
+                        if(click == true)
+                        {
+                            go.clicks++;
+                            click = false;
                         }//end if
                     }//end if
                 }//end if
@@ -236,7 +263,14 @@ public class Main extends PApplet
                     {
                         if((go.pos.y + mousePos.y) < (go.pos.y*2 + height/36) && (go.pos.y + mousePos.y) > (go.pos.y*2 - height/36))
                         {
-                            battlefield.colourChange = true;
+							if(go.nextTurn == true)
+							{
+								battlefield.colourGreen = true;
+							}//end if
+                            if(go.nextTurn == false)
+                            {
+                                battlefield.colourRed = true;
+                            }//end if
                         }//end if
                     }//end if
                 }//end for
@@ -249,21 +283,28 @@ public class Main extends PApplet
         click = true;
         println("clicked is" + clicked);
 
+        if(mouseX < width && mouseX > width - battlefield.size * 2 && mouseY < height && mouseY > height - battlefield.size)
+        {
+            println("next turn");
+        }//end if)
+
     }//end mouseClicked()
 
     public void mouseDragged()
     {
         if(clicked == 0)
         {
-            for(int i = 1; i < types.length + 1; i ++)
+            if(mouseX < battlefield.size && mouseX > 0 && mouseY < height && mouseY > height - battlefield.size)
             {
-                if(mouseX < i * battlefield.size && mouseX > i-1 * battlefield.size && mouseY < height && mouseY > height - battlefield.size)
-                {
-                    types[i-1] = true;
-                    clicked = 1;
+                types[0] = true;
+                clicked = 1;
+            }//end if
 
-                }//end if
-            }//end for
+            if(mouseX < battlefield.size * 2 && mouseX > battlefield.size && mouseY < height && mouseY > height - battlefield.size)
+            {
+                types[1] = true;
+                clicked = 1;
+            }//end if
         }//end if
     }//end mousePressed
 

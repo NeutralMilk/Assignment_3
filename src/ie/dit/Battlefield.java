@@ -47,7 +47,9 @@ public class Battlefield extends PApplet
 		}//end for
 	}
 
-	boolean colourChange = false;
+	boolean colourGreen = false;
+	boolean colourRed = false;
+	boolean hover = false;
 	public void update()
 	{
 		for(int i = 0; i < 32; i++)
@@ -57,9 +59,13 @@ public class Battlefield extends PApplet
 				//if the mouse position is within the bounds of a box change the colour and keep the oil picture displaying
 				if(main.mouseX < (main.cPosX[i] + main.width/32) && main.mouseX > main.cPosX[i] && main.mouseY < (main.cPosY[j] + main.height/18) && main.mouseY > main.cPosY[j])
 				{
-                    if(colourChange == true)
+                    if(colourGreen == true)
                     {
                         s = color(0,255,0);
+                    }
+                    else if(colourRed == true)
+                    {
+                        s = color(255,0,0);
                     }
                     else
                     {
@@ -70,10 +76,20 @@ public class Battlefield extends PApplet
 					main.strokeWeight(3);
 					main.noFill();
 					main.rect(main.cPosX[i], main.cPosY[j], size, size);
-                    colourChange = false;
+                    colourGreen = false;
+                    colourRed = false;
 				}//end if
 			}//end for
 		}//end for
+
+		if(hover == true)
+		{
+			main.textAlign(CENTER);
+			main.fill(255, 0 , 0);
+			main.textSize(main.height/48);
+			main.text("Next Turn", main.width-size, main.height - size/2 + 5);
+		}
+
 	}
 
 	public void render()
@@ -107,5 +123,10 @@ public class Battlefield extends PApplet
 				main.image(images[i], i * main.width/32 - size/2, main.height - size/2);
 			}//end if
 		}//end for
+
+		main.textAlign(CENTER);
+		main.fill(0);
+		main.textSize(main.height/48);
+		main.text("Next Turn", main.width-size, main.height - size/2 + 5);
 	}
 }
