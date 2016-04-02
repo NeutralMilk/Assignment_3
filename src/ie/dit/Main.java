@@ -285,7 +285,14 @@ public class Main extends PApplet
 
         if(mouseX < width && mouseX > width - battlefield.size * 2 && mouseY < height && mouseY > height - battlefield.size)
         {
-            println("next turn");
+            for(int i = 0 ; i < units.size(); i ++)
+            {
+                GameObject go = units.get(i);
+
+                go.nextTurn = true;
+                go.clicks = 0;
+                println(go.nextTurn, go.clicks);
+            }//end for
         }//end if)
 
     }//end mouseClicked()

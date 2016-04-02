@@ -86,7 +86,7 @@ public class Ship extends GameObject
                         if(clicks > 1)
                         {
                             move = 1;
-							nextTurn = true;
+							nextTurn = false;
                         }//end if
 					}//end if
 
