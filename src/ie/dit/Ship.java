@@ -11,6 +11,9 @@ public class Ship extends GameObject
 	{
 		super(_main);
 		unit = main.loadImage("1.png");
+		int w = unit.width * main.width/2560;
+		int h = unit.height * main.height/1440;
+		unit.resize(w,h);
 		pos = new PVector();
 		mouseBox = new PVector();
 		easing = .7f;

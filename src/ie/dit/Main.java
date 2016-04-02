@@ -170,7 +170,7 @@ public class Main extends PApplet
         else
         {
             battlefield.hover = false;
-        }
+        }//end else
 	}
 
 	public void keyPressed()
@@ -271,6 +271,18 @@ public class Main extends PApplet
                             {
                                 battlefield.colourRed = true;
                             }//end if
+                            rectMode(CENTER);
+                            strokeWeight(1);
+                            stroke(0);
+                            fill(255,0 , 0);
+                            rect(width/2, height - 40, 600, 20);
+                            int healthBar = (int)map(go.health, 0, 100, 0 ,600);
+                            fill(0, 255, 0);
+                            rect(width/2, height - 40, healthBar, 20);
+                            strokeWeight(3);
+                            fill(0);
+                            text(go.health, width/2, height - 5);
+                            rectMode(CORNER);
                         }//end if
                     }//end if
                 }//end for
@@ -281,20 +293,6 @@ public class Main extends PApplet
     public void mouseClicked()
     {
         click = true;
-        println("clicked is" + clicked);
-
-        if(mouseX < width && mouseX > width - battlefield.size * 2 && mouseY < height && mouseY > height - battlefield.size)
-        {
-            for(int i = 0 ; i < units.size(); i ++)
-            {
-                GameObject go = units.get(i);
-
-                go.nextTurn = true;
-                go.clicks = 0;
-                println(go.nextTurn, go.clicks);
-            }//end for
-        }//end if)
-
     }//end mouseClicked()
 
     public void mouseDragged()
@@ -344,12 +342,21 @@ public class Main extends PApplet
                 }//end else
             }//end for
         }//end if
+
+
+        if(mouseX < width && mouseX > width - battlefield.size * 2 && mouseY < height && mouseY > height - battlefield.size)
+        {
+            for(int i = 0 ; i < units.size(); i ++)
+            {
+                GameObject go = units.get(i);
+
+                go.nextTurn = true;
+                go.clicks = 0;
+                println(go.nextTurn, go.clicks);
+            }//end for
+        }//end if)
     }//end mouseReleased
 
-    public void mouseMoved()
-    {
-        println("you moved the mouse");
-    }
 	public static void main(String[] args)
 	{
 		PApplet.main(Main.class.getName());
