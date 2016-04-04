@@ -12,22 +12,31 @@ public class Main extends PApplet
 	ArrayList<GameObject> units = new ArrayList<GameObject>();
 	Battlefield battlefield;
 	int numShips = 0;
-	boolean[] occupied = new boolean[544];
     PVector mousePos = new PVector(mouseX, mouseY);
 	int clicked;
     boolean place = false;
-    //center position of each tile
+
+    //position of each tile
 	int[] cPosX = new int[32];
 	int[] cPosY = new int[17];
+
 	//variables for making the units
 	boolean[] types = new boolean[2];
     boolean click = false;
+
+    //variables for the menu
 	boolean menu = true;
 	boolean firstTime = true;
 
+    //variables to track occupied squares
+
+    boolean[] occupiedFriendly = new boolean [544];
+    boolean[] occupiedEnemy = new boolean [544];
+
 	public void settings()
 	{
-		fullScreen();
+		//fullScreen();
+        size(1920,1080);
 	}//end settings
 
 	public void setup()
@@ -48,9 +57,10 @@ public class Main extends PApplet
 		}  //end for
 
 
-		for( int i = 0; i < occupied.length; i++ )
+		for( int i = 0; i < 544; i++ )
 		{
-			occupied[i] = false;
+			occupiedFriendly[i] = false;
+            occupiedEnemy[i] = false;
 		}//end for
 	}//end setup
 
@@ -233,7 +243,6 @@ public class Main extends PApplet
                 {
                     if((go.pos.y + mousePos.y) < (go.pos.y*2 + height/36) && (go.pos.y + mousePos.y) > (go.pos.y*2 - height/36))
                     {
-                        println(i, "clicks is" + go.clicks);
 
                         if (go.move == 1)
                         {
@@ -276,12 +285,12 @@ public class Main extends PApplet
                             stroke(0);
                             fill(255,0 , 0);
                             rect(width/2, height - 40, 600, 20);
-                            int healthBar = (int)map(go.health, 0, 100, 0 ,600);
+                            int healthBar = (int)map(go.currentHealth, 0, go.initialHealth, 0 ,600);
                             fill(0, 255, 0);
                             rect(width/2, height - 40, healthBar, 20);
                             strokeWeight(3);
                             fill(0);
-                            text(go.health, width/2, height - 5);
+                            text(go.currentHealth, width/2, height - 5);
                             rectMode(CORNER);
                         }//end if
                     }//end if
@@ -322,15 +331,20 @@ public class Main extends PApplet
             {
                 GameObject go = units.get(j);
                 //allow it to be placed on the battlefield
-                if(mouseY < height - height/18)
+                if(mouseY < height - (height/18) &&  mouseY > height - (height/18) * 3 && mouseX > width/2 - battlefield.size*2 && mouseX < width/2 + battlefield.size*2)
                 {
-                    if(go.move == 0)
+                    println("this works 1");
+                    if(mouseX > width/2 + battlefield.size && mouseX < width/2 - battlefield.size && mouseY > height - battlefield.size * 2 && mouseY < height - battlefield.size)
                     {
-                        go.move = 1;
+                        println("this works");
+                        if(go.move == 0)
+                        {
+                            go.move = 1;
 
-                        clicked = 0;
-                        place = true;
-                        go.madeMove = true;
+                            clicked = 0;
+                            place = true;
+                            go.madeMove = true;
+                        }//end if
                     }//end if
                 }//end if
                 //if you try to place it off the battlefield it will be deleted
@@ -352,8 +366,8 @@ public class Main extends PApplet
 
                 go.nextTurn = true;
                 go.clicks = 0;
-                println(go.nextTurn, go.clicks);
             }//end for
+            battlefield.turnCount++;
         }//end if)
     }//end mouseReleased
 

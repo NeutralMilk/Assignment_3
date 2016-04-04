@@ -11,6 +11,8 @@ public class Ship extends GameObject
 	{
 		super(_main);
 		unit = main.loadImage("1.png");
+
+		//this scales the units to fit any screen size
 		int w = unit.width * main.width/2560;
 		int h = unit.height * main.height/1440;
 		unit.resize(w,h);
@@ -18,11 +20,14 @@ public class Ship extends GameObject
 		mouseBox = new PVector();
 		easing = .7f;
         madeMove = false;
+		initialHealth = 100;
+		currentHealth = 100;
 		clicks = 0;
 	}
 
 	public void update()
 	{
+
 
 		if (move == 0) {
 			float targetX = main.mouseX;
@@ -42,24 +47,18 @@ public class Ship extends GameObject
 				{
 					if (pos.x < (main.cPosX[i] + main.width / 32 + 1) && pos.x > main.cPosX[i] && pos.y < (main.cPosY[j] + main.height / 18 + 1) && pos.y > main.cPosY[j])
 					{
-						if (main.occupied[i * j] == true)
-						{
-							break;
-						} //end if
-						else
-						{
-							pos.x = main.cPosX[i] + main.width / 64;
-							pos.y = main.cPosY[j] + main.height / 36;
-						}//end else
+						main.occupiedFriendly[i * j] = true;
+
+                        pos.x = main.cPosX[i] + main.width / 64;
+                        pos.y = main.cPosY[j] + main.height / 36;
+
 					}//end if
 				}//end for
 			}//end for
 		}//end if 1
 
-		int clickCount = 0;
 		if (move == 2)
 		{
-
 			for (int i = 0; i < 32; i++)
 			{
 				for (int j = 0; j < 17; j++)
@@ -68,7 +67,7 @@ public class Ship extends GameObject
 					{
 						pos.x = main.cPosX[i] + main.width / 64;
 						pos.y = main.cPosY[j] + main.height / 36;
-						main.occupied[i * j] = true;
+						main.occupiedFriendly[i * j] = true;
 					}//end if
 
 					if (main.mouseX < (main.cPosX[i] + main.width / 32) && main.mouseX > main.cPosX[i] && main.mouseY < (main.cPosY[j] + main.height / 18) && main.mouseY > main.cPosY[j])
@@ -163,8 +162,6 @@ public class Ship extends GameObject
 				break;
 
 			}//end case 2
-
-
 		}//end switch
-	}
+	}//end render
 }

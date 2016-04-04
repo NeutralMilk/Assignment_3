@@ -14,7 +14,8 @@ public abstract class GameObject extends PApplet
 	float angle = 0;
 	boolean validTile;
 	boolean madeMove;
-    int health = 25;
+	int initialHealth;
+    int currentHealth;
 	int clicks;
 	boolean colourChange = false;
 	boolean nextTurn = false;

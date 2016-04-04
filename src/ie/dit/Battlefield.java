@@ -15,7 +15,9 @@ public class Battlefield extends PApplet
 	int size;
 	boolean[] placeOil = new boolean[544];
 	PImage[] images = new PImage[3];
+	PImage friendlyCity = new PImage();
 	PImage oil = new PImage();
+
 	boolean highlight = false;
 
 
@@ -26,6 +28,8 @@ public class Battlefield extends PApplet
 		x = 0;
 		y = 0;
 		size = main.width/32;
+
+		friendlyCity = main.loadImage("city.png");
 
 		for(int i = 0; i < placeOil.length; i++)
 		{
@@ -44,12 +48,24 @@ public class Battlefield extends PApplet
 		for ( int i = 0; i< images.length; i++ )
 		{
 			images[i] = main.loadImage( i + ".png" );
+			int w = images[i].width * main.width/2560;
+			int h = images[i].height * main.height/1440;
+			images[i].resize(w,h);
 		}//end for
+
+		int w = friendlyCity.width * main.width/2560;
+		int h = friendlyCity.height * main.height/1440;
+		friendlyCity.resize(w,h);
+
+		w = oil.width * main.width/2560;
+		h = oil.height * main.height/1440;
+		oil.resize(w,h);
 	}
 
 	boolean colourGreen = false;
 	boolean colourRed = false;
 	boolean hover = false;
+	int turnCount = 0;
 	public void update()
 	{
 		for(int i = 0; i < 32; i++)
@@ -89,6 +105,8 @@ public class Battlefield extends PApplet
 			main.textSize(main.height/48);
 			main.text("Next Turn", main.width-size, main.height - size/2 + 5);
 		}
+		//main.imageMode(CORNER);
+
 
 	}
 
@@ -124,9 +142,14 @@ public class Battlefield extends PApplet
 			}//end if
 		}//end for
 
+		main.imageMode(CORNER);
+		main.image(friendlyCity, main.width/2 - size, main.height-size*2);
+
 		main.textAlign(CENTER);
 		main.fill(0);
 		main.textSize(main.height/48);
 		main.text("Next Turn", main.width-size, main.height - size/2 + 5);
+        main.fill(0);
+        main.text("Turn: " + turnCount, main.width-size*4, main.height - size/2 + 5);
 	}
 }
