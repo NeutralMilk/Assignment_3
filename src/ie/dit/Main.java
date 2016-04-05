@@ -36,7 +36,7 @@ public class Main extends PApplet
 	public void settings()
 	{
 		//fullScreen();
-        size(1920,1080);
+        size(1280,720);
 	}//end settings
 
 	public void setup()
@@ -280,6 +280,10 @@ public class Main extends PApplet
                             {
                                 battlefield.colourRed = true;
                             }//end if
+                            if(validTile() == true)
+                            {
+                                battlefield.colourGreen = true;
+                            }
                             rectMode(CENTER);
                             strokeWeight(1);
                             stroke(0);
@@ -299,6 +303,17 @@ public class Main extends PApplet
         }//end for
     }//end checkCollisions()
 
+    public boolean validTile()
+    {
+        boolean valid = false;
+        if(mouseY < height - (height/18)*2 &&  mouseY > height - (height/18) * 3 && mouseX > width/2 - battlefield.size*2 && mouseX < width/2 + battlefield.size*2 ||
+                mouseY > height - (height/18)*2 &&  mouseY < height - (height/18) && mouseX > width/2 - battlefield.size*2 && mouseX < width/2 - battlefield.size ||
+                mouseY > height - (height/18)*2 &&  mouseY < height - (height/18) && mouseX < width/2 + battlefield.size*2 && mouseX > width/2 + battlefield.size)
+        {
+           valid = true;
+        }//end if
+        return valid;
+    }
     public void mouseClicked()
     {
         click = true;
@@ -331,22 +346,22 @@ public class Main extends PApplet
             {
                 GameObject go = units.get(j);
                 //allow it to be placed on the battlefield
-                if(mouseY < height - (height/18) &&  mouseY > height - (height/18) * 3 && mouseX > width/2 - battlefield.size*2 && mouseX < width/2 + battlefield.size*2)
+                if(mouseY < height - (height/18)*2 &&  mouseY > height - (height/18) * 3 && mouseX > width/2 - battlefield.size*2 && mouseX < width/2 + battlefield.size*2 ||
+                        mouseY > height - (height/18)*2 &&  mouseY < height - (height/18) && mouseX > width/2 - battlefield.size*2 && mouseX < width/2 - battlefield.size ||
+                        mouseY > height - (height/18)*2 &&  mouseY < height - (height/18) && mouseX < width/2 + battlefield.size*2 && mouseX > width/2 + battlefield.size)
                 {
                     println("this works 1");
-                    if(mouseX > width/2 + battlefield.size && mouseX < width/2 - battlefield.size && mouseY > height - battlefield.size * 2 && mouseY < height - battlefield.size)
+                    println("this works");
+                    if(go.move == 0)
                     {
-                        println("this works");
-                        if(go.move == 0)
-                        {
-                            go.move = 1;
+                        go.move = 1;
 
-                            clicked = 0;
-                            place = true;
-                            go.madeMove = true;
-                        }//end if
+                        clicked = 0;
+                        place = true;
+                        go.madeMove = true;
                     }//end if
                 }//end if
+
                 //if you try to place it off the battlefield it will be deleted
                 if(go.pos.y > height - height/18)
                 {
