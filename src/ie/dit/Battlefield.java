@@ -17,6 +17,7 @@ public class Battlefield extends PApplet
 	PImage[] images = new PImage[3];
 	PImage friendlyCity = new PImage();
 	PImage oil = new PImage();
+	int[][] colours = new int[32][17];
 
 	boolean highlight = false;
 
@@ -31,8 +32,9 @@ public class Battlefield extends PApplet
 
 		friendlyCity = main.loadImage("city.png");
 
-		for(int i = 0; i < placeOil.length; i++)
+		for(int i = 0; i < 32; i++)
 		{
+
 			int ran = (int)random(1,30);
 			if(ran == 1)
 			{
@@ -60,6 +62,14 @@ public class Battlefield extends PApplet
 		w = oil.width * main.width/2560;
 		h = oil.height * main.height/1440;
 		oil.resize(w,h);
+
+		for(int i = 0; i < 32; i ++)
+		{
+			for(int j = 0; j < 17; j ++)
+			{
+				colours[i][j] = (int)random(125,150);
+			}
+		}
 	}
 
 	boolean colourGreen = false;
@@ -121,12 +131,20 @@ public class Battlefield extends PApplet
 				s = color(255);
 				main.stroke(s);
 				main.rect(i*main.width/32, j*main.height/18, size, size);
+
 				main.imageMode(CENTER);
-				if(placeOil[i*j] == true)
+				if(placeOil[i * j] == true)
 				{
 					main.image(oil, i*main.width/32 + main.width/64, j*main.height/18 + main.height/36);
 				}//end if
 
+                if(main.visited[i][j] == false)
+                {
+                    main.fill(colours[i][j]);
+                    s = color(255);
+                    main.stroke(s);
+                    main.rect(i*main.width/32, j*main.height/18, size, size);
+                }
 			}//end for
 		}//end for
 

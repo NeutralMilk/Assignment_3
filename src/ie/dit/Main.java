@@ -32,6 +32,7 @@ public class Main extends PApplet
 
     boolean[] occupiedFriendly = new boolean [544];
     boolean[] occupiedEnemy = new boolean [544];
+    boolean[][] visited = new boolean [32][17];
 
 	public void settings()
 	{
@@ -61,6 +62,7 @@ public class Main extends PApplet
 		{
 			occupiedFriendly[i] = false;
             occupiedEnemy[i] = false;
+            //visited[i][j] = false;
 		}//end for
 	}//end setup
 
@@ -181,7 +183,61 @@ public class Main extends PApplet
         {
             battlefield.hover = false;
         }//end else
+
+       /* for(int i = 0; i < 32; i ++)
+        {
+            for(int j = 0; j < 17; j ++)
+            {
+                if(checkVisited() == true)
+                {
+                    visited[i][j] = true;
+                }
+            }//end for
+        }//end for*/
 	}
+
+    public boolean checkVisited()
+    {
+        boolean works = false;
+        for (int i = 0; i < 32; i++)
+        {
+            for (int j = 0; j < 17; j++)
+            {
+                int count = 0;
+
+                if(i > 0)
+                {
+                    visited[i - 1][j] = true;
+                    count ++;
+                }//end if
+
+                if(i < 32)
+                {
+                    visited[i + 1][j] = true;
+                    count++;
+                }//end if
+
+                if(j > 0)
+                {
+                    visited[i][j - 1] = true;
+                    count++;
+                }//end if
+
+                if(j < 17)
+                {
+                    visited[i][j + 1] = true;
+                    count++;
+                }//end if
+
+                if(count == 4)
+                {
+                    works = true;
+                }
+
+            }//end for
+        }//end for
+        return works;
+    }
 
 	public void keyPressed()
 	{
@@ -283,7 +339,9 @@ public class Main extends PApplet
                             if(validTile() == true)
                             {
                                 battlefield.colourGreen = true;
-                            }
+                            }//end if
+
+
                             rectMode(CENTER);
                             strokeWeight(1);
                             stroke(0);
