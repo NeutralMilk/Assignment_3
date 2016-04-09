@@ -11,14 +11,16 @@ public class Main extends PApplet
 {
 	ArrayList<GameObject> units = new ArrayList<GameObject>();
 	Battlefield battlefield;
+    City city;
 	int numShips = 0;
     PVector mousePos = new PVector(mouseX, mouseY);
 	int clicked;
     boolean place = false;
 
     //position of each tile
-	int[] cPosX = new int[32];
-	int[] cPosY = new int[17];
+    int[] cPosX;
+    int[] cPosY;
+    boolean[][] visited;
 
 	//variables for making the units
 	boolean[] types = new boolean[2];
@@ -28,29 +30,41 @@ public class Main extends PApplet
 	boolean menu = true;
 	boolean firstTime = true;
 
+    int gold = 10000;
+    int amountSubbed = 0;
+
+    int w = 32;
+    int h = 17;
+    int hplus1 = h + 1;
+
     //variables to track occupied squares
 
-    boolean[] occupiedFriendly = new boolean [544];
-    boolean[] occupiedEnemy = new boolean [544];
-    boolean[][] visited = new boolean [32][17];
+    boolean[] occupiedFriendly = new boolean [544*4];
+    boolean[] occupiedEnemy = new boolean [544*4];
+
 
 	public void settings()
 	{
-		//fullScreen();
-        size(1280,720);
+		fullScreen();
+        //size(1280,720);
 	}//end settings
 
 	public void setup()
 	{
 		smooth();
 		battlefield = new Battlefield(this);
+        city = new City(this);
 
-		for(int i = 0; i < 32; i ++)
+        cPosX = new int[w];
+        cPosY = new int[h];
+        visited = new boolean [w][h];
+
+		for(int i = 0; i < w; i ++)
 		{
-			for(int j = 0; j < 17; j ++)
+			for(int j = 0; j < h; j ++)
 			{
-				int a = (i * width/32);
-				int b = (j * height/18);
+				int a = (i * width/w);
+				int b = (j * height/hplus1);
 
 				cPosX[i] = a;
 				cPosY[j] = b;
@@ -66,6 +80,7 @@ public class Main extends PApplet
 		}//end for
 	}//end setup
 
+    //have separate methods for both the menu and the game
 	public void draw()
 	{
 		if(menu == true)
@@ -154,10 +169,9 @@ public class Main extends PApplet
 		battlefield.render();
 		battlefield.update();
 
-        if(mouseY < height - height/18)
-        {
-            checkUnit();
-        }//end if
+        city.render();
+
+        checkUnit();
 
 		for(int i = 0; i < units.size(); i++)
 		{
@@ -165,15 +179,10 @@ public class Main extends PApplet
 			units.get(i).update();
 		}//end for
 
-		if(types[0] == true)
+		if(types[0] == true && gold >= 50)
 		{
 			shipCreate();
 		}//end if
-
-        if(types[1] == true)
-        {
-            subCreate();
-        }//end if
 
         if(mouseX < width && mouseX > width - battlefield.size * 2 && mouseY < height && mouseY > height - battlefield.size)
         {
@@ -184,60 +193,7 @@ public class Main extends PApplet
             battlefield.hover = false;
         }//end else
 
-       /* for(int i = 0; i < 32; i ++)
-        {
-            for(int j = 0; j < 17; j ++)
-            {
-                if(checkVisited() == true)
-                {
-                    visited[i][j] = true;
-                }
-            }//end for
-        }//end for*/
-	}
-
-    public boolean checkVisited()
-    {
-        boolean works = false;
-        for (int i = 0; i < 32; i++)
-        {
-            for (int j = 0; j < 17; j++)
-            {
-                int count = 0;
-
-                if(i > 0)
-                {
-                    visited[i - 1][j] = true;
-                    count ++;
-                }//end if
-
-                if(i < 32)
-                {
-                    visited[i + 1][j] = true;
-                    count++;
-                }//end if
-
-                if(j > 0)
-                {
-                    visited[i][j - 1] = true;
-                    count++;
-                }//end if
-
-                if(j < 17)
-                {
-                    visited[i][j + 1] = true;
-                    count++;
-                }//end if
-
-                if(count == 4)
-                {
-                    works = true;
-                }
-
-            }//end for
-        }//end for
-        return works;
-    }
+	}//end game()
 
 	public void keyPressed()
 	{
@@ -262,6 +218,8 @@ public class Main extends PApplet
 	{
 		//increase the number of ships
 		int i = numShips;
+        gold -=50;
+        amountSubbed = 50;
 		//create a ship
 		Ship ship = new Ship(this);
 		units.add(ship);
@@ -271,26 +229,13 @@ public class Main extends PApplet
 		types[0] = false;
 	}//end shipCreate()
 
-    private void subCreate()
-    {
-        //increase the number of ships
-        int i = numShips;
-        //create a ship
-        Sub ship = new Sub(this);
-        units.add(ship);
-        //set it so that the ship follows the mouse
-        units.get(i).move = 0;
-        numShips++;
-        types[1] = false;
-    }//end shipCreate()
-
-
 	void checkUnit()
     {
         mousePos.x = mouseX;
         mousePos.y = mouseY;
-        if(mousePressed && clicked == 0)
+        if(release == true && clicked == 0)
         {
+            release = false;
             for(int i = 0 ; i < units.size(); i ++)
             {
                 GameObject go = units.get(i);
@@ -306,8 +251,10 @@ public class Main extends PApplet
                             clicked = 0;
                         }//end if
 
+                        //this prevents multiple moves per turn
                         if(click == true)
                         {
+                            println(go.clicks);
                             go.clicks++;
                             click = false;
                         }//end if
@@ -320,9 +267,9 @@ public class Main extends PApplet
         {
             GameObject go = units.get(i);
 
-            for(int k = 0; k < 32; k++)
+            for(int k = 0; k < w; k++)
             {
-                for (int j = 0; j < 17; j++)
+                for (int j = 0; j < h; j++)
                 {
                     if ((go.pos.x + mousePos.x) < (go.pos.x*2 + width/64) && (go.pos.x + mousePos.x) > (go.pos.x*2 - width/64))
                     {
@@ -364,9 +311,9 @@ public class Main extends PApplet
     public boolean validTile()
     {
         boolean valid = false;
-        if(mouseY < height - (height/18)*2 &&  mouseY > height - (height/18) * 3 && mouseX > width/2 - battlefield.size*2 && mouseX < width/2 + battlefield.size*2 ||
-                mouseY > height - (height/18)*2 &&  mouseY < height - (height/18) && mouseX > width/2 - battlefield.size*2 && mouseX < width/2 - battlefield.size ||
-                mouseY > height - (height/18)*2 &&  mouseY < height - (height/18) && mouseX < width/2 + battlefield.size*2 && mouseX > width/2 + battlefield.size)
+        if(mouseY < height - (height/hplus1)*2 &&  mouseY > height - (height/hplus1) * 3 && mouseX > width/2 - battlefield.size*2 && mouseX < width/2 + battlefield.size*2 ||
+                mouseY > height - (height/hplus1)*2 &&  mouseY < height - (height/hplus1) && mouseX > width/2 - battlefield.size*2 && mouseX < width/2 - battlefield.size ||
+                mouseY > height - (height/hplus1)*2 &&  mouseY < height - (height/hplus1) && mouseX < width/2 + battlefield.size*2 && mouseX > width/2 + battlefield.size)
         {
            valid = true;
         }//end if
@@ -375,6 +322,7 @@ public class Main extends PApplet
     public void mouseClicked()
     {
         click = true;
+        println("this counts as a clcik");
     }//end mouseClicked()
 
     public void mouseDragged()
@@ -395,25 +343,59 @@ public class Main extends PApplet
         }//end if
     }//end mousePressed
 
+    boolean release = false;
     public void mouseReleased()
     {
 
+        release = true;
         if(clicked == 1)
         {
             for(int j = 0; j < units.size(); j++)
             {
                 GameObject go = units.get(j);
                 //allow it to be placed on the battlefield
-                if(mouseY < height - (height/18)*2 &&  mouseY > height - (height/18) * 3 && mouseX > width/2 - battlefield.size*2 && mouseX < width/2 + battlefield.size*2 ||
-                        mouseY > height - (height/18)*2 &&  mouseY < height - (height/18) && mouseX > width/2 - battlefield.size*2 && mouseX < width/2 - battlefield.size ||
-                        mouseY > height - (height/18)*2 &&  mouseY < height - (height/18) && mouseX < width/2 + battlefield.size*2 && mouseX > width/2 + battlefield.size)
+                //check if placed on left side
+                if(mouseX > width/2 - battlefield.size*2 && mouseX < width/2 - battlefield.size && mouseY > height/2 - battlefield.size*2 && mouseY < height/2 + battlefield.size*2)
                 {
-                    println("this works 1");
-                    println("this works");
-                    if(go.move == 0)
+                    if (go.move == 0)
                     {
                         go.move = 1;
+                        clicked = 0;
+                        place = true;
+                        go.madeMove = true;
+                    }//end if
+                }//end if
 
+                //check if placed on right
+                if(mouseX > width/2 + battlefield.size && mouseX < width/2 + battlefield.size*2 && mouseY > height/2 - battlefield.size*2 && mouseY < height/2 + battlefield.size*2)
+                {
+                    if (go.move == 0)
+                    {
+                        go.move = 1;
+                        clicked = 0;
+                        place = true;
+                        go.madeMove = true;
+                    }//end if
+                }//end if
+
+                //check if placed on top
+                if(mouseX > width/2 - battlefield.size*2 && mouseX < width/2 + battlefield.size*2 && mouseY > height/2 - battlefield.size*2 && mouseY < height/2 - battlefield.size)
+                {
+                    if (go.move == 0)
+                    {
+                        go.move = 1;
+                        clicked = 0;
+                        place = true;
+                        go.madeMove = true;
+                    }//end if
+                }//end if
+
+                //check if placed on bottom
+                if(mouseX > width/2 - battlefield.size*2 && mouseX < width/2 + battlefield.size*2 && mouseY > height/2 + battlefield.size && mouseY < height/2 + battlefield.size*2)
+                {
+                    if (go.move == 0)
+                    {
+                        go.move = 1;
                         clicked = 0;
                         place = true;
                         go.madeMove = true;
@@ -421,11 +403,12 @@ public class Main extends PApplet
                 }//end if
 
                 //if you try to place it off the battlefield it will be deleted
-                if(go.pos.y > height - height/18)
+                if(go.pos.y > height/2 + battlefield.size*2 || go.pos.y < height/2 - battlefield.size*2 || go.pos.x > width/2 + battlefield.size*2 || go.pos.x < width/2 - battlefield.size*2)
                 {
                     units.remove(go);
                     numShips--;
                     clicked = 0;
+                    gold += amountSubbed;
                 }//end else
             }//end for
         }//end if

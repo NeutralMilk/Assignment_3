@@ -19,10 +19,18 @@ public abstract class GameObject extends PApplet
 	int clicks;
 	boolean colourChange = false;
 	boolean nextTurn = false;
+	int w;
+	int h;
+	int hplus1;
+	int hmin1;
 
     GameObject(Main _main)
     {
     	main = _main;
+		w = main.w;
+		h = main.h;
+		hplus1 = main.h + 1;
+		hmin1 = main.h - 1;
     }
   
     public abstract void update();  

@@ -1,86 +1,95 @@
 package ie.dit;
 
-import java.util.ArrayList;
-
-import ddf.minim.Minim;
 import processing.core.*;
 
 public class Battlefield extends PApplet
 {
 	Main main;
-	int f = color(68,193,235);
 	int s = color(255);
 	int x;
 	int y;
 	int size;
-	boolean[] placeOil = new boolean[544];
-	PImage[] images = new PImage[3];
-	PImage friendlyCity = new PImage();
-	PImage oil = new PImage();
-	int[][] colours = new int[32][17];
-
-	boolean highlight = false;
+	boolean[][] placeOil;
+	PImage[] images;
+	PImage oil;
+	int[][] colours;
+    int[][] coloursWater ;
+	int w;
+	int h;
+	int hplus1;
 
 
 
 	public Battlefield(Main _main)
 	{
 		main = _main;
+
+		w = main.w;
+		h = main.h;
+		hplus1 = h+1;
 		x = 0;
 		y = 0;
-		size = main.width/32;
+		size = main.width/w;
 
-		friendlyCity = main.loadImage("city.png");
+		placeOil = new boolean[w][h];
+		images = new PImage[3];
+		oil = new PImage();
+		colours = new int[w][h];
+		coloursWater = new int[w][h];
 
-		for(int i = 0; i < 32; i++)
+		for(int i = 0; i < w; i++)
 		{
-
-			int ran = (int)random(1,30);
-			if(ran == 1)
-			{
-				placeOil[i] = true;
-			}
-			else
-			{
-				placeOil[i] = false;
-			}
-		}
+            for(int j = 0 ; j < h; j++)
+            {
+                if ((int)random(1,50) == 1)
+                {
+                    placeOil[i][j] = true;
+                } //end if
+                else
+                {
+                    placeOil[i][j] = false;
+                }//end else
+            }//end for
+		}//end for
 		oil = main.loadImage("oil.png");
 
 		for ( int i = 0; i< images.length; i++ )
 		{
 			images[i] = main.loadImage( i + ".png" );
-			int w = images[i].width * main.width/2560;
-			int h = images[i].height * main.height/1440;
-			images[i].resize(w,h);
+			int wi = images[i].width * main.width/2560;
+			int hi = images[i].height * main.height/1440;
+			images[i].resize(wi,hi);
 		}//end for
 
-		int w = friendlyCity.width * main.width/2560;
-		int h = friendlyCity.height * main.height/1440;
-		friendlyCity.resize(w,h);
 
-		w = oil.width * main.width/2560;
-		h = oil.height * main.height/1440;
-		oil.resize(w,h);
 
-		for(int i = 0; i < 32; i ++)
+		int wi = oil.width * main.width/2560;
+		int hi = oil.height * main.height/1440;
+		oil.resize(wi,hi);
+
+		for(int i = 0; i < w; i ++)
 		{
-			for(int j = 0; j < 17; j ++)
+			for(int j = 0; j < h; j ++)
 			{
 				colours[i][j] = (int)random(125,150);
-			}
-		}
+                int r = (int)random(55,70);
+                int g = (int)random(180,190);
+                int b = (int)random(230,245);
+                int c = color(r, g, b);
+                coloursWater[i][j] = c;
+			}//end for
+		}//end for
 	}
 
 	boolean colourGreen = false;
 	boolean colourRed = false;
 	boolean hover = false;
-	int turnCount = 0;
+	int turnCount = 1;
 	public void update()
 	{
-		for(int i = 0; i < 32; i++)
+		for(int i = 0; i < w; i++)
 		{
-			for(int j = 0; j < 17; j++)
+			for(int j = 0; j < h; j++)
 			{
 				//if the mouse position is within the bounds of a box change the colour and keep the oil picture displaying
 				if(main.mouseX < (main.cPosX[i] + main.width/32) && main.mouseX > main.cPosX[i] && main.mouseY < (main.cPosY[j] + main.height/18) && main.mouseY > main.cPosY[j])
@@ -117,25 +126,29 @@ public class Battlefield extends PApplet
 		}
 		//main.imageMode(CORNER);
 
+		main.textAlign(CENTER);
+		main.fill(245, 189 , 7);
+		main.textSize(main.height/48);
+		main.text("Gold = " + main.gold, main.width-size*10, main.height - size/2 + 5);
+
 
 	}
 
 	public void render()
 	{
-		for(int i = 0; i < 32; i ++)
+		for(int i = 0; i < w; i ++)
 		{
-			for(int j = 0; j < 17; j ++)
+			for(int j = 0; j < h; j ++)
 			{
-
-				main.fill(f);
+				main.fill(coloursWater[i][j]);
 				s = color(255);
 				main.stroke(s);
-				main.rect(i*main.width/32, j*main.height/18, size, size);
+				main.rect(i*main.width/w, j*main.height/hplus1, size, size);
 
 				main.imageMode(CENTER);
-				if(placeOil[i * j] == true)
+				if(placeOil[i][j] == true)
 				{
-					main.image(oil, i*main.width/32 + main.width/64, j*main.height/18 + main.height/36);
+					main.image(oil, i*main.width/w + main.width/w/2, j*main.height/hplus1 + main.height/hplus1*2);
 				}//end if
 
                 if(main.visited[i][j] == false)
@@ -143,25 +156,24 @@ public class Battlefield extends PApplet
                     main.fill(colours[i][j]);
                     s = color(255);
                     main.stroke(s);
-                    main.rect(i*main.width/32, j*main.height/18, size, size);
-                }
+                    main.rect(i*main.width/w, j*main.height/hplus1, size, size);
+                }//end if
 			}//end for
 		}//end for
 
-		for(int i = 0; i < 32; i ++)
+		for(int i = 0; i < w; i ++)
 		{
 			main.imageMode(CENTER);
 			main.fill(255);
 			main.stroke(255);
-			main.rect(i * main.width/32, main.height - size, size, size);
+			main.rect(i * main.width/w, main.height - size, size, size);
 			if(i < images.length)
 			{
-				main.image(images[i], i * main.width/32 - size/2, main.height - size/2);
+				main.image(images[i], i * main.width/w - size/2, main.height - size/2);
 			}//end if
 		}//end for
 
-		main.imageMode(CORNER);
-		main.image(friendlyCity, main.width/2 - size, main.height-size*2);
+
 
 		main.textAlign(CENTER);
 		main.fill(0);

@@ -41,15 +41,15 @@ public class Ship extends GameObject
 
 		if (move == 1)
 		{
-			for (int i = 0; i < 32; i++)
+			for (int i = 0; i < w; i++)
 			{
-				for (int j = 0; j < 17; j++)
+				for (int j = 0; j < h; j++)
 				{
-					if (pos.x < (main.cPosX[i] + main.width / 32 + 1) && pos.x > main.cPosX[i] && pos.y < (main.cPosY[j] + main.height / 18 + 1) && pos.y > main.cPosY[j])
+					if (pos.x < (main.cPosX[i] + main.width / w + 1) && pos.x > main.cPosX[i] && pos.y < (main.cPosY[j] + main.height / hplus1 + 1) && pos.y > main.cPosY[j])
 					{
                         main.visited[i][j]= true;
 
-                        if(i > 0 && i < 31 &&  j > 0 && j < 16)
+                        if(i > 0 && i < 31 &&  j > 0 && j < hmin1)
                         {
                             main.visited[i - 1][j] = true;
 							main.visited[i + 1][j] = true;
@@ -76,18 +76,18 @@ public class Ship extends GameObject
 
 		if (move == 2)
 		{
-			for (int i = 0; i < 32; i++)
+			for (int i = 0; i < w; i++)
 			{
-				for (int j = 0; j < 17; j++)
+				for (int j = 0; j < h; j++)
 				{
-					if (pos.x < (main.cPosX[i] + main.width / 32 + 1) && pos.x > main.cPosX[i] && pos.y < (main.cPosY[j] + main.height / 18 + 1) && pos.y > main.cPosY[j])
+					if (pos.x < (main.cPosX[i] + main.width / w + 1) && pos.x > main.cPosX[i] && pos.y < (main.cPosY[j] + main.height / hplus1 + 1) && pos.y > main.cPosY[j])
 					{
 						pos.x = main.cPosX[i] + main.width / 64;
 						pos.y = main.cPosY[j] + main.height / 36;
 						main.occupiedFriendly[i * j] = true;
 					}//end if
 
-					if (main.mouseX < (main.cPosX[i] + main.width / 32) && main.mouseX > main.cPosX[i] && main.mouseY < (main.cPosY[j] + main.height / 18) && main.mouseY > main.cPosY[j])
+					if (main.mouseX < (main.cPosX[i] + main.width / w) && main.mouseX > main.cPosX[i] && main.mouseY < (main.cPosY[j] + main.height / hplus1) && main.mouseY > main.cPosY[j])
 					{
 						mouseBox.x = main.cPosX[i] + main.width / 64;
 						mouseBox.y = main.cPosY[j] + main.height / 36;
@@ -102,7 +102,7 @@ public class Ship extends GameObject
 						madeMove = true;
 
                         //only move once per turn
-                        if(clicks > 1)
+                        if(clicks > 0)
                         {
                             move = 1;
 							nextTurn = false;
@@ -119,16 +119,16 @@ public class Ship extends GameObject
 	public boolean validTiles()
 	{
 		//check for the x values
-		int plusX = (int)pos.x + main.width/32;
-		int plus2X = (int)pos.x + main.width/16;
-		int minX = (int)pos.x - main.width/32;
-		int min2X = (int)pos.x - main.width/16;
+		int plusX = (int)pos.x + main.width/w;
+		int plus2X = (int)pos.x + main.width/hmin1;
+		int minX = (int)pos.x - main.width/w;
+		int min2X = (int)pos.x - main.width/hmin1;
 
 		//check for y values
 
-		int plusY = (int)pos.y + main.height/18;
+		int plusY = (int)pos.y + main.height/hplus1;
 		int plus2Y = (int)pos.y + main.height/9;
-		int minY = (int)pos.y - main.height/18;
+		int minY = (int)pos.y - main.height/hplus1;
 		int min2Y = (int)pos.y - main.height/9;
 
 		if (mouseBox.x == plusX || mouseBox.x == plus2X || mouseBox.x == minX || mouseBox.x == min2X || mouseBox.x == pos.x)
