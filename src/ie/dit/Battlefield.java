@@ -18,8 +18,6 @@ public class Battlefield extends PApplet
 	int h;
 	int hplus1;
 
-
-
 	public Battlefield(Main _main)
 	{
 		main = _main;
@@ -65,6 +63,8 @@ public class Battlefield extends PApplet
 
 		int wi = oil.width * main.width/2560;
 		int hi = oil.height * main.height/1440;
+
+        println(wi,hi);
 		oil.resize(wi,hi);
 
 		for(int i = 0; i < w; i ++)
@@ -148,16 +148,17 @@ public class Battlefield extends PApplet
 				main.imageMode(CENTER);
 				if(placeOil[i][j] == true)
 				{
+                    main.text("hello",i*main.width/w + main.width/w/2, j*main.height/hplus1 + main.height/hplus1*2);
 					main.image(oil, i*main.width/w + main.width/w/2, j*main.height/hplus1 + main.height/hplus1*2);
 				}//end if
 
-                if(main.visited[i][j] == false)
+                /*if(main.visited[i][j] == false)
                 {
                     main.fill(colours[i][j]);
                     s = color(255);
                     main.stroke(s);
                     main.rect(i*main.width/w, j*main.height/hplus1, size, size);
-                }//end if
+                }//end if*/
 			}//end for
 		}//end for
 

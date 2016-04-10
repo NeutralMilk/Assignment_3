@@ -254,7 +254,6 @@ public class Main extends PApplet
                         //this prevents multiple moves per turn
                         if(click == true)
                         {
-                            println(go.clicks);
                             go.clicks++;
                             click = false;
                         }//end if
@@ -322,7 +321,6 @@ public class Main extends PApplet
     public void mouseClicked()
     {
         click = true;
-        println("this counts as a clcik");
     }//end mouseClicked()
 
     public void mouseDragged()
@@ -353,6 +351,16 @@ public class Main extends PApplet
             for(int j = 0; j < units.size(); j++)
             {
                 GameObject go = units.get(j);
+
+                //if you try to place it off the battlefield it will be deleted
+                if(go.pos.y > height-battlefield.size)
+                {
+                    units.remove(j);
+                    numShips--;
+                    clicked = 0;
+                    gold += amountSubbed;
+                }//end else
+
                 //allow it to be placed on the battlefield
                 //check if placed on left side
                 if(mouseX > width/2 - battlefield.size*2 && mouseX < width/2 - battlefield.size && mouseY > height/2 - battlefield.size*2 && mouseY < height/2 + battlefield.size*2)
@@ -402,14 +410,6 @@ public class Main extends PApplet
                     }//end if
                 }//end if
 
-                //if you try to place it off the battlefield it will be deleted
-                if(go.pos.y > height/2 + battlefield.size*2 || go.pos.y < height/2 - battlefield.size*2 || go.pos.x > width/2 + battlefield.size*2 || go.pos.x < width/2 - battlefield.size*2)
-                {
-                    units.remove(go);
-                    numShips--;
-                    clicked = 0;
-                    gold += amountSubbed;
-                }//end else
             }//end for
         }//end if
 
