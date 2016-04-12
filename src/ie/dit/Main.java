@@ -17,10 +17,12 @@ public class Main extends PApplet
 	int clicked;
     boolean place = false;
 
+    PVector previousPos = new PVector();
     //position of each tile
     int[] cPosX;
     int[] cPosY;
     boolean[][] visited;
+    ArrayList<PVector> posList = new ArrayList<PVector>();
 
 	//variables for making the units
 	boolean[] types = new boolean[2];
@@ -39,8 +41,8 @@ public class Main extends PApplet
 
     //variables to track occupied squares
 
-    boolean[] occupiedFriendly = new boolean [544*4];
-    boolean[] occupiedEnemy = new boolean [544*4];
+    boolean[][] occupiedFriendly = new boolean [32][17];
+    boolean[][] occupiedEnemy = new boolean [32][17];
 
 
 	public void settings()
@@ -65,19 +67,13 @@ public class Main extends PApplet
 			{
 				int a = (i * width/w);
 				int b = (j * height/hplus1);
+                occupiedFriendly[i][j] = false;
 
 				cPosX[i] = a;
 				cPosY[j] = b;
 			}//end for
 		}  //end for
 
-
-		for( int i = 0; i < 544; i++ )
-		{
-			occupiedFriendly[i] = false;
-            occupiedEnemy[i] = false;
-            //visited[i][j] = false;
-		}//end for
 	}//end setup
 
     //have separate methods for both the menu and the game
@@ -173,10 +169,11 @@ public class Main extends PApplet
 
         checkUnit();
 
-		for(int i = 0; i < units.size(); i++)
+		for(int i = units.size()-1; i >= 0; i--)
 		{
 			units.get(i).render();
 			units.get(i).update();
+            //if(units.get(i).pos.x)
 		}//end for
 
 		if(types[0] == true && gold >= 50)
@@ -201,6 +198,15 @@ public class Main extends PApplet
 		{
 			firstTime = false;
 
+            println(posList);
+            //checking if occupied slots work
+            /*for(int i = 0; i < w; i ++)
+            {
+                for(int j = 0; j < h; j ++)
+                {
+                    println("after"+i, j, occupiedFriendly[i][j]);
+                }
+            }*/
 			if(menu == true)
 			{
 				menu = false;
@@ -361,55 +367,68 @@ public class Main extends PApplet
                     gold += amountSubbed;
                 }//end else
 
-                //allow it to be placed on the battlefield
-                //check if placed on left side
-                if(mouseX > width/2 - battlefield.size*2 && mouseX < width/2 - battlefield.size && mouseY > height/2 - battlefield.size*2 && mouseY < height/2 + battlefield.size*2)
+                for( int i = 0; i < 32; i++ )
                 {
-                    if (go.move == 0)
+                    for( int q = 0; q < 17; q++)
                     {
-                        go.move = 1;
-                        clicked = 0;
-                        place = true;
-                        go.madeMove = true;
-                    }//end if
-                }//end if
+                        //allow it to be placed on the battlefield
+                        //check if placed on left side
+                        if(mouseX > width/2 - battlefield.size*2 && mouseX < width/2 - battlefield.size && mouseY > height/2 - battlefield.size*2 && mouseY < height/2 + battlefield.size*2)
+                        {
+                            if (go.move == 0)
+                            {
+                                go.move = 1;
+                                PVector pv = new PVector(go.pos.x, go.pos.y);
+                                posList.add(pv);
+                                clicked = 0;
+                                place = true;
+                                go.madeMove = true;
+                            }//end if
+                        }//end if
 
-                //check if placed on right
-                if(mouseX > width/2 + battlefield.size && mouseX < width/2 + battlefield.size*2 && mouseY > height/2 - battlefield.size*2 && mouseY < height/2 + battlefield.size*2)
-                {
-                    if (go.move == 0)
-                    {
-                        go.move = 1;
-                        clicked = 0;
-                        place = true;
-                        go.madeMove = true;
-                    }//end if
-                }//end if
+                        //check if placed on right
+                        if(mouseX > width/2 + battlefield.size && mouseX < width/2 + battlefield.size*2 && mouseY > height/2 - battlefield.size*2 && mouseY < height/2 + battlefield.size*2)
+                        {
+                            if (go.move == 0)
+                            {
+                                go.move = 1;
+                                PVector pv = new PVector(go.pos.x, go.pos.y);
+                                posList.add(pv);
+                                clicked = 0;
+                                place = true;
+                                go.madeMove = true;
+                            }//end if
+                        }//end if
 
-                //check if placed on top
-                if(mouseX > width/2 - battlefield.size*2 && mouseX < width/2 + battlefield.size*2 && mouseY > height/2 - battlefield.size*2 && mouseY < height/2 - battlefield.size)
-                {
-                    if (go.move == 0)
-                    {
-                        go.move = 1;
-                        clicked = 0;
-                        place = true;
-                        go.madeMove = true;
-                    }//end if
-                }//end if
+                        //check if placed on top
+                        if(mouseX > width/2 - battlefield.size*2 && mouseX < width/2 + battlefield.size*2 && mouseY > height/2 - battlefield.size*2 && mouseY < height/2 - battlefield.size)
+                        {
+                            if (go.move == 0)
+                            {
+                                go.move = 1;
+                                PVector pv = new PVector(go.pos.x, go.pos.y);
+                                posList.add(pv);
+                                clicked = 0;
+                                place = true;
+                                go.madeMove = true;
+                            }//end if
+                        }//end if
 
-                //check if placed on bottom
-                if(mouseX > width/2 - battlefield.size*2 && mouseX < width/2 + battlefield.size*2 && mouseY > height/2 + battlefield.size && mouseY < height/2 + battlefield.size*2)
-                {
-                    if (go.move == 0)
-                    {
-                        go.move = 1;
-                        clicked = 0;
-                        place = true;
-                        go.madeMove = true;
-                    }//end if
-                }//end if
-
+                        //check if placed on bottom
+                        if(mouseX > width/2 - battlefield.size*2 && mouseX < width/2 + battlefield.size*2 && mouseY > height/2 + battlefield.size && mouseY < height/2 + battlefield.size*2)
+                        {
+                            if (go.move == 0)
+                            {
+                                go.move = 1;
+                                PVector pv = new PVector(go.pos.x, go.pos.y);
+                                posList.add(pv);
+                                clicked = 0;
+                                place = true;
+                                go.madeMove = true;
+                            }//end if
+                        }//end if
+                    }//end for
+                }//end for
             }//end for
         }//end if
 

@@ -39,7 +39,7 @@ public class Battlefield extends PApplet
 		{
             for(int j = 0 ; j < h; j++)
             {
-                if ((int)random(1,50) == 1)
+                if ((int)random(1,45) == 1)
                 {
                     placeOil[i][j] = true;
                 } //end if
@@ -54,6 +54,7 @@ public class Battlefield extends PApplet
 		for ( int i = 0; i< images.length; i++ )
 		{
 			images[i] = main.loadImage( i + ".png" );
+			//scaling the image
 			int wi = images[i].width * main.width/2560;
 			int hi = images[i].height * main.height/1440;
 			images[i].resize(wi,hi);
@@ -61,10 +62,10 @@ public class Battlefield extends PApplet
 
 
 
+		//scaling th eimage
 		int wi = oil.width * main.width/2560;
 		int hi = oil.height * main.height/1440;
 
-        println(wi,hi);
 		oil.resize(wi,hi);
 
 		for(int i = 0; i < w; i ++)
@@ -97,15 +98,15 @@ public class Battlefield extends PApplet
                     if(colourGreen == true)
                     {
                         s = color(0,255,0);
-                    }
+                    }//end if
                     else if(colourRed == true)
                     {
                         s = color(255,0,0);
-                    }
+                    }//end else if
                     else
                     {
                         s = color(255);
-                    }
+                    }//end else
 
 					main.stroke(s);
 					main.strokeWeight(3);
@@ -123,16 +124,14 @@ public class Battlefield extends PApplet
 			main.fill(255, 0 , 0);
 			main.textSize(main.height/48);
 			main.text("Next Turn", main.width-size, main.height - size/2 + 5);
-		}
-		//main.imageMode(CORNER);
+		}//end
 
 		main.textAlign(CENTER);
 		main.fill(245, 189 , 7);
 		main.textSize(main.height/48);
 		main.text("Gold = " + main.gold, main.width-size*10, main.height - size/2 + 5);
 
-
-	}
+	}//end upate
 
 	public void render()
 	{
@@ -148,17 +147,16 @@ public class Battlefield extends PApplet
 				main.imageMode(CENTER);
 				if(placeOil[i][j] == true)
 				{
-                    main.text("hello",i*main.width/w + main.width/w/2, j*main.height/hplus1 + main.height/hplus1*2);
-					main.image(oil, i*main.width/w + main.width/w/2, j*main.height/hplus1 + main.height/hplus1*2);
-				}//end if
-
-                /*if(main.visited[i][j] == false)
+					main.image(oil, i*main.width/32 + main.width/64, j*main.height/18 + main.height/36);
+                }//end if
+                //main.image(oil, main.width/4, main.height/4);
+                if(main.visited[i][j] == false)
                 {
                     main.fill(colours[i][j]);
                     s = color(255);
                     main.stroke(s);
                     main.rect(i*main.width/w, j*main.height/hplus1, size, size);
-                }//end if*/
+                }//end if
 			}//end for
 		}//end for
 

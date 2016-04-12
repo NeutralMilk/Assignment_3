@@ -48,6 +48,10 @@ public class Ship extends GameObject
 					if (pos.x < (main.cPosX[i] + main.width / w + 1) && pos.x > main.cPosX[i] && pos.y < (main.cPosY[j] + main.height / hplus1 + 1) && pos.y > main.cPosY[j])
 					{
                         main.visited[i][j]= true;
+                        main.occupiedFriendly[i][j] = true;
+
+						//println("ship" +i,j, main.occupiedFriendly[i][j]);
+
 
                         if(i > 0 && i < 31 &&  j > 0 && j < hmin1)
                         {
@@ -69,6 +73,11 @@ public class Ship extends GameObject
 
                         break;
 					}//end if
+					else
+					{
+						main.occupiedFriendly[i][j] = false;
+					}
+
 				}//end for
 			}//end for
 
@@ -84,7 +93,6 @@ public class Ship extends GameObject
 					{
 						pos.x = main.cPosX[i] + main.width / 64;
 						pos.y = main.cPosY[j] + main.height / 36;
-						main.occupiedFriendly[i * j] = true;
 					}//end if
 
 					if (main.mouseX < (main.cPosX[i] + main.width / w) && main.mouseX > main.cPosX[i] && main.mouseY < (main.cPosY[j] + main.height / hplus1) && main.mouseY > main.cPosY[j])
@@ -104,6 +112,7 @@ public class Ship extends GameObject
                         //only move once per turn
                         if(clicks > 0)
                         {
+
                             move = 1;
 							nextTurn = false;
                         }//end if
