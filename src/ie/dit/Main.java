@@ -46,8 +46,8 @@ public class Main extends PApplet
 
 	public void settings()
 	{
-		fullScreen();
-        //size(1280,720);
+		//fullScreen();
+        size(1280,720);
 	}//end settings
 
 	public void setup()
@@ -197,15 +197,6 @@ public class Main extends PApplet
 		{
 			firstTime = false;
 
-            println(posList);
-            //checking if occupied slots work
-            /*for(int i = 0; i < w; i ++)
-            {
-                for(int j = 0; j < h; j ++)
-                {
-                    println("after"+i, j, occupiedFriendly[i][j]);
-                }
-            }*/
 			if(menu == true)
 			{
 				menu = false;
@@ -358,7 +349,10 @@ public class Main extends PApplet
                 GameObject go = units.get(j);
 
                 //if you try to place it off the battlefield it will be deleted
-                if(go.pos.y > height-battlefield.size || checkPos(go.pos))
+
+                //if you place it off the field it wont work
+                //if the position is the same as another you cant place it
+                if(go.pos.y > height-battlefield.size || checkPos(go.pos, j) == false)
                 {
                     units.remove(j);
                     numShips--;
@@ -435,7 +429,6 @@ public class Main extends PApplet
             }//end for
         }//end if
 
-
         if(mouseX < width && mouseX > width - battlefield.size * 2 && mouseY < height && mouseY > height - battlefield.size)
         {
             for(int i = 0 ; i < units.size(); i ++)
@@ -448,31 +441,36 @@ public class Main extends PApplet
             battlefield.turnCount++;
         }//end if)
     }//end mouseReleased
-    public boolean checkPos(PVector pos)
+
+    public boolean checkPos(PVector pos, int j)
     {
+        boolean valid = true;
         for(int i = 0; i < units.size(); i++)
         {
-            GameObject go = units.get(i);
-            float size = battlefield.size/2
-            if(pos.x < go.pos.x + size && pos.x > go.pos.x - size)
-            {
-                if(pos.y < go.pos.y + size && pos.y > go.pos.y - size)
-                {
+            //change the position to the centre
+            pos = centerPos(pos);
 
-                }//end if
+            GameObject go = units.get(i);
+            float size = battlefield.size/2;
+
+            //if the position is the same as any unit other than itself then you cannot place it
+            if(pos.x == go.pos.x && pos.y == go.pos.y && i != j)
+            {
+                valid = false;
             }//end if
         }//end for
+        println(valid);
+        return valid;
     }//end checkPos
     public PVector centerPos(PVector pos)
     {
-        //PVector pos = new PVector(x,y)
         for (int i = 0; i < w; i++)
         {
             for (int j = 0; j < h; j++)
             {
-                if (pos.x < (cPosX[i] + width / w + 1) && pos.x > cPosX[i] && pos.y < (cPosY[j] + height / hplus1 + 1) && pos.y > cPosY[j])
+                if (pos.x < (cPosX[i] + (width / w) + 1) && pos.x > cPosX[i] && pos.y < (cPosY[j] + (height / hplus1) + 1) && pos.y > cPosY[j])
                 {
-                    println("this works");
+                    //move them to the centre
                     pos.x = cPosX[i] + width / 64;
                     pos.y = cPosY[j] + height / 36;
                 }//end if
