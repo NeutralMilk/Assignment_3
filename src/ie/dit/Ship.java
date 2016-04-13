@@ -99,7 +99,7 @@ public class Ship extends GameObject
 						mouseBox.y = main.cPosY[j] + main.height / 36;
 					}//end if
 
-					if (main.mousePressed && validTiles() && checkPos(mouseBox) == false)
+					if (main.mousePressed && validTiles() && checkPos(mouseBox) == true)
 					{
 						pos.x = mouseBox.x;
 						pos.y = mouseBox.y;
@@ -163,6 +163,7 @@ public class Ship extends GameObject
 			//if the position is the same as any unit other than itself then you cannot place it
 			if(pos.x == go.pos.x && pos.y == go.pos.y)
 			{
+				println("This works xy");
 				valid = false;
 			}//end if
 		}//end for
