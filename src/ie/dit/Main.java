@@ -476,6 +476,7 @@ public class Main extends PApplet
                 }//end if
             }//end if
         }//end for
+
         return pos;
     }//end centerPos
 

@@ -65,8 +65,6 @@ public class Ship extends GameObject
 							main.visited[i - 1][j - 1] = true;
                         }//end if
 
-
-
                         pos.x = main.cPosX[i] + main.width / 64;
                         pos.y = main.cPosY[j] + main.height / 36;
 
@@ -101,7 +99,7 @@ public class Ship extends GameObject
 						mouseBox.y = main.cPosY[j] + main.height / 36;
 					}//end if
 
-					if (main.mousePressed && validTiles())
+					if (main.mousePressed && validTiles() && checkPos(mouseBox) == false)
 					{
 						pos.x = mouseBox.x;
 						pos.y = mouseBox.y;
@@ -149,7 +147,28 @@ public class Ship extends GameObject
 		}//end if
 
 		return validTile;
-	}
+	}//end validTiles()
+
+	public boolean checkPos(PVector pos)
+	{
+		boolean valid = true;
+		for(int i = 0; i < main.units.size(); i++)
+		{
+			//change the position to the centre
+			pos = main.centerPos(pos);
+
+			GameObject go = main.units.get(i);
+			float size = main.battlefield.size/2;
+
+			//if the position is the same as any unit other than itself then you cannot place it
+			if(pos.x == go.pos.x && pos.y == go.pos.y)
+			{
+				valid = false;
+			}//end if
+		}//end for
+		println(valid);
+		return valid;
+	}//end checkPos
 
 	public void render()
 	{
