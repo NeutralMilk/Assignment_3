@@ -17,7 +17,6 @@ public class Main extends PApplet
 	int clicked;
     boolean place = false;
 
-    PVector previousPos = new PVector();
     //position of each tile
     int[] cPosX;
     int[] cPosY;
@@ -359,7 +358,7 @@ public class Main extends PApplet
                 GameObject go = units.get(j);
 
                 //if you try to place it off the battlefield it will be deleted
-                if(go.pos.y > height-battlefield.size)
+                if(go.pos.y > height-battlefield.size || checkPos(go.pos))
                 {
                     units.remove(j);
                     numShips--;
@@ -379,6 +378,7 @@ public class Main extends PApplet
                             {
                                 go.move = 1;
                                 PVector pv = new PVector(go.pos.x, go.pos.y);
+                                pv = centerPos(pv);
                                 posList.add(pv);
                                 clicked = 0;
                                 place = true;
@@ -393,6 +393,7 @@ public class Main extends PApplet
                             {
                                 go.move = 1;
                                 PVector pv = new PVector(go.pos.x, go.pos.y);
+                                pv = centerPos(pv);
                                 posList.add(pv);
                                 clicked = 0;
                                 place = true;
@@ -407,6 +408,7 @@ public class Main extends PApplet
                             {
                                 go.move = 1;
                                 PVector pv = new PVector(go.pos.x, go.pos.y);
+                                pv = centerPos(pv);
                                 posList.add(pv);
                                 clicked = 0;
                                 place = true;
@@ -421,6 +423,7 @@ public class Main extends PApplet
                             {
                                 go.move = 1;
                                 PVector pv = new PVector(go.pos.x, go.pos.y);
+                                pv = centerPos(pv);
                                 posList.add(pv);
                                 clicked = 0;
                                 place = true;
@@ -445,6 +448,38 @@ public class Main extends PApplet
             battlefield.turnCount++;
         }//end if)
     }//end mouseReleased
+    public boolean checkPos(PVector pos)
+    {
+        for(int i = 0; i < units.size(); i++)
+        {
+            GameObject go = units.get(i);
+            float size = battlefield.size/2
+            if(pos.x < go.pos.x + size && pos.x > go.pos.x - size)
+            {
+                if(pos.y < go.pos.y + size && pos.y > go.pos.y - size)
+                {
+
+                }//end if
+            }//end if
+        }//end for
+    }//end checkPos
+    public PVector centerPos(PVector pos)
+    {
+        //PVector pos = new PVector(x,y)
+        for (int i = 0; i < w; i++)
+        {
+            for (int j = 0; j < h; j++)
+            {
+                if (pos.x < (cPosX[i] + width / w + 1) && pos.x > cPosX[i] && pos.y < (cPosY[j] + height / hplus1 + 1) && pos.y > cPosY[j])
+                {
+                    println("this works");
+                    pos.x = cPosX[i] + width / 64;
+                    pos.y = cPosY[j] + height / 36;
+                }//end if
+            }//end if
+        }//end for
+        return pos;
+    }//end centerPos
 
 	public static void main(String[] args)
 	{
