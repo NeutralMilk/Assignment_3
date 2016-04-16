@@ -9,7 +9,12 @@ import ddf.minim.analysis.WindowFunction;
 
 public class Main extends PApplet
 {
+    //friendly units
 	ArrayList<GameObject> units = new ArrayList<GameObject>();
+
+    //enemy units
+    ArrayList<GameObject> enemyUnits = new ArrayList<GameObject>();
+
 	Battlefield battlefield;
     City city;
 	int numShips = 0;
@@ -27,27 +32,28 @@ public class Main extends PApplet
 	boolean[] types = new boolean[2];
     boolean click = false;
 
+    //turnCount counts the turns since the last enemy spawned, a new enemy spawns every 1-5 turns
+    //when turnCount = spawn a unit spawns
+    int spawn = 0;
+    int turnCount = 0;
+
     //variables for the menu
 	boolean menu = true;
 	boolean firstTime = true;
 
+    //money
     int gold = 10000;
     int amountSubbed = 0;
 
+    //some dimension variables
     int w = 32;
     int h = 17;
     int hplus1 = h + 1;
 
-    //variables to track occupied squares
-
-    boolean[][] occupiedFriendly = new boolean [32][17];
-    boolean[][] occupiedEnemy = new boolean [32][17];
-
-
 	public void settings()
 	{
 		//fullScreen();
-        size(1280,720);
+        size(1600,900);
 	}//end settings
 
 	public void setup()
@@ -66,7 +72,6 @@ public class Main extends PApplet
 			{
 				int a = (i * width/w);
 				int b = (j * height/hplus1);
-                occupiedFriendly[i][j] = false;
 
 				cPosX[i] = a;
 				cPosY[j] = b;
@@ -175,6 +180,13 @@ public class Main extends PApplet
             //if(units.get(i).pos.x)
 		}//end for
 
+        for(int i = units.size()-1; i >= 0; i--)
+        {
+            units.get(i).render();
+            units.get(i).update();
+            //if(units.get(i).pos.x)
+        }//end for
+
 		if(types[0] == true && gold >= 50)
 		{
 			shipCreate();
@@ -231,7 +243,6 @@ public class Main extends PApplet
         mousePos.y = mouseY;
         if(release == true && clicked == 0)
         {
-            release = false;
             for(int i = 0 ; i < units.size(); i ++)
             {
                 GameObject go = units.get(i);

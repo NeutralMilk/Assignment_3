@@ -113,6 +113,7 @@ public class Ship extends GameObject
 
                             move = 1;
 							nextTurn = false;
+							//main.active = false;
                         }//end if
 					}//end if
 
@@ -149,6 +150,7 @@ public class Ship extends GameObject
 		return validTile;
 	}//end validTiles()
 
+	//checks the position of every other ship
 	public boolean checkPos(PVector pos)
 	{
 		boolean valid = true;
@@ -163,17 +165,14 @@ public class Ship extends GameObject
 			//if the position is the same as any unit other than itself then you cannot place it
 			if(pos.x == go.pos.x && pos.y == go.pos.y)
 			{
-				println("This works xy");
 				valid = false;
 			}//end if
 		}//end for
-		println(valid);
 		return valid;
 	}//end checkPos
 
 	public void render()
 	{
-
 		switch(move)
 		{
 			case 0:

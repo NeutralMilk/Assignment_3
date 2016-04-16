@@ -150,13 +150,13 @@ public class Battlefield extends PApplet
 					main.image(oil, i*main.width/32 + main.width/64, j*main.height/18 + main.height/36);
                 }//end if
                 //main.image(oil, main.width/4, main.height/4);
-                if(main.visited[i][j] == false)
+                /*if(main.visited[i][j] == false)
                 {
                     main.fill(colours[i][j]);
                     s = color(255);
                     main.stroke(s);
                     main.rect(i*main.width/w, j*main.height/hplus1, size, size);
-                }//end if
+                }//end if*/
 			}//end for
 		}//end for
 
