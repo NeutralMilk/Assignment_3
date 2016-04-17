@@ -99,6 +99,7 @@ public class EnemyShip extends GameObject
 
     public void update()
     {
+
         int direction = (int)random(1,4);
         //position 1 chooses a random box along the top to spawn in
         int q = main.width/w;
@@ -129,25 +130,24 @@ public class EnemyShip extends GameObject
             pos.y -= q;
         }
 
-        if(pos.x > width)
+        if(pos.x > main.width)
         {
-            println("this shouldnt go");
-            pos.x -= q;
+            pos.x = q/2;
         }
 
         if(pos.x < 0)
         {
-            pos.x += q;
+            pos.x = main.width - q/2;
         }
 
-        if(pos.y > height - q)
+        if(pos.y > main.height - q)
         {
-            pos.y -= q;
+            pos.y = q/2;
         }
 
         if(pos.y < 0)
         {
-            pos.y += q;
+            pos.y = (main.height - q) - (q/2);
         }
     }//end update()
 
@@ -155,8 +155,9 @@ public class EnemyShip extends GameObject
     {
         main.rectMode(CENTER);
         main.stroke(255, 0, 0);
-        main.strokeWeight(.25f);
-        main.rect(pos.x,pos.y, width/32, height/18);
+        main.strokeWeight(.5f);
+        main.noFill();
+        main.rect(pos.x,pos.y, main.width/32, main.height/18);
         main.pushMatrix();
         main.translate(pos.x, pos.y);
         main.imageMode(CENTER);

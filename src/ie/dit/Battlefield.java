@@ -12,7 +12,6 @@ public class Battlefield extends PApplet
 	boolean[][] placeOil;
 	PImage[] images;
 	PImage oil;
-	int[][] colours;
     int[][] coloursWater ;
 	int w;
 	int h;
@@ -32,7 +31,6 @@ public class Battlefield extends PApplet
 		placeOil = new boolean[w][h];
 		images = new PImage[3];
 		oil = new PImage();
-		colours = new int[w][h];
 		coloursWater = new int[w][h];
 
 		for(int i = 0; i < w; i++)
@@ -72,7 +70,6 @@ public class Battlefield extends PApplet
 		{
 			for(int j = 0; j < h; j ++)
 			{
-				colours[i][j] = (int)random(125,150);
                 int r = (int)random(55,70);
                 int g = (int)random(180,190);
                 int b = (int)random(230,245);
@@ -139,6 +136,7 @@ public class Battlefield extends PApplet
 		{
 			for(int j = 0; j < h; j ++)
 			{
+
 				main.fill(coloursWater[i][j]);
 				s = color(255);
 				main.stroke(s);
@@ -149,16 +147,9 @@ public class Battlefield extends PApplet
 				{
 					main.image(oil, i*main.width/32 + main.width/64, j*main.height/18 + main.height/36);
                 }//end if
-                //main.image(oil, main.width/4, main.height/4);
-                /*if(main.visited[i][j] == false)
-                {
-                    main.fill(colours[i][j]);
-                    s = color(255);
-                    main.stroke(s);
-                    main.rect(i*main.width/w, j*main.height/hplus1, size, size);
-                }//end if*/
 			}//end for
 		}//end for
+
 
 		for(int i = 0; i < w; i ++)
 		{

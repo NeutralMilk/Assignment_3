@@ -16,6 +16,7 @@ public class Main extends PApplet
     ArrayList<GameObject> enemyUnits = new ArrayList<GameObject>();
 
 	Battlefield battlefield;
+    Fog fog;
     City city;
 	int numShips = 0;
     PVector mousePos = new PVector(mouseX, mouseY);
@@ -62,6 +63,7 @@ public class Main extends PApplet
 	{
 		smooth();
 		battlefield = new Battlefield(this);
+        fog = new Fog(this);
         city = new City(this);
 
         cPosX = new int[w];
@@ -170,25 +172,32 @@ public class Main extends PApplet
 
 		battlefield.render();
 		battlefield.update();
+        
+        checkUnit();
+
+        for(int i = 0; i < enemyUnits.size(); i++)
+        {
+            enemyUnits.get(i).render();
+        }//end for
+
+        if(hold == updateCount)
+        {
+            for(int i = 0; i < enemyUnits.size(); i++)
+            {
+                enemyUnits.get(i).update();
+            }//end for
+            hold = 1;
+            updateCount = 0;
+        }//end if
+
+        fog.render();
 
         city.render();
 
-        checkUnit();
-
-		for(int i = units.size()-1; i >= 0; i--)
-		{
-			units.get(i).render();
-			units.get(i).update();
-		}//end for
-
-        for(int i = enemyUnits.size()-1; i >= 0; i--)
+        for(int i = 0; i < units.size(); i++)
         {
-            enemyUnits.get(i).render();
-            if(hold == updateCount)
-            {
-                enemyUnits.get(i).update();
-                hold = updateCount+1;
-            }//end if
+            units.get(i).render();
+            units.get(i).update();
         }//end for
 
         spawnEnemy();
