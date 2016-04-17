@@ -48,9 +48,6 @@ public class Ship extends GameObject
 					if (pos.x < (main.cPosX[i] + main.width / w + 1) && pos.x > main.cPosX[i] && pos.y < (main.cPosY[j] + main.height / hplus1 + 1) && pos.y > main.cPosY[j])
 					{
                         main.visited[i][j]= true;
-                        main.occupiedFriendly[i][j] = true;
-
-						//println("ship" +i,j, main.occupiedFriendly[i][j]);
 
 
                         if(i > 0 && i < 31 &&  j > 0 && j < hmin1)
@@ -71,11 +68,6 @@ public class Ship extends GameObject
 
                         break;
 					}//end if
-					else
-					{
-						main.occupiedFriendly[i][j] = false;
-					}
-
 				}//end for
 			}//end for
 
@@ -116,8 +108,6 @@ public class Ship extends GameObject
 							//main.active = false;
                         }//end if
 					}//end if
-
-
 				}//end for
 			}//end for
 		}//end if 2

@@ -32,10 +32,12 @@ public class Main extends PApplet
 	boolean[] types = new boolean[2];
     boolean click = false;
 
-    //turnCount counts the turns since the last enemy spawned, a new enemy spawns every 1-5 turns
+    //turnCount counts the turns since the last enemy spawned, a new enemy spawns every 4-8 turns
     //when turnCount = spawn a unit spawns
     int spawn = 0;
     int turnCount = 0;
+    int updateCount = 0;
+    int hold = updateCount+1;
 
     //variables for the menu
 	boolean menu = true;
@@ -177,15 +179,19 @@ public class Main extends PApplet
 		{
 			units.get(i).render();
 			units.get(i).update();
-            //if(units.get(i).pos.x)
 		}//end for
 
-        for(int i = units.size()-1; i >= 0; i--)
+        for(int i = enemyUnits.size()-1; i >= 0; i--)
         {
-            units.get(i).render();
-            units.get(i).update();
-            //if(units.get(i).pos.x)
+            enemyUnits.get(i).render();
+            if(hold == updateCount)
+            {
+                enemyUnits.get(i).update();
+                hold = updateCount+1;
+            }//end if
         }//end for
+
+        spawnEnemy();
 
 		if(types[0] == true && gold >= 50)
 		{
@@ -195,7 +201,8 @@ public class Main extends PApplet
         if(mouseX < width && mouseX > width - battlefield.size * 2 && mouseY < height && mouseY > height - battlefield.size)
         {
             battlefield.hover = true;
-        }//end if)
+        }//end if
+
         else
         {
             battlefield.hover = false;
@@ -236,6 +243,18 @@ public class Main extends PApplet
 		numShips++;
 		types[0] = false;
 	}//end shipCreate()
+
+
+    private void spawnEnemy()
+    {
+        if(spawn == turnCount)
+        {
+            EnemyShip enemyShip = new EnemyShip(this);
+            enemyUnits.add(enemyShip);
+            turnCount = 0;
+            spawn = (int) random(4,8);
+        }//end if
+    }//ennd spawnEnemy()
 
 	void checkUnit()
     {
@@ -450,6 +469,8 @@ public class Main extends PApplet
                 go.clicks = 0;
             }//end for
             battlefield.turnCount++;
+            turnCount++;
+            updateCount++;
         }//end if)
     }//end mouseReleased
 

@@ -11,122 +11,85 @@ public class EnemyShip extends GameObject
     {
         super(_main);
         unit = main.loadImage("1.png");
-
-        //this scales the units to fit any screen size
         int w = unit.width * main.width/2560;
         int h = unit.height * main.height/1440;
         unit.resize(w,h);
-        pos = new PVector();
-        mouseBox = new PVector();
-        easing = .7f;
-        madeMove = false;
-        initialHealth = 100;
-        currentHealth = 100;
-        clicks = 0;
+        pos = new PVector(0,0);
+        pos = initialSpawn();
     }
 
-    public void update()
+    private PVector initialSpawn()
     {
-        if (move == 1)
+        int position = (int)random(1,4);
+        PVector pos = new PVector();
+        //position 1 chooses a random box along the top to spawn in
+        if(position == 1)
         {
-            for (int i = 0; i < w; i++)
-            {
-                for (int j = 0; j < h; j++)
-                {
-                    if (pos.x < (main.cPosX[i] + main.width / w + 1) && pos.x > main.cPosX[i] && pos.y < (main.cPosY[j] + main.height / hplus1 + 1) && pos.y > main.cPosY[j])
-                    {
-                        pos.x = main.cPosX[i] + main.width / 64;
-                        pos.y = main.cPosY[j] + main.height / 36;
-                        break;
-                    }//end if
-                }//end for
-            }//end for
+            int x = (int)random(1,32);
+            int y = 0;
 
-        }//end if 1
+            x = main.cPosX[x] + main.width/64;
+            y = main.cPosY[y] + main.width/64;
+            pos.x = x;
+            pos.y = y;
+        }
 
-        if (move == 2)
+        //position 2 chooses a random box along the bottom
+        if(position == 2)
         {
-            for (int i = 0; i < w; i++)
-            {
-                for (int j = 0; j < h; j++)
-                {
-                    if (pos.x < (main.cPosX[i] + main.width / w + 1) && pos.x > main.cPosX[i] && pos.y < (main.cPosY[j] + main.height / hplus1 + 1) && pos.y > main.cPosY[j])
-                    {
-                        pos.x = main.cPosX[i] + main.width / 64;
-                        pos.y = main.cPosY[j] + main.height / 36;
-                    }//end if
+            int x = (int)random(1,32);
+            int y = 16;
 
-                    if (main.mouseX < (main.cPosX[i] + main.width / w) && main.mouseX > main.cPosX[i] && main.mouseY < (main.cPosY[j] + main.height / hplus1) && main.mouseY > main.cPosY[j])
-                    {
-                        mouseBox.x = main.cPosX[i] + main.width / 64;
-                        mouseBox.y = main.cPosY[j] + main.height / 36;
-                    }//end if
+            x = main.cPosX[x] + main.width/64;
+            y = main.cPosY[y] + main.width/64;
+            pos.x = x;
+            pos.y = y;
+        }
 
-                    if (main.mousePressed && validTiles() && checkPos(mouseBox) == true)
-                    {
-                        pos.x = mouseBox.x;
-                        pos.y = mouseBox.y;
-
-                        validTile = false;
-                        madeMove = true;
-
-                        //only move once per turn
-                        if(clicks > 0)
-                        {
-
-                            move = 1;
-                            nextTurn = false;
-                            //main.active = false;
-                        }//end if
-                    }//end if
-
-
-                }//end for
-            }//end for
-        }//end if 2
-    }//end update()
-
-    //this function checks to see if the mouse is within two boxes up, down, left or right of the unit
-    public boolean validTiles()
-    {
-        //check for the x values
-        int plusX = (int)pos.x + main.width/w;
-        int plus2X = (int)pos.x + main.width/hmin1;
-        int minX = (int)pos.x - main.width/w;
-        int min2X = (int)pos.x - main.width/hmin1;
-
-        //check for y values
-
-        int plusY = (int)pos.y + main.height/hplus1;
-        int plus2Y = (int)pos.y + main.height/9;
-        int minY = (int)pos.y - main.height/hplus1;
-        int min2Y = (int)pos.y - main.height/9;
-
-        if (mouseBox.x == plusX || mouseBox.x == plus2X || mouseBox.x == minX || mouseBox.x == min2X || mouseBox.x == pos.x)
+        //position 3 chooses a box along the left
+        if(position == 3)
         {
-            if (mouseBox.y == plusY || mouseBox.y == plus2Y || mouseBox.y == minY || mouseBox.y == min2Y || mouseBox.y == pos.y)
-            {
-                validTile = true;
-            }//end if
-        }//end if
+            int y = (int)random(1,17);
+            int x = 0;
 
-        return validTile;
-    }//end validTiles()
+            x = main.cPosX[x] + main.width/64;
+            y = main.cPosY[y] + main.width/64;
+            pos.x = x;
+            pos.y = y;
+        }
 
-    //checks the position of every other ship
-    public boolean checkPos(PVector pos)
+        //positino 4 chooses a box along the right
+        if(position == 4)
+        {
+            int y = (int)random(1,17);
+            int x = 31;
+
+            x = main.cPosX[x] + main.width/64;
+            y = main.cPosY[y] + main.width/64;
+            pos.x = x;
+            pos.y = y;
+        }
+
+        if(checkPos(pos) == false)
+        {
+            initialSpawn();
+        }
+        return pos;
+    }
+
+    public boolean checkPos(PVector pos2)
     {
         boolean valid = true;
-        for(int i = 0; i < main.units.size(); i++)
+        for(int i = 0; i < main.enemyUnits.size(); i++)
         {
             //change the position to the centre
-            pos = main.centerPos(pos);
+            pos2 = main.centerPos(pos2);
 
-            GameObject go = main.units.get(i);
+            GameObject go = main.enemyUnits.get(i);
             float size = main.battlefield.size/2;
 
             //if the position is the same as any unit other than itself then you cannot place it
-            if(pos.x == go.pos.x && pos.y == go.pos.y)
+            if(pos2.x == go.pos.x && pos2.y == go.pos.y)
             {
                 valid = false;
             }//end if
@@ -134,42 +97,71 @@ public class EnemyShip extends GameObject
         return valid;
     }//end checkPos
 
+    public void update()
+    {
+        int direction = (int)random(1,4);
+        //position 1 chooses a random box along the top to spawn in
+        int q = main.width/w;
+        if(direction == 1)
+        {
+            pos.x += q;
+            pos.y += q;
+        }
+
+        //position 2 chooses a random box along the bottom
+        if(direction == 2)
+        {
+            pos.x -= q;
+            pos.y += q;
+        }
+
+        //position 3 chooses a box along the left
+        if(direction == 3)
+        {
+            pos.x += q;
+            pos.y -= q;
+        }
+
+        //positino 4 chooses a box along the right
+        if(direction == 4)
+        {
+            pos.x -= q;
+            pos.y -= q;
+        }
+
+        if(pos.x > width)
+        {
+            println("this shouldnt go");
+            pos.x -= q;
+        }
+
+        if(pos.x < 0)
+        {
+            pos.x += q;
+        }
+
+        if(pos.y > height - q)
+        {
+            pos.y -= q;
+        }
+
+        if(pos.y < 0)
+        {
+            pos.y += q;
+        }
+    }//end update()
+
     public void render()
     {
-        switch(move)
-        {
-            case 0:
-            {
-                main.pushMatrix();
-                main.translate(main.mouseX, main.mouseY);
-                main.imageMode(CENTER);
-                main.image(unit, 0, 0);
-                main.popMatrix();
-                break;
-            }//end case 0
-
-            case 1:
-            {
-                main.pushMatrix();
-                main.translate(pos.x, pos.y);
-                main.imageMode(CENTER);
-                main.image(unit, 0, 0);
-                main.popMatrix();
-                break;
-            }//end case 1
-
-            case 2:
-            {
-                main.pushMatrix();
-                angle = atan2(-(pos.x - mouseBox.x), -(pos.y - mouseBox.y));
-                main.translate(pos.x, pos.y);
-                main.rotate(-angle+PI);
-                main.imageMode(CENTER);
-                main.image(unit, 0, 0);
-                main.popMatrix();
-                break;
-
-            }//end case 2
-        }//end switch
+        main.rectMode(CENTER);
+        main.stroke(255, 0, 0);
+        main.strokeWeight(.25f);
+        main.rect(pos.x,pos.y, width/32, height/18);
+        main.pushMatrix();
+        main.translate(pos.x, pos.y);
+        main.imageMode(CENTER);
+        main.image(unit, 0, 0);
+        main.popMatrix();
+        main.rectMode(CORNER);
     }//end render
 }
