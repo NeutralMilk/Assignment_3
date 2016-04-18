@@ -6,6 +6,7 @@ import ddf.minim.Minim;
 import processing.core.*;
 
 public class EnemyShip extends GameObject {
+    int q;
     public EnemyShip(Main _main) {
         super(_main);
         unit = main.loadImage("1.png");
@@ -14,6 +15,7 @@ public class EnemyShip extends GameObject {
         unit.resize(w, h);
         pos = new PVector(0, 0);
         pos = initialSpawn();
+        q = main.width/w;
     }
 
     private PVector initialSpawn() {
@@ -100,6 +102,7 @@ public class EnemyShip extends GameObject {
 
             if(relativePos.x == 1 && relativePos.y == 1)
             {
+                println("go go go");
                 movement(1);
             }
             if(relativePos.x == 1 && relativePos.y == 0)
@@ -131,11 +134,31 @@ public class EnemyShip extends GameObject {
                 movement(8);
             }
         }
+
+        //wrap them around the screen
+        if(pos.x > main.width)
+        {
+            pos.x = q/2;
+        }
+
+        if(pos.x < 0)
+        {
+            pos.x = main.width - q/2;
+        }//end if
+
+        if(pos.y > main.height - q)
+        {
+            pos.y = q/2;
+        }//end if
+
+        if(pos.y < 0)
+        {
+            pos.y = (main.height - q) - (q/2);
+        }//end if
     }//end update()
 
     public void movement(int direction)
     {
-        int q = main.width/w;
 
         //ifs for movement
         //moves down and right
@@ -184,27 +207,6 @@ public class EnemyShip extends GameObject {
         if(direction == 8)
         {
             pos.y += q;
-        }//end if
-
-        //wrap them around the screen
-        if(pos.x > main.width)
-        {
-            pos.x = q/2;
-        }
-
-        if(pos.x < 0)
-        {
-            pos.x = main.width - q/2;
-        }//end if
-
-        if(pos.y > main.height - q)
-        {
-            pos.y = q/2;
-        }//end if
-
-        if(pos.y < 0)
-        {
-            pos.y = (main.height - q) - (q/2);
         }//end if
     }
     public boolean checkDistance(PVector pos2)

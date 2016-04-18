@@ -271,6 +271,8 @@ public class Main extends PApplet
         mousePos.y = mouseY;
         if(release == true && clicked == 0)
         {
+            release = false;
+            println("this shouldnt work");
             for(int i = 0 ; i < units.size(); i ++)
             {
                 GameObject go = units.get(i);
@@ -279,7 +281,6 @@ public class Main extends PApplet
                 {
                     if((go.pos.y + mousePos.y) < (go.pos.y*2 + height/36) && (go.pos.y + mousePos.y) > (go.pos.y*2 - height/36))
                     {
-
                         if (go.move == 1)
                         {
                             go.move = 2;
@@ -292,6 +293,7 @@ public class Main extends PApplet
                             go.clicks++;
                             click = false;
                         }//end if
+
                     }//end if
                 }//end if
             }//end for
@@ -321,7 +323,6 @@ public class Main extends PApplet
                             {
                                 battlefield.colourGreen = true;
                             }//end if
-
 
                             rectMode(CENTER);
                             strokeWeight(1);

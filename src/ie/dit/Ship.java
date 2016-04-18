@@ -91,7 +91,7 @@ public class Ship extends GameObject
 						mouseBox.y = main.cPosY[j] + main.height / 36;
 					}//end if
 
-					if (main.mousePressed && validTiles() && checkPos(mouseBox) == true)
+					if (main.mousePressed && validTiles() /*&& checkPos(mouseBox) == true*/)
 					{
 						pos.x = mouseBox.x;
 						pos.y = mouseBox.y;
