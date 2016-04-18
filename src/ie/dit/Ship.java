@@ -102,7 +102,6 @@ public class Ship extends GameObject
                         //only move once per turn
                         if(clicks > 0)
                         {
-
                             move = 1;
 							nextTurn = false;
 							//main.active = false;
@@ -136,7 +135,6 @@ public class Ship extends GameObject
 				validTile = true;
 			}//end if
 		}//end if
-
 		return validTile;
 	}//end validTiles()
 

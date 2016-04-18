@@ -172,7 +172,7 @@ public class Main extends PApplet
 
 		battlefield.render();
 		battlefield.update();
-        
+
         checkUnit();
 
         for(int i = 0; i < enemyUnits.size(); i++)
