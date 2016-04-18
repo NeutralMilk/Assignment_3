@@ -15,14 +15,15 @@ public class EnemyShip extends GameObject {
         unit.resize(w, h);
         pos = new PVector(0, 0);
         pos = initialSpawn();
-        q = main.width/w;
+        q = main.width/32;
     }
 
     private PVector initialSpawn() {
         int position = (int) random(1, 4);
         PVector pos = new PVector();
         //position 1 chooses a random box along the top to spawn in
-        if (position == 1) {
+        if (position == 1)
+        {
             int x = (int) random(1, 32);
             int y = 0;
 
@@ -33,7 +34,8 @@ public class EnemyShip extends GameObject {
         }
 
         //position 2 chooses a random box along the bottom
-        if (position == 2) {
+        if (position == 2)
+        {
             int x = (int) random(1, 32);
             int y = 16;
 
@@ -44,7 +46,8 @@ public class EnemyShip extends GameObject {
         }
 
         //position 3 chooses a box along the left
-        if (position == 3) {
+        if (position == 3)
+        {
             int y = (int) random(1, 17);
             int x = 0;
 
@@ -55,7 +58,8 @@ public class EnemyShip extends GameObject {
         }
 
         //positino 4 chooses a box along the right
-        if (position == 4) {
+        if (position == 4)
+        {
             int y = (int) random(1, 17);
             int x = 31;
 
@@ -65,7 +69,8 @@ public class EnemyShip extends GameObject {
             pos.y = y;
         }
 
-        if (checkPos(pos) == false) {
+        if (checkPos(pos) == false)
+        {
             initialSpawn();
         }
         return pos;
@@ -90,48 +95,51 @@ public class EnemyShip extends GameObject {
 
     public void update() {
         //if it does not detect a freindly ship near by, roam around randomly
-        if (checkDistance(pos) == false) {
+        if (checkDistance(pos) == false)
+        {
             int direction = (int) random(1, 8);
-            movement(direction);
+            pos = movement(direction, pos);
+            println("first");
         }
 
         //if it detects a friendly nearby, it will start following it
         else
         {
+            println("second");
             PVector relativePos = relativePos(pos);
+            println(relativePos);
 
             if(relativePos.x == 1 && relativePos.y == 1)
             {
-                println("go go go");
-                movement(1);
+                pos = movement(1, pos);
             }
             if(relativePos.x == 1 && relativePos.y == 0)
             {
-                movement(2);
+                pos = movement(2, pos);
             }
             if(relativePos.x == 0 && relativePos.y == 1)
             {
-                movement(3);
+                pos = movement(3, pos);
             }
             if(relativePos.x == 0 && relativePos.y == 0)
             {
-                movement(4);
+                pos = movement(4, pos);
             }
             if(relativePos.x == -1 && relativePos.y == -1)
             {
-                movement(5);
+                pos = movement(5, pos);
             }
             if(relativePos.x == 1 && relativePos.y == -1)
             {
-                movement(6);
+                pos = movement(6, pos);
             }
             if(relativePos.x == -1 && relativePos.y == 1)
             {
-                movement(7);
+                pos = movement(7, pos);
             }
             if(relativePos.x == 0 && relativePos.y == -1)
             {
-                movement(8);
+                pos = movement(8, pos);
             }
         }
 
@@ -157,57 +165,64 @@ public class EnemyShip extends GameObject {
         }//end if
     }//end update()
 
-    public void movement(int direction)
+    public PVector movement(int direction, PVector pos2)
     {
 
         //ifs for movement
         //moves down and right
         if(direction == 1)
         {
-            pos.x += q;
-            pos.y += q;
+            pos2.x += q;
+            pos2.y += q;
         }//end if
 
         //moves down and left
         if(direction == 2)
         {
-            pos.x -= q;
-            pos.y += q;
+            pos2.x -= q;
+            pos2.y += q;
         }//end if
 
         //moves up and right
         if(direction == 3)
         {
-            pos.x += q;
-            pos.y -= q;
+            pos2.x += q;
+            pos2.y -= q;
         }//end if
 
         //moves down and left
         if(direction == 4)
         {
-            pos.x -= q;
-            pos.y -= q;
+            pos2.x -= q;
+            pos2.y -= q;
         }//end if
 
         if(direction == 5)
         {
-            pos.x -= q;
+            pos2.x -= q;
+            pos2.y += 0;
         }//end if
 
         if(direction == 6)
         {
-            pos.y -= q;
+            pos2.y -= q;
+            pos2.x += 0;
+
         }//end if
 
         if(direction == 7)
         {
-            pos.x += q;
+            pos2.x += q;
+            pos2.y += 0;
         }//end if
 
         if(direction == 8)
         {
-            pos.y += q;
+            pos2.y += q;
+            pos2.x += 0;
         }//end if
+        println("pos2 is" + pos2);
+        return pos2;
     }
     public boolean checkDistance(PVector pos2)
     {
@@ -225,6 +240,7 @@ public class EnemyShip extends GameObject {
             {
                 if(pos2.y < go.pos.y + size*3 && pos2.y > go.pos.y - size*3)
                 {
+                    println("this is within ranger");
                     withinRange = true;
                 }//end if
             }//end if
@@ -234,7 +250,6 @@ public class EnemyShip extends GameObject {
 
     public PVector relativePos(PVector pos2)
     {
-        println("this goes");
         for(int i = 0; i < main.units.size(); i++)
         {
             //change the position to the centre

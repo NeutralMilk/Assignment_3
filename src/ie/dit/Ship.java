@@ -91,7 +91,7 @@ public class Ship extends GameObject
 						mouseBox.y = main.cPosY[j] + main.height / 36;
 					}//end if
 
-					if (main.mousePressed && validTiles() /*&& checkPos(mouseBox) == true*/)
+					if (main.mousePressed && validTiles()/* && checkPos(mouseBox) == true*/)
 					{
 						pos.x = mouseBox.x;
 						pos.y = mouseBox.y;
@@ -132,27 +132,28 @@ public class Ship extends GameObject
 		{
 			if (mouseBox.y == plusY || mouseBox.y == plus2Y || mouseBox.y == minY || mouseBox.y == min2Y || mouseBox.y == pos.y)
 			{
-				validTile = true;
+                validTile = checkPos(mouseBox);
 			}//end if
 		}//end if
 		return validTile;
 	}//end validTiles()
 
 	//checks the position of every other ship
-	public boolean checkPos(PVector pos)
+	public boolean checkPos(PVector mouse)
 	{
 		boolean valid = true;
 		for(int i = 0; i < main.units.size(); i++)
 		{
 			//change the position to the centre
-			pos = main.centerPos(pos);
+			mouse = main.centerPos(mouse);
 
 			GameObject go = main.units.get(i);
 			float size = main.battlefield.size/2;
 
 			//if the position is the same as any unit other than itself then you cannot place it
-			if(pos.x == go.pos.x && pos.y == go.pos.y)
+			if(mouse.x == go.pos.x && mouse.y == go.pos.y)
 			{
+				println("this gets here" + main.units.size());
 				valid = false;
 			}//end if
 		}//end for

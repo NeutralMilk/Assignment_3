@@ -272,7 +272,6 @@ public class Main extends PApplet
         if(release == true && clicked == 0)
         {
             release = false;
-            println("this shouldnt work");
             for(int i = 0 ; i < units.size(); i ++)
             {
                 GameObject go = units.get(i);
@@ -293,7 +292,6 @@ public class Main extends PApplet
                             go.clicks++;
                             click = false;
                         }//end if
-
                     }//end if
                 }//end if
             }//end for
@@ -499,9 +497,9 @@ public class Main extends PApplet
             if(pos.x == go.pos.x && pos.y == go.pos.y && i != j)
             {
                 valid = false;
+                println(valid);
             }//end if
         }//end for
-        println(valid);
         return valid;
     }//end checkPos
     public PVector centerPos(PVector pos)
