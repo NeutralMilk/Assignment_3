@@ -94,7 +94,7 @@ public class Galleon extends GameObject
                         if(enemy == true)
                         {
                             currentHealth -= (int)random(20,30);
-                            main.enemyUnits.get(enemyIndex).currentHealth -= (int)(random(25,35));
+                            main.enemyUnits.get(enemyIndex).currentHealth -= (int)(random(60,75));
                             enemy = false;
                             clicks++;
                         }
@@ -170,7 +170,6 @@ public class Galleon extends GameObject
             mouse = main.centerPos(mouse);
 
             GameObject go = main.enemyUnits.get(i);
-            float size = main.battlefield.size/2;
 
             //if the position is the same as any unit other than itself then you cannot place it
             if(mouse.x == go.pos.x && mouse.y == go.pos.y)
@@ -220,9 +219,4 @@ public class Galleon extends GameObject
             }//end case 2
         }//end switch
     }//end render
-
-    public void mouseReleased()
-    {
-        println("This works");
-    }
 }

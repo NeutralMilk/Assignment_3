@@ -1,6 +1,7 @@
 package ie.dit;
 
 import processing.core.*;
+import java.util.ArrayList;
 
 public class Battlefield extends PApplet
 {
@@ -9,13 +10,16 @@ public class Battlefield extends PApplet
 	int x;
 	int y;
 	int size;
+	ArrayList<PVector> oilPos = new ArrayList<PVector>();
 	boolean[][] placeOil;
 	PImage[] images;
+	PImage rig;
 	PImage oil;
-    int[][] coloursWater ;
+    int[][] coloursWater;
 	int w;
 	int h;
 	int hplus1;
+	boolean position = true;
 
 	public Battlefield(Main _main)
 	{
@@ -31,15 +35,19 @@ public class Battlefield extends PApplet
 		placeOil = new boolean[w][h];
 		images = new PImage[4];
 		oil = new PImage();
+		rig = new PImage();
 		coloursWater = new int[w][h];
 
 		for(int i = 0; i < w; i++)
 		{
             for(int j = 0 ; j < h; j++)
             {
+				//generate a random amount of them
                 if ((int)random(1,45) == 1)
                 {
                     placeOil[i][j] = true;
+					PVector temp = new PVector(main.cPosX[i] + main.width/64, main.cPosY[j] + main.width/64);
+					oilPos.add(temp);
                 } //end if
                 else
                 {
@@ -47,7 +55,9 @@ public class Battlefield extends PApplet
                 }//end else
             }//end for
 		}//end for
+
 		oil = main.loadImage("oil.png");
+		rig = main.loadImage("rig.png");
 
 		for ( int i = 0; i< images.length; i++ )
 		{
@@ -58,13 +68,16 @@ public class Battlefield extends PApplet
 			images[i].resize(wi,hi);
 		}//end for
 
-
-
-		//scaling th eimage
+		//scaling the image
 		int wi = oil.width * main.width/2560;
 		int hi = oil.height * main.height/1440;
 
 		oil.resize(wi,hi);
+
+		wi = rig.width * main.width/2560;
+		hi = rig.height* main.height/1440;
+
+		rig.resize(wi,hi);
 
 		for(int i = 0; i < w; i ++)
 		{
@@ -114,6 +127,7 @@ public class Battlefield extends PApplet
 				}//end if
 			}//end for
 		}//end for
+
 
 		if(hover == true)
 		{
@@ -167,6 +181,7 @@ public class Battlefield extends PApplet
 			{
 				main.image(images[i], (i+1) * main.width/w - size/2, main.height - size/2);
 			}//end if
+			main.image(rig, (5) * main.width/w - size/2, main.height - size/2);
 		}//end for
 
 

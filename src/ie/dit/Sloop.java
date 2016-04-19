@@ -221,8 +221,4 @@ public class Sloop extends GameObject
 		}//end switch
 	}//end render
 
-	public void mouseReleased()
-	{
-		println("This works");
-	}
 }

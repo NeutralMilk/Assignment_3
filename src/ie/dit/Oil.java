@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import ddf.minim.Minim;
 import processing.core.*;
 
-public class Sub extends GameObject
+public class Oil extends GameObject
 {
-    public Sub(Main _main)
+    public Oil(Main _main)
     {
         super(_main);
-        unit = main.loadImage("2.png");
+        unit = main.loadImage("rig.png");
 
         //this scales the units to fit any screen size
         int w = unit.width * main.width/2560;
@@ -20,8 +20,8 @@ public class Sub extends GameObject
         mouseBox = new PVector();
         easing = .7f;
         madeMove = false;
-        initialHealth = 30;
-        currentHealth = 30;
+        initialHealth = 50;
+        currentHealth = 50;
         clicks = 0;
     }
 
@@ -49,86 +49,28 @@ public class Sub extends GameObject
 
                         pos.x = main.cPosX[i] + main.width / 64;
                         pos.y = main.cPosY[j] + main.height / 36;
-
-                        break;
                     }//end if
                 }//end for
             }//end for
         }//end if 1
-
-        if (move == 2)
-        {
-            for (int i = 0; i < w; i++)
-            {
-                for (int j = 0; j < h; j++)
-                {
-                    if (pos.x < (main.cPosX[i] + main.width / w + 1) && pos.x > main.cPosX[i] && pos.y < (main.cPosY[j] + main.height / hplus1 + 1) && pos.y > main.cPosY[j])
-                    {
-                        pos.x = main.cPosX[i] + main.width / 64;
-                        pos.y = main.cPosY[j] + main.height / 36;
-                    }//end if
-
-                    if (main.mouseX < (main.cPosX[i] + main.width / w) && main.mouseX > main.cPosX[i] && main.mouseY < (main.cPosY[j] + main.height / hplus1) && main.mouseY > main.cPosY[j])
-                    {
-                        mouseBox.x = main.cPosX[i] + main.width / 64;
-                        mouseBox.y = main.cPosY[j] + main.height / 36;
-                    }//end if
-
-                    if (main.mousePressed && main.release2 && validTiles())
-                    {
-                        if(enemy == true)
-                        {
-                            currentHealth -= (int)random(25,30);
-                            main.enemyUnits.get(enemyIndex).currentHealth -= (int)(random(150,180));
-                            enemy = false;
-                            clicks++;
-                        }
-
-                        else
-                        {
-                            pos.x = mouseBox.x;
-                            pos.y = mouseBox.y;
-
-                            validTile = false;
-                            madeMove = true;
-
-                            //only move once per turn
-                        }//end else
-
-                        if(clicks > 0)
-                        {
-                            move = 1;
-                            nextTurn = false;
-                            //main.active = false;
-                        }//end if
-                        main.release2 = false;
-                    }//end if
-                    if(pos.dist(mouseBox) < main.width/6)
-                    {
-                        main.battlefield.colourGreen = true;
-                        main.fog.colourGreen = true;
-                    }
-                    else
-                    {
-                        main.battlefield.colourRed = true;
-                        main.fog.colourRed = true;
-                    }
-                }//end for
-            }//end for
-        }//end if 2
     }//end update()
 
     //this function checks to see if the mouse is within two boxes up, down, left or right of the unit
-    public boolean validTiles()
+    /*public boolean validTiles()
     {
-
-        //the subs can travel 1/6 of the map each turn
-        if(pos.dist(mouseBox) < main.width/6)
+        for(int i = 0; i < w; i++)
         {
-            validTile = checkPos(mouseBox);
-        }
+            for(int j = 0; j < h; j++)
+            {
+                if(main.battlefield.placeOil[i][j] == true)
+                {
+                    validTile = checkPos(mouseBox);
+                }//end f
+            }//end for
+        }//end for
+
         return validTile;
-    }//end validTiles()
+    }//end validTiles()*/
 
     boolean enemy= false;
     //checks the position of every other ship
@@ -191,20 +133,6 @@ public class Sub extends GameObject
                 main.popMatrix();
                 break;
             }//end case 1
-
-            case 2:
-            {
-                main.pushMatrix();
-                angle = atan2(-(pos.x - mouseBox.x), -(pos.y - mouseBox.y));
-                main.translate(pos.x, pos.y);
-                main.rotate(-angle+PI);
-                main.imageMode(CENTER);
-                main.image(unit, 0, 0);
-                main.popMatrix();
-                break;
-
-            }//end case 2
         }//end switch
     }//end render
-
 }

@@ -139,7 +139,6 @@ public class EnemyShip extends GameObject {
         for(int i = 0; i < main.units.size(); i++)
         {
             float closest = pos2.dist(main.units.get(0).pos);
-            println(closest);
 
             GameObject go = main.units.get(i);
 
@@ -205,7 +204,6 @@ public class EnemyShip extends GameObject {
         float c = pos.y + q;
         float d = pos.y - q;
 
-        println(relPos);
         if(relPos.x == 1)
         {
             if(relPos.y == 1)
@@ -219,7 +217,6 @@ public class EnemyShip extends GameObject {
                 pos.set(a, c);
             }
 
-            println("1");
         }//end if
 
         if(relPos.x == 0)
@@ -234,7 +231,6 @@ public class EnemyShip extends GameObject {
                 pos.set(b, c);
             }
 
-            println("2");
         }//end if
 
         if(relPos.x == -1)
@@ -248,7 +244,6 @@ public class EnemyShip extends GameObject {
             {
                 pos.set(pos.x, c);
             }
-            println("3");
         }//end if
 
     }//end movement

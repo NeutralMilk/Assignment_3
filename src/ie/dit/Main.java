@@ -11,6 +11,7 @@ public class Main extends PApplet
 {
     //friendly units
 	ArrayList<GameObject> units = new ArrayList<GameObject>();
+    ArrayList<GameObject> oilrigs = new ArrayList<GameObject>();
 
     //enemy units
     ArrayList<GameObject> enemyUnits = new ArrayList<GameObject>();
@@ -19,6 +20,7 @@ public class Main extends PApplet
     Fog fog;
     City city;
 	int numShips = 0;
+    int numRigs = 0;
     PVector mousePos = new PVector(mouseX, mouseY);
 	int clicked;
     boolean place = false;
@@ -30,7 +32,7 @@ public class Main extends PApplet
     ArrayList<PVector> posList = new ArrayList<PVector>();
 
 	//variables for making the units
-	boolean[] types = new boolean[4];
+	boolean[] types = new boolean[5];
     boolean click = false;
 
     //turnCount counts the turns since the last enemy spawned, a new enemy spawns every 4-8 turns
@@ -45,7 +47,7 @@ public class Main extends PApplet
 	boolean firstTime = true;
 
     //money
-    int gold = 10000;
+    int gold = 100;
     int amountSubbed = 0;
 
     //some dimension variables
@@ -55,14 +57,14 @@ public class Main extends PApplet
 
 	public void settings()
 	{
-		//fullScreen();
-        size(1600,900);
+		fullScreen();
+        //size(1600,900);
 	}//end settings
 
 	public void setup()
 	{
 		smooth();
-		battlefield = new Battlefield(this);
+
         fog = new Fog(this);
         city = new City(this);
 
@@ -81,6 +83,8 @@ public class Main extends PApplet
 				cPosY[j] = b;
 			}//end for
 		}  //end for
+
+        battlefield = new Battlefield(this);
 
 	}//end setup
 
@@ -175,6 +179,11 @@ public class Main extends PApplet
 
         checkUnit();
 
+        for(int i = 0; i < oilrigs.size(); i++)
+        {
+            oilrigs.get(i).render();
+            oilrigs.get(i).update();
+        }//end for
         for(int a = 0; a < enemyUnits.size(); a++)
         {
             enemyUnits.get(a).render();
@@ -201,6 +210,8 @@ public class Main extends PApplet
             units.get(i).update();
         }//end for
 
+
+
         spawnEnemy();
 
 		if(types[0] == true && gold >= 50)
@@ -221,6 +232,38 @@ public class Main extends PApplet
         if(types[3] == true && gold >= 500)
         {
             WarshipCreate();
+        }//end if
+
+        if(types[4] == true && gold >= 100)
+        {
+            oilCreate();
+        }//end if
+
+        //these display the cost of a unit
+        textMode(CENTER);
+        if(mouseX < battlefield.size && mouseX > 0 && mouseY < height && mouseY > height - battlefield.size)
+        {
+            text(50,width/2,height - (battlefield.size/2));
+        }//end if
+
+        if(mouseX < battlefield.size * 2 && mouseX > battlefield.size && mouseY < height && mouseY > height - battlefield.size)
+        {
+            text(200,width/2,height - (battlefield.size/2));
+        }//end if
+
+        if(mouseX < battlefield.size * 3 && mouseX > battlefield.size*2 && mouseY < height && mouseY > height - battlefield.size)
+        {
+            text(350,width/2,height - (battlefield.size/2));
+        }//end if
+
+        if(mouseX < battlefield.size * 4 && mouseX > battlefield.size*3 && mouseY < height && mouseY > height - battlefield.size)
+        {
+            text(500,width/2,height - (battlefield.size/2));
+        }//end if
+
+        if(mouseX < battlefield.size * 5 && mouseX > battlefield.size*4 && mouseY < height && mouseY > height - battlefield.size)
+        {
+            text(100,width/2,height - (battlefield.size/2));
         }//end if
 
         if(mouseX < width && mouseX > width - battlefield.size * 2 && mouseY < height && mouseY > height - battlefield.size)
@@ -256,7 +299,6 @@ public class Main extends PApplet
 		if (key == 'm')
 		{
 			firstTime = false;
-            println(units.size());
 
 			if(menu == true)
 			{
@@ -329,6 +371,21 @@ public class Main extends PApplet
         units.get(i).move = 0;
         numShips++;
         types[3] = false;
+    }//end shipCreate()
+
+    private void oilCreate()
+    {
+        //increase the number of ships
+        int i = numRigs;
+        gold -=100;
+        amountSubbed = 100;
+        //create a rig
+        Oil rig = new Oil(this);
+        oilrigs.add(rig);
+        //set it so that the ship follows the mouse
+        oilrigs.get(i).move = 0;
+        numRigs++;
+        types[4] = false;
     }//end shipCreate()
 
 
@@ -463,8 +520,14 @@ public class Main extends PApplet
                 clicked = 1;
             }//end if
 
+            if(mouseX < battlefield.size * 5 && mouseX > battlefield.size*4 && mouseY < height && mouseY > height - battlefield.size)
+            {
+                types[4] = true;
+                clicked = 1;
+            }//end if
+
         }//end if
-    }//end mousePressed
+    }//end Dragged
 
     boolean release = false;
     boolean release2 = false;
@@ -558,6 +621,41 @@ public class Main extends PApplet
                     }//end for
                 }//end for
             }//end for
+
+            for(int j = 0; j < oilrigs.size(); j++)
+            {
+                GameObject go = oilrigs.get(j);
+
+                //if you try to place it off the battlefield it will be deleted
+                //if you place it off the field it wont work
+                //if the position is the same as another you cant place it
+                if(go.pos.y > height-battlefield.size || checkPos(go.pos, j) == false)
+                {
+                    oilrigs.remove(j);
+                    numRigs--;
+                    clicked = 0;
+                    gold += amountSubbed;
+                }//end else
+
+                else
+                {
+                    //allow it to be placed on the battlefield
+                    PVector mousePos = new PVector(mouseX, mouseY);
+                    for(int q = 0; q < battlefield.oilPos.size(); q++)
+                    {
+                        float dist = mousePos.dist(battlefield.oilPos.get(q));
+                        float a = width/64;
+                        if(dist < a)
+                        {
+                            if (go.move == 0)
+                            {
+                                go.move = 1;
+                                clicked = 0;
+                            }//end if
+                        }//end if
+                    }//end for
+                }//end else
+            }//end for
         }//end if
 
         if(mouseX < width && mouseX > width - battlefield.size * 2 && mouseY < height && mouseY > height - battlefield.size)
@@ -568,10 +666,13 @@ public class Main extends PApplet
 
                 go.nextTurn = true;
                 go.clicks = 0;
+
             }//end for
             battlefield.turnCount++;
             turnCount++;
             updateCount++;
+            gold +=5;
+            gold+= oilrigs.size()*10;
         }//end if)
     }//end mouseReleased
 
@@ -590,7 +691,6 @@ public class Main extends PApplet
             if(pos.x == go.pos.x && pos.y == go.pos.y && i != j)
             {
                 valid = false;
-                println(valid);
             }//end if
         }//end for
         return valid;

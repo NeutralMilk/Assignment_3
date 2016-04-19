@@ -94,7 +94,7 @@ public class Warship extends GameObject
                         if(enemy == true)
                         {
                             currentHealth -= (int)random(20,30);
-                            main.enemyUnits.get(enemyIndex).currentHealth -= (int)(random(25,35));
+                            main.enemyUnits.get(enemyIndex).currentHealth -= (int)(random(80,90));
                             enemy = false;
                             clicks++;
                         }
@@ -220,9 +220,4 @@ public class Warship extends GameObject
             }//end case 2
         }//end switch
     }//end render
-
-    public void mouseReleased()
-    {
-        println("This works");
-    }
 }
