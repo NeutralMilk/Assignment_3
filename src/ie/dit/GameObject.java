@@ -14,6 +14,7 @@ public abstract class GameObject extends PApplet
 	float angle = 0;
 	boolean validTile;
 	boolean madeMove;
+	boolean release;
 	int initialHealth;
     int currentHealth;
 	int clicks;
@@ -22,6 +23,7 @@ public abstract class GameObject extends PApplet
 	int h;
 	int hplus1;
 	int hmin1;
+	int enemyIndex;
 
     GameObject(Main _main)
     {

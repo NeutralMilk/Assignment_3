@@ -217,6 +217,22 @@ public class Main extends PApplet
             battlefield.hover = false;
         }//end else
 
+        for(int i  = 0; i < units.size(); i++)
+        {
+            if(units.get(i).currentHealth < 0)
+            {
+                units.remove(i);
+                numShips--;
+            }
+        }
+
+        for(int i  = 0; i < enemyUnits.size(); i++)
+        {
+            if(enemyUnits.get(i).currentHealth < 0)
+            {
+                enemyUnits.remove(i);
+            }
+        }
 	}//end game()
 
 	public void keyPressed()
@@ -376,10 +392,12 @@ public class Main extends PApplet
     }//end mousePressed
 
     boolean release = false;
+    boolean release2 = false;
     public void mouseReleased()
     {
 
         release = true;
+        release2 = true;
         if(clicked == 1)
         {
             for(int j = 0; j < units.size(); j++)

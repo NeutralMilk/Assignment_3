@@ -18,7 +18,8 @@ public class EnemyShip extends GameObject {
         q = main.width/32;
     }
 
-    private PVector initialSpawn() {
+    private PVector initialSpawn()
+    {
         int position = (int) random(1, 4);
         PVector pos = new PVector();
         //position 1 chooses a random box along the top to spawn in
@@ -74,11 +75,13 @@ public class EnemyShip extends GameObject {
             initialSpawn();
         }
         return pos;
-    }
+    }//end initialPos
 
-    public boolean checkPos(PVector pos2) {
+    public boolean checkPos(PVector pos2)
+    {
         boolean valid = true;
-        for (int i = 0; i < main.enemyUnits.size(); i++) {
+        for (int i = 0; i < main.enemyUnits.size(); i++)
+        {
             //change the position to the centre
             pos2 = main.centerPos(pos2);
 
@@ -86,14 +89,16 @@ public class EnemyShip extends GameObject {
             float size = main.battlefield.size / 2;
 
             //if the position is the same as any unit other than itself then you cannot place it
-            if (pos2.x == go.pos.x && pos2.y == go.pos.y) {
+            if (pos2.x == go.pos.x && pos2.y == go.pos.y)
+            {
                 valid = false;
             }//end if
         }//end for
         return valid;
     }//end checkPos
 
-    public void update() {
+    public void update()
+    {
         //if it does not detect a freindly ship near by, roam around randomly
         if (checkDistance(pos) == false)
         {
@@ -103,45 +108,55 @@ public class EnemyShip extends GameObject {
         }
 
         //if it detects a friendly nearby, it will start following it
-        else
+        /*else
         {
             println("second");
             PVector relativePos = relativePos(pos);
             println(relativePos);
 
-            if(relativePos.x == 1 && relativePos.y == 1)
+            //right, above
+            if(relativePos.x == 1)
             {
-                pos = movement(1, pos);
-            }
-            if(relativePos.x == 1 && relativePos.y == 0)
+                pos.x += q;
+                if(relativePos.y == 1)
+                {
+                    pos.y -= q;
+                }
+
+                if(relativePos.y == 0)
+                {
+                    pos.y += q;
+                }
+            }//end if
+
+            if(relativePos.x == 0)
             {
-                pos = movement(2, pos);
-            }
-            if(relativePos.x == 0 && relativePos.y == 1)
+                pos.x -= q;
+                if(relativePos.y == 1)
+                {
+                    pos.y -= q;
+                }
+
+                if(relativePos.y == 0)
+                {
+                    pos.y += q;
+                }
+            }//end if
+
+            if(relativePos.x == -1)
             {
-                pos = movement(3, pos);
-            }
-            if(relativePos.x == 0 && relativePos.y == 0)
-            {
-                pos = movement(4, pos);
-            }
-            if(relativePos.x == -1 && relativePos.y == -1)
-            {
-                pos = movement(5, pos);
-            }
-            if(relativePos.x == 1 && relativePos.y == -1)
-            {
-                pos = movement(6, pos);
-            }
-            if(relativePos.x == -1 && relativePos.y == 1)
-            {
-                pos = movement(7, pos);
-            }
-            if(relativePos.x == 0 && relativePos.y == -1)
-            {
-                pos = movement(8, pos);
-            }
-        }
+                pos.x += 0;
+                if(relativePos.y == 1)
+                {
+                    pos.y -= q;
+                }
+
+                if(relativePos.y == 0)
+                {
+                    pos.y += q;
+                }
+            }//end if
+        }//else*/
 
         //wrap them around the screen
         if(pos.x > main.width)
@@ -167,26 +182,25 @@ public class EnemyShip extends GameObject {
 
     public PVector movement(int direction, PVector pos2)
     {
-
         //ifs for movement
         //moves down and right
         if(direction == 1)
         {
             pos2.x += q;
-            pos2.y += q;
+            pos2.y -= q;
         }//end if
 
         //moves down and left
         if(direction == 2)
         {
-            pos2.x -= q;
+            pos2.x += q;
             pos2.y += q;
         }//end if
 
         //moves up and right
         if(direction == 3)
         {
-            pos2.x += q;
+            pos2.x -= q;
             pos2.y -= q;
         }//end if
 
@@ -194,46 +208,46 @@ public class EnemyShip extends GameObject {
         if(direction == 4)
         {
             pos2.x -= q;
-            pos2.y -= q;
+            pos2.y += q;
         }//end if
 
         if(direction == 5)
         {
-            pos2.x -= q;
-            pos2.y += 0;
+            pos2.x += 0;
+            pos2.y += q;
         }//end if
 
         if(direction == 6)
         {
-            pos2.y -= q;
-            pos2.x += 0;
+            pos2.y -= 0;
+            pos2.x += q;
 
         }//end if
 
         if(direction == 7)
         {
-            pos2.x += q;
-            pos2.y += 0;
+            pos2.x += 0;
+            pos2.y -= q;
         }//end if
 
         if(direction == 8)
         {
-            pos2.y += q;
-            pos2.x += 0;
+            pos2.y += 0;
+            pos2.x -= q;
         }//end if
         println("pos2 is" + pos2);
         return pos2;
-    }
+    }//end movement
     public boolean checkDistance(PVector pos2)
     {
         boolean withinRange = false;
         for(int i = 0; i < main.units.size(); i++)
         {
             //change the position to the centre
-            pos2 = main.centerPos(pos2);
+            //pos2 = main.centerPos(pos2);
 
             GameObject go = main.units.get(i);
-            float size = main.battlefield.size/2;
+            float size = main.battlefield.size;
 
             //if the position is the same as any unit other than itself then you cannot place it
             if(pos2.x < go.pos.x + size*3 && pos2.x > go.pos.x - size*3)
@@ -257,8 +271,8 @@ public class EnemyShip extends GameObject {
             float size = main.battlefield.size/2;
 
             //set pos2 x and y to either 0 or 1 to indicate if i is above, below, right or left of the unit
-            //x = 1 means right, x = 0 means left
-            //y = 1 means above, y = 0 means below
+            //x = 1 means right, x = 0 means left, x = -1 means same x value
+            //y = 1 means above, y = 0 means below, y = - 1 means same y value
 
             //check the x values
             if(pos2.x < go.pos.x)

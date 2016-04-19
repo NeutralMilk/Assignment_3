@@ -27,8 +27,6 @@ public class Ship extends GameObject
 
 	public void update()
 	{
-
-
 		if (move == 0) {
 			float targetX = main.mouseX;
 			float dx = targetX - pos.x;
@@ -91,21 +89,31 @@ public class Ship extends GameObject
 						mouseBox.y = main.cPosY[j] + main.height / 36;
 					}//end if
 
-					if (main.mousePressed && validTiles()/* && checkPos(mouseBox) == true*/)
+					if (main.mousePressed && main.release2 && validTiles())
 					{
-						pos.x = mouseBox.x;
-						pos.y = mouseBox.y;
+						if(enemy == true)
+						{
+							currentHealth -= (int)random(20,30);
+							enemy = false;
+						}
 
-						validTile = false;
-						madeMove = true;
+						else
+						{
+							pos.x = mouseBox.x;
+							pos.y = mouseBox.y;
 
-                        //only move once per turn
-                        if(clicks > 0)
-                        {
-                            move = 1;
-							nextTurn = false;
-							//main.active = false;
-                        }//end if
+							validTile = false;
+							madeMove = true;
+
+							//only move once per turn
+							if(clicks > 0)
+							{
+								move = 1;
+								nextTurn = false;
+								//main.active = false;
+							}//end if
+						}//end else
+						main.release2 = false;
 					}//end if
 				}//end for
 			}//end for
@@ -138,6 +146,7 @@ public class Ship extends GameObject
 		return validTile;
 	}//end validTiles()
 
+	boolean enemy= false;
 	//checks the position of every other ship
 	public boolean checkPos(PVector mouse)
 	{
@@ -153,8 +162,23 @@ public class Ship extends GameObject
 			//if the position is the same as any unit other than itself then you cannot place it
 			if(mouse.x == go.pos.x && mouse.y == go.pos.y)
 			{
-				println("this gets here" + main.units.size());
 				valid = false;
+			}//end if
+		}//end for
+
+		for(int i = 0; i < main.enemyUnits.size(); i++)
+		{
+			//change the position to the centre
+			mouse = main.centerPos(mouse);
+
+			GameObject go = main.enemyUnits.get(i);
+			float size = main.battlefield.size/2;
+
+			//if the position is the same as any unit other than itself then you cannot place it
+			if(mouse.x == go.pos.x && mouse.y == go.pos.y)
+			{
+				enemy = true;
+				enemyIndex = i;
 			}//end if
 		}//end for
 		return valid;
@@ -198,4 +222,9 @@ public class Ship extends GameObject
 			}//end case 2
 		}//end switch
 	}//end render
+
+	public void mouseReleased()
+	{
+		println("This works");
+	}
 }
