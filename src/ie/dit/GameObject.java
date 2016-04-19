@@ -24,6 +24,8 @@ public abstract class GameObject extends PApplet
 	int hplus1;
 	int hmin1;
 	int enemyIndex;
+	int friendlyIndex;
+	int q;
 
     GameObject(Main _main)
     {

@@ -6,7 +6,6 @@ import ddf.minim.Minim;
 import processing.core.*;
 
 public class EnemyShip extends GameObject {
-    int q;
     public EnemyShip(Main _main) {
         super(_main);
         unit = main.loadImage("1.png");
@@ -15,6 +14,8 @@ public class EnemyShip extends GameObject {
         unit.resize(w, h);
         pos = new PVector(0, 0);
         pos = initialSpawn();
+        initialHealth = 100;
+        currentHealth = initialHealth;
         q = main.width/32;
     }
 
@@ -99,176 +100,67 @@ public class EnemyShip extends GameObject {
 
     public void update()
     {
-        //if it does not detect a freindly ship near by, roam around randomly
-        if (checkDistance(pos) == false)
-        {
-            int direction = (int) random(1, 8);
-            pos = movement(direction, pos);
-            println("first");
-        }
+        //follows the closest friendly ship
 
-        //if it detects a friendly nearby, it will start following it
-        /*else
-        {
-            println("second");
-            PVector relativePos = relativePos(pos);
-            println(relativePos);
+        //checkDistance finds the closest ship
+        checkDistance(pos);
 
-            //right, above
-            if(relativePos.x == 1)
-            {
-                pos.x += q;
-                if(relativePos.y == 1)
-                {
-                    pos.y -= q;
-                }
+        //relativePos finds what directions the friendly ship is in
+        PVector relativePos = relativePos(pos);
 
-                if(relativePos.y == 0)
-                {
-                    pos.y += q;
-                }
-            }//end if
+        //movement moves the enemy in the direction of the friendly
+        movement(relativePos);
 
-            if(relativePos.x == 0)
-            {
-                pos.x -= q;
-                if(relativePos.y == 1)
-                {
-                    pos.y -= q;
-                }
-
-                if(relativePos.y == 0)
-                {
-                    pos.y += q;
-                }
-            }//end if
-
-            if(relativePos.x == -1)
-            {
-                pos.x += 0;
-                if(relativePos.y == 1)
-                {
-                    pos.y -= q;
-                }
-
-                if(relativePos.y == 0)
-                {
-                    pos.y += q;
-                }
-            }//end if
-        }//else*/
-
-        //wrap them around the screen
+        //keep them on the screen
         if(pos.x > main.width)
         {
-            pos.x = q/2;
+            pos.x = main.width - q/2;
         }
 
         if(pos.x < 0)
         {
-            pos.x = main.width - q/2;
+            pos.x = q/2;
         }//end if
 
         if(pos.y > main.height - q)
         {
-            pos.y = q/2;
+            pos.y = (main.height - q) - (q/2);
         }//end if
 
         if(pos.y < 0)
         {
-            pos.y = (main.height - q) - (q/2);
+            pos.y = q/2;
         }//end if
+
     }//end update()
 
-    public PVector movement(int direction, PVector pos2)
+    public void checkDistance(PVector pos2)
     {
-        //ifs for movement
-        //moves down and right
-        if(direction == 1)
-        {
-            pos2.x += q;
-            pos2.y -= q;
-        }//end if
-
-        //moves down and left
-        if(direction == 2)
-        {
-            pos2.x += q;
-            pos2.y += q;
-        }//end if
-
-        //moves up and right
-        if(direction == 3)
-        {
-            pos2.x -= q;
-            pos2.y -= q;
-        }//end if
-
-        //moves down and left
-        if(direction == 4)
-        {
-            pos2.x -= q;
-            pos2.y += q;
-        }//end if
-
-        if(direction == 5)
-        {
-            pos2.x += 0;
-            pos2.y += q;
-        }//end if
-
-        if(direction == 6)
-        {
-            pos2.y -= 0;
-            pos2.x += q;
-
-        }//end if
-
-        if(direction == 7)
-        {
-            pos2.x += 0;
-            pos2.y -= q;
-        }//end if
-
-        if(direction == 8)
-        {
-            pos2.y += 0;
-            pos2.x -= q;
-        }//end if
-        println("pos2 is" + pos2);
-        return pos2;
-    }//end movement
-    public boolean checkDistance(PVector pos2)
-    {
-        boolean withinRange = false;
         for(int i = 0; i < main.units.size(); i++)
         {
-            //change the position to the centre
-            //pos2 = main.centerPos(pos2);
+            float closest = pos2.dist(main.units.get(0).pos);
+            println(closest);
 
             GameObject go = main.units.get(i);
-            float size = main.battlefield.size;
 
-            //if the position is the same as any unit other than itself then you cannot place it
-            if(pos2.x < go.pos.x + size*3 && pos2.x > go.pos.x - size*3)
+            //find the closest unit
+            //friendlyIndex is the index of the closest unit
+            //set the closest to be the first one initially
+            friendlyIndex = 0;
+
+            if(pos2.dist(go.pos) < closest)
             {
-                if(pos2.y < go.pos.y + size*3 && pos2.y > go.pos.y - size*3)
-                {
-                    println("this is within ranger");
-                    withinRange = true;
-                }//end if
+                friendlyIndex = i;
             }//end if
         }//end for
-        return withinRange;
-    }
+    }//end checkdistance
 
     public PVector relativePos(PVector pos2)
     {
-        for(int i = 0; i < main.units.size(); i++)
+        for(int i = 0; i < main.units.size(); i ++)
         {
             //change the position to the centre
-            GameObject go = main.units.get(i);
-            float size = main.battlefield.size/2;
+            GameObject go = main.units.get(friendlyIndex);
 
             //set pos2 x and y to either 0 or 1 to indicate if i is above, below, right or left of the unit
             //x = 1 means right, x = 0 means left, x = -1 means same x value
@@ -305,6 +197,61 @@ public class EnemyShip extends GameObject {
         }//end for
         return pos2;
     }//end relativePos
+
+    public void movement(PVector relPos)
+    {
+        float a = pos.x + q;
+        float b = pos.x - q;
+        float c = pos.y + q;
+        float d = pos.y - q;
+
+        println(relPos);
+        if(relPos.x == 1)
+        {
+            if(relPos.y == 1)
+            {
+                pos.set(a, d);
+
+            }
+
+            if(relPos.y == 0)
+            {
+                pos.set(a, c);
+            }
+
+            println("1");
+        }//end if
+
+        if(relPos.x == 0)
+        {
+            if(relPos.y == 1)
+            {
+                pos.set(b, d);
+            }
+
+            if(relPos.y == 0)
+            {
+                pos.set(b, c);
+            }
+
+            println("2");
+        }//end if
+
+        if(relPos.x == -1)
+        {
+            if(relPos.y == 1)
+            {
+                pos.set(pos.x, d);
+            }
+
+            if(relPos.y == 0)
+            {
+                pos.set(pos.x, c);
+            }
+            println("3");
+        }//end if
+
+    }//end movement
 
     public void render()
     {

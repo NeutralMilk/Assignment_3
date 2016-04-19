@@ -136,7 +136,6 @@ public class Battlefield extends PApplet
 		{
 			for(int j = 0; j < h; j ++)
 			{
-
 				main.fill(coloursWater[i][j]);
 				s = color(255);
 				main.stroke(s);
@@ -146,6 +145,13 @@ public class Battlefield extends PApplet
 				if(placeOil[i][j] == true)
 				{
 					main.image(oil, i*main.width/32 + main.width/64, j*main.height/18 + main.height/36);
+				}//end if
+
+				if(main.visited[i][j] == false)
+                {
+                    main.fill(main.fog.coloursFog[i][j]);
+                    main.stroke(255);
+                    main.rect(i*main.width/w, j*main.height/hplus1, size, size);
                 }//end if
 			}//end for
 		}//end for

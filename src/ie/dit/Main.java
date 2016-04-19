@@ -30,7 +30,7 @@ public class Main extends PApplet
     ArrayList<PVector> posList = new ArrayList<PVector>();
 
 	//variables for making the units
-	boolean[] types = new boolean[2];
+	boolean[] types = new boolean[3];
     boolean click = false;
 
     //turnCount counts the turns since the last enemy spawned, a new enemy spawns every 4-8 turns
@@ -175,22 +175,23 @@ public class Main extends PApplet
 
         checkUnit();
 
-        for(int i = 0; i < enemyUnits.size(); i++)
+        for(int a = 0; a < enemyUnits.size(); a++)
         {
-            enemyUnits.get(i).render();
+            enemyUnits.get(a).render();
         }//end for
 
         if(hold == updateCount)
         {
-            for(int i = 0; i < enemyUnits.size(); i++)
+            for(int b = 0; b < enemyUnits.size(); b++)
             {
-                enemyUnits.get(i).update();
+                enemyUnits.get(b).update();
             }//end for
             hold = 1;
             updateCount = 0;
         }//end if
 
         fog.render();
+        fog.update();
 
         city.render();
 
@@ -204,8 +205,18 @@ public class Main extends PApplet
 
 		if(types[0] == true && gold >= 50)
 		{
-			shipCreate();
+			sloopCreate();
 		}//end if
+
+        if(types[1] == true && gold >= 200)
+        {
+            galleonCreate();
+        }//end if
+
+        if(types[2] == true && gold >= 350)
+        {
+            subCreate();
+        }//end if
 
         if(mouseX < width && mouseX > width - battlefield.size * 2 && mouseY < height && mouseY > height - battlefield.size)
         {
@@ -240,6 +251,7 @@ public class Main extends PApplet
 		if (key == 'm')
 		{
 			firstTime = false;
+            println(units.size());
 
 			if(menu == true)
 			{
@@ -254,20 +266,50 @@ public class Main extends PApplet
 	}
 
 	//creates a ship
-	private void shipCreate()
+	private void sloopCreate()
 	{
 		//increase the number of ships
 		int i = numShips;
         gold -=50;
         amountSubbed = 50;
 		//create a ship
-		Ship ship = new Ship(this);
+		Sloop ship = new Sloop(this);
 		units.add(ship);
 		//set it so that the ship follows the mouse
 		units.get(i).move = 0;
 		numShips++;
 		types[0] = false;
 	}//end shipCreate()
+
+    private void galleonCreate()
+    {
+        //increase the number of ships
+        int i = numShips;
+        gold -=200;
+        amountSubbed = 200;
+        //create a ship
+        Galleon ship = new Galleon(this);
+        units.add(ship);
+        //set it so that the ship follows the mouse
+        units.get(i).move = 0;
+        numShips++;
+        types[1] = false;
+    }//end shipCreate()
+
+    private void subCreate()
+    {
+        //increase the number of ships
+        int i = numShips;
+        gold -=350;
+        amountSubbed = 350;
+        //create a ship
+        Sub ship = new Sub(this);
+        units.add(ship);
+        //set it so that the ship follows the mouse
+        units.get(i).move = 0;
+        numShips++;
+        types[2] = false;
+    }//end shipCreate()
 
 
     private void spawnEnemy()
@@ -386,6 +428,12 @@ public class Main extends PApplet
             if(mouseX < battlefield.size * 2 && mouseX > battlefield.size && mouseY < height && mouseY > height - battlefield.size)
             {
                 types[1] = true;
+                clicked = 1;
+            }//end if
+
+            if(mouseX < battlefield.size * 3 && mouseX > battlefield.size*2 && mouseY < height && mouseY > height - battlefield.size)
+            {
+                types[2] = true;
                 clicked = 1;
             }//end if
         }//end if

@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import ddf.minim.Minim;
 import processing.core.*;
 
-public class Ship extends GameObject
+public class Sloop extends GameObject
 {
-	public Ship(Main _main)
+	public Sloop(Main _main)
 	{
 		super(_main);
-		unit = main.loadImage("1.png");
+		unit = main.loadImage("0.png");
 
 		//this scales the units to fit any screen size
 		int w = unit.width * main.width/2560;
@@ -94,7 +94,9 @@ public class Ship extends GameObject
 						if(enemy == true)
 						{
 							currentHealth -= (int)random(20,30);
+							main.enemyUnits.get(enemyIndex).currentHealth -= (int)(random(25,35));
 							enemy = false;
+							clicks++;
 						}
 
 						else
@@ -106,13 +108,14 @@ public class Ship extends GameObject
 							madeMove = true;
 
 							//only move once per turn
-							if(clicks > 0)
-							{
-								move = 1;
-								nextTurn = false;
-								//main.active = false;
-							}//end if
 						}//end else
+
+						if(clicks > 0)
+						{
+							move = 1;
+							nextTurn = false;
+							//main.active = false;
+						}//end if
 						main.release2 = false;
 					}//end if
 				}//end for
