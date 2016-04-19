@@ -278,8 +278,6 @@ public class Main extends PApplet
 
         for(int i = 0; i < types.length; i++)
         {
-            //println(i + "is " +types[i]);
-            //clicked = 0;
             types[i] = false;
         }
 
@@ -543,35 +541,30 @@ public class Main extends PApplet
         {
             if(mouseX < battlefield.size && mouseX > 0 && mouseY < height && mouseY > height - battlefield.size)
             {
-                println("1");
                 types[0] = true;
                 clicked = 1;
             }//end if
 
             if(mouseX < battlefield.size * 2 && mouseX > battlefield.size && mouseY < height && mouseY > height - battlefield.size)
             {
-                println("2");
                 types[1] = true;
                 clicked = 1;
             }//end if
 
             if(mouseX < battlefield.size * 3 && mouseX > battlefield.size*2 && mouseY < height && mouseY > height - battlefield.size)
             {
-                println("3");
                 types[2] = true;
                 clicked = 1;
             }//end if
 
             if(mouseX < battlefield.size * 4 && mouseX > battlefield.size*3 && mouseY < height && mouseY > height - battlefield.size)
             {
-                println("4");
                 types[3] = true;
                 clicked = 1;
             }//end if
 
             if(mouseX < battlefield.size * 5 && mouseX > battlefield.size*4 && mouseY < height && mouseY > height - battlefield.size)
             {
-                println("5");
                 types[4] = true;
                 clicked = 1;
             }//end if

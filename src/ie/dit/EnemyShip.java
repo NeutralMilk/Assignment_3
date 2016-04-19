@@ -104,13 +104,10 @@ public class EnemyShip extends GameObject {
 
         //checkDistance finds the closest ship
         checkDistance(pos);
+        relativePos();
 
         //relativePos finds what directions the friendly ship is in
-        PVector relativePos = relativePos(pos);
-
         //movement moves the enemy in the direction of the friendly
-        movement(relativePos);
-
         //keep them on the screen
         if(pos.x > main.width)
         {
@@ -154,7 +151,7 @@ public class EnemyShip extends GameObject {
         }//end for
     }//end checkdistance
 
-    public PVector relativePos(PVector pos2)
+    public void relativePos()
     {
         for(int i = 0; i < main.units.size(); i ++)
         {
@@ -166,38 +163,55 @@ public class EnemyShip extends GameObject {
             //y = 1 means above, y = 0 means below, y = - 1 means same y value
 
             //check the x values
-            if(pos2.x < go.pos.x)
+            if(pos.x < go.pos.x)
             {
-                pos2.x = 1;
+                movement(1);
             }//end if
-            if(pos2.x > go.pos.x)
+            if(pos.x > go.pos.x)
             {
-                pos2.x = 0;
+                movement(2);
             }//end if
-            if(pos2.x == go.pos.x)
-            {
-                pos2.x = -1;
-            }//end if
-
             //check the y values
-            if(pos2.y < go.pos.y)
+            if(pos.y < go.pos.y)
             {
-                pos2.y = 1;
+                movement(3);
             }//end if
-            if(pos2.y > go.pos.y)
+            if(pos.y > go.pos.y)
             {
-                pos2.y = 0;
+                movement(4);
             }//end if
-            if(pos2.y == go.pos.y)
-            {
-                pos2.y = -1;
-            }//end if
-
         }//end for
-        return pos2;
     }//end relativePos
 
-    public void movement(PVector relPos)
+    public void movement(int direction)
+    {
+        //ifs for movement
+
+        //moves right
+        if(direction == 1)
+        {
+            pos.x += q;
+        }//end if
+
+        //moves left
+        if(direction == 2)
+        {
+            pos.x -= q;
+        }//end if
+
+        //moves up
+        if(direction == 3)
+        {
+            pos.y += q;
+        }//end if
+
+        //moves down
+        if(direction == 4)
+        {
+            pos.y -= q;
+        }//end if
+    }//end movement
+    /*public void movement(PVector relPos)
     {
         float a = pos.x + q;
         float b = pos.x - q;
@@ -208,8 +222,7 @@ public class EnemyShip extends GameObject {
         {
             if(relPos.y == 1)
             {
-                pos.x += q;
-                pos.y += q;
+                pos.set(a, d);
             }
 
             if(relPos.y == 0)
@@ -246,7 +259,7 @@ public class EnemyShip extends GameObject {
             }
         }//end if
 
-    }//end movement
+    }//end movement*/
 
     public void render()
     {
