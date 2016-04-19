@@ -20,8 +20,8 @@ public class Sloop extends GameObject
 		mouseBox = new PVector();
 		easing = .7f;
         madeMove = false;
-		initialHealth = 100;
-		currentHealth = 100;
+		initialHealth = 50;
+		currentHealth = 50;
 		clicks = 0;
 	}
 
@@ -118,6 +118,17 @@ public class Sloop extends GameObject
 						}//end if
 						main.release2 = false;
 					}//end if
+
+					if(pos.dist(mouseBox) < main.battlefield.size*3)
+					{
+						main.battlefield.colourGreen = true;
+						main.fog.colourGreen = true;
+					}
+					else
+					{
+						main.battlefield.colourRed = true;
+						main.fog.colourRed = true;
+					}
 				}//end for
 			}//end for
 		}//end if 2
@@ -126,26 +137,10 @@ public class Sloop extends GameObject
 	//this function checks to see if the mouse is within two boxes up, down, left or right of the unit
 	public boolean validTiles()
 	{
-		//check for the x values
-		int plusX = (int)pos.x + main.width/w;
-		int plus2X = (int)pos.x + main.width/hmin1;
-		int minX = (int)pos.x - main.width/w;
-		int min2X = (int)pos.x - main.width/hmin1;
-
-		//check for y values
-
-		int plusY = (int)pos.y + main.height/hplus1;
-		int plus2Y = (int)pos.y + main.height/9;
-		int minY = (int)pos.y - main.height/hplus1;
-		int min2Y = (int)pos.y - main.height/9;
-
-		if (mouseBox.x == plusX || mouseBox.x == plus2X || mouseBox.x == minX || mouseBox.x == min2X || mouseBox.x == pos.x)
+		if(pos.dist(mouseBox) < main.battlefield.size*3)
 		{
-			if (mouseBox.y == plusY || mouseBox.y == plus2Y || mouseBox.y == minY || mouseBox.y == min2Y || mouseBox.y == pos.y)
-			{
-                validTile = checkPos(mouseBox);
-			}//end if
-		}//end if
+			validTile = checkPos(mouseBox);
+		}
 		return validTile;
 	}//end validTiles()
 

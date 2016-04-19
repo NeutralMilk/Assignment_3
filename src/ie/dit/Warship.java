@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import ddf.minim.Minim;
 import processing.core.*;
 
-public class Galleon extends GameObject
+public class Warship extends GameObject
 {
-    public Galleon(Main _main)
+    public Warship(Main _main)
     {
         super(_main);
-        unit = main.loadImage("1.png");
+        unit = main.loadImage("3.png");
 
         //this scales the units to fit any screen size
         int w = unit.width * main.width/2560;
@@ -20,8 +20,8 @@ public class Galleon extends GameObject
         mouseBox = new PVector();
         easing = .7f;
         madeMove = false;
-        initialHealth = 150;
-        currentHealth = 150;
+        initialHealth = 250;
+        currentHealth = 250;
         clicks = 0;
     }
 
@@ -54,10 +54,10 @@ public class Galleon extends GameObject
                             main.visited[i + 1][j] = true;
                             main.visited[i][j - 1] = true;
                             main.visited[i][j + 1] = true;
-                            /*main.visited[i + 1][j + 1] = true;
+                            main.visited[i + 1][j + 1] = true;
                             main.visited[i - 1][j + 1] = true;
                             main.visited[i + 1][j - 1] = true;
-                            main.visited[i - 1][j - 1] = true;*/
+                            main.visited[i - 1][j - 1] = true;
                         }//end if
 
                         pos.x = main.cPosX[i] + main.width / 64;
@@ -119,7 +119,7 @@ public class Galleon extends GameObject
                         main.release2 = false;
                     }//end if
 
-                    if(pos.dist(mouseBox) < main.battlefield.size*2)
+                    if(pos.dist(mouseBox) < main.battlefield.size*4)
                     {
                         main.battlefield.colourGreen = true;
                         main.fog.colourGreen = true;
@@ -137,7 +137,7 @@ public class Galleon extends GameObject
     //this function checks to see if the mouse is within two boxes up, down, left or right of the unit
     public boolean validTiles()
     {
-        if(pos.dist(mouseBox) < main.battlefield.size*2)
+        if(pos.dist(mouseBox) < main.battlefield.size*4)
         {
             validTile = checkPos(mouseBox);
         }

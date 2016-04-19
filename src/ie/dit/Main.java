@@ -30,7 +30,7 @@ public class Main extends PApplet
     ArrayList<PVector> posList = new ArrayList<PVector>();
 
 	//variables for making the units
-	boolean[] types = new boolean[3];
+	boolean[] types = new boolean[4];
     boolean click = false;
 
     //turnCount counts the turns since the last enemy spawned, a new enemy spawns every 4-8 turns
@@ -218,6 +218,11 @@ public class Main extends PApplet
             subCreate();
         }//end if
 
+        if(types[3] == true && gold >= 500)
+        {
+            WarshipCreate();
+        }//end if
+
         if(mouseX < width && mouseX > width - battlefield.size * 2 && mouseY < height && mouseY > height - battlefield.size)
         {
             battlefield.hover = true;
@@ -309,6 +314,21 @@ public class Main extends PApplet
         units.get(i).move = 0;
         numShips++;
         types[2] = false;
+    }//end shipCreate()
+
+    private void WarshipCreate()
+    {
+        //increase the number of ships
+        int i = numShips;
+        gold -=500;
+        amountSubbed = 500;
+        //create a ship
+        Warship ship = new Warship(this);
+        units.add(ship);
+        //set it so that the ship follows the mouse
+        units.get(i).move = 0;
+        numShips++;
+        types[3] = false;
     }//end shipCreate()
 
 
@@ -436,6 +456,13 @@ public class Main extends PApplet
                 types[2] = true;
                 clicked = 1;
             }//end if
+
+            if(mouseX < battlefield.size * 4 && mouseX > battlefield.size*3 && mouseY < height && mouseY > height - battlefield.size)
+            {
+                types[3] = true;
+                clicked = 1;
+            }//end if
+
         }//end if
     }//end mousePressed
 

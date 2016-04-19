@@ -29,7 +29,7 @@ public class Battlefield extends PApplet
 		size = main.width/w;
 
 		placeOil = new boolean[w][h];
-		images = new PImage[3];
+		images = new PImage[4];
 		oil = new PImage();
 		coloursWater = new int[w][h];
 
@@ -52,7 +52,7 @@ public class Battlefield extends PApplet
 		for ( int i = 0; i< images.length; i++ )
 		{
 			images[i] = main.loadImage( i + ".png" );
-			//scaling the image
+
 			int wi = images[i].width * main.width/2560;
 			int hi = images[i].height * main.height/1440;
 			images[i].resize(wi,hi);
@@ -165,7 +165,7 @@ public class Battlefield extends PApplet
 			main.rect(i * main.width/w, main.height - size, size, size);
 			if(i < images.length)
 			{
-				main.image(images[i], i * main.width/w - size/2, main.height - size/2);
+				main.image(images[i], (i+1) * main.width/w - size/2, main.height - size/2);
 			}//end if
 		}//end for
 

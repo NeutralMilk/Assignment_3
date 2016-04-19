@@ -20,8 +20,8 @@ public class Sub extends GameObject
         mouseBox = new PVector();
         easing = .7f;
         madeMove = false;
-        initialHealth = 100;
-        currentHealth = 100;
+        initialHealth = 30;
+        currentHealth = 30;
         clicks = 0;
     }
 
@@ -47,28 +47,13 @@ public class Sub extends GameObject
                     {
                         main.visited[i][j]= true;
 
-
-                        /*if(i > 0 && i < 31 &&  j > 0 && j < hmin1)
-                        {
-                            main.visited[i - 1][j] = true;
-                            main.visited[i + 1][j] = true;
-                            main.visited[i][j - 1] = true;
-                            main.visited[i][j + 1] = true;
-                            main.visited[i + 1][j + 1] = true;
-                            main.visited[i - 1][j + 1] = true;
-                            main.visited[i + 1][j - 1] = true;
-                            main.visited[i - 1][j - 1] = true;
-                        }//end if*/
-
                         pos.x = main.cPosX[i] + main.width / 64;
                         pos.y = main.cPosY[j] + main.height / 36;
-
 
                         break;
                     }//end if
                 }//end for
             }//end for
-
         }//end if 1
 
         if (move == 2)
