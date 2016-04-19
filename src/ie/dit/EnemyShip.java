@@ -14,7 +14,7 @@ public class EnemyShip extends GameObject {
         unit.resize(w, h);
         pos = new PVector(0, 0);
         pos = initialSpawn();
-        initialHealth = 100;
+        initialHealth = (int)random(50,120);
         currentHealth = initialHealth;
         q = main.width/32;
     }
@@ -208,8 +208,8 @@ public class EnemyShip extends GameObject {
         {
             if(relPos.y == 1)
             {
-                pos.set(a, d);
-
+                pos.x += q;
+                pos.y += q;
             }
 
             if(relPos.y == 0)
@@ -255,11 +255,7 @@ public class EnemyShip extends GameObject {
         main.strokeWeight(.5f);
         main.noFill();
         main.ellipse(pos.x,pos.y, main.width/32, main.height/18);
-        main.pushMatrix();
-        main.translate(pos.x, pos.y);
         main.imageMode(CENTER);
-        main.image(unit, 0, 0);
-        main.popMatrix();
-        main.rectMode(CORNER);
+        main.image(unit, pos.x, pos.y);
     }//end render
 }

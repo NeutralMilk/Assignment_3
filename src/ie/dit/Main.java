@@ -57,8 +57,8 @@ public class Main extends PApplet
 
 	public void settings()
 	{
-		fullScreen();
-        //size(1600,900);
+		//fullScreen();
+        size(1600,900);
 	}//end settings
 
 	public void setup()
@@ -216,31 +216,76 @@ public class Main extends PApplet
 
 		if(types[0] == true && gold >= 50)
 		{
-			sloopCreate();
+            if(gold >= 50)
+            {
+                sloopCreate();
+            }//end if
+            else
+            {
+                clicked = 0;
+            }
 		}//end if
 
-        if(types[1] == true && gold >= 200)
+        if(types[1] == true)
         {
-            galleonCreate();
+            if(gold >= 200)
+            {
+                galleonCreate();
+            }
+
+            else
+            {
+                clicked = 0;
+            }
         }//end if
 
-        if(types[2] == true && gold >= 350)
+        if(types[2] == true)
         {
-            subCreate();
+            if(gold >= 350)
+            {
+                subCreate();
+            }
+            else
+            {
+                clicked = 0;
+            }
         }//end if
 
-        if(types[3] == true && gold >= 500)
+        if(types[3] == true)
         {
-            WarshipCreate();
+            if(gold >= 500)
+            {
+
+                WarshipCreate();
+            }
+            else
+            {
+                clicked = 0;
+            }
         }//end if
 
-        if(types[4] == true && gold >= 100)
+        if(types[4] == true)
         {
-            oilCreate();
+            if(gold >= 100)
+            {
+                oilCreate();
+            }
+            else
+            {
+                clicked = 0;
+            }
         }//end if
+
+        for(int i = 0; i < types.length; i++)
+        {
+            //println(i + "is " +types[i]);
+            //clicked = 0;
+            types[i] = false;
+        }
 
         //these display the cost of a unit
         textMode(CENTER);
+        fill(0);
         if(mouseX < battlefield.size && mouseX > 0 && mouseY < height && mouseY > height - battlefield.size)
         {
             text(50,width/2,height - (battlefield.size/2));
@@ -270,7 +315,6 @@ public class Main extends PApplet
         {
             battlefield.hover = true;
         }//end if
-
         else
         {
             battlefield.hover = false;
@@ -290,6 +334,7 @@ public class Main extends PApplet
             if(enemyUnits.get(i).currentHealth < 0)
             {
                 enemyUnits.remove(i);
+                gold+=20;
             }
         }
 	}//end game()
@@ -498,34 +543,38 @@ public class Main extends PApplet
         {
             if(mouseX < battlefield.size && mouseX > 0 && mouseY < height && mouseY > height - battlefield.size)
             {
+                println("1");
                 types[0] = true;
                 clicked = 1;
             }//end if
 
             if(mouseX < battlefield.size * 2 && mouseX > battlefield.size && mouseY < height && mouseY > height - battlefield.size)
             {
+                println("2");
                 types[1] = true;
                 clicked = 1;
             }//end if
 
             if(mouseX < battlefield.size * 3 && mouseX > battlefield.size*2 && mouseY < height && mouseY > height - battlefield.size)
             {
+                println("3");
                 types[2] = true;
                 clicked = 1;
             }//end if
 
             if(mouseX < battlefield.size * 4 && mouseX > battlefield.size*3 && mouseY < height && mouseY > height - battlefield.size)
             {
+                println("4");
                 types[3] = true;
                 clicked = 1;
             }//end if
 
             if(mouseX < battlefield.size * 5 && mouseX > battlefield.size*4 && mouseY < height && mouseY > height - battlefield.size)
             {
+                println("5");
                 types[4] = true;
                 clicked = 1;
             }//end if
-
         }//end if
     }//end Dragged
 

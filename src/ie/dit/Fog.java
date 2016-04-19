@@ -74,12 +74,12 @@ public class Fog extends PApplet
         {
             for(int j = 0; j < h; j ++)
             {
-                if(main.visited[i][j] == false)
+                /*if(main.visited[i][j] == false)
                 {
                     main.fill(coloursFog[i][j]);
                     main.stroke(255);
                     main.rect(i*main.width/w, j*main.height/hplus1, size, size);
-                }//end if
+                }//end if*/
             }//end for
         }//end for
     }//end render()
