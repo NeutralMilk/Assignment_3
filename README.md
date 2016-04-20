@@ -6,7 +6,7 @@ You have a choice of four ships:
 
 a) A sloop is moderately fast and costs only 50 credits but is easy to destroy. It reveals all tiles that surround it
 b) A galleon is slow and more expensive at 200 credits but is powerful and hard to damage. it also revels less of the map but can shoot as far as a sloop
-c) A submarine is very fast and costs 350 credits. It can destroy most enemies in one hit but can also be destroyed very easily itself. It only reveals the tile that it occupies.
+c) A submarine is very fast and costs 350 credits. It can destroy most enemies in one hit but can also be destroyed very easily itself. It only reveals the tile that it occupies. It can hit enemies that are far away.
 d) A warship is the most expensive at 500 credits but is powerful and fast and has a lot of armour. It reveals the same amount as a sloop.
 
 There is also an oil rig which can be placed on tiles with oil in them. They cost 100 credits and can not be attacked or destroyed. the generate 10 gold per turn.
@@ -19,9 +19,10 @@ To place a unit on the map drag it from the bottom left corner to one of the til
 To move a ship click on it and click again on the square you want to go to. You can only move once per turn.
 If a tile is green when you're moving a unit that means it can be moved to it. If it is red it is out of range and can't be moved there.
 
-Enemies are damaged by clicking on the friendly unit you want to attack it, and then clicking the enemy.
+Enemies are damaged by clicking on the friendly unit you want to attack it with, then clicking the enemy.
 Enemies only do damage if you are in a tile immediately beside them, so keep some distance.
 
-
+# Download Link
+https://drive.google.com/open?id=0B4oGH8FaGY7VUTVSczJyZzlqdlk
 
 
