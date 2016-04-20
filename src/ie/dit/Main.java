@@ -560,7 +560,7 @@ public class Main extends PApplet
                 }//end for
             }//end for
         }//end for
-        
+
         //shows the enemy health
         for(int i = 0 ; i < enemyUnits.size(); i ++)
         {

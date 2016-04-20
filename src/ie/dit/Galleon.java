@@ -140,7 +140,7 @@ public class Galleon extends GameObject
     //this function checks to see if the mouse is within two boxes up, down, left or right of the unit
     public boolean validTiles()
     {
-        if(pos.dist(mouseBox) < main.battlefield.size*2)
+        if(pos.dist(mouseBox) < main.battlefield.size*3)
         {
             validTile = checkPos(mouseBox);
         }
