@@ -7,11 +7,15 @@ public class City extends PApplet
 
     Main main;
     PImage city = new PImage();
+    int initialHealth;
+    int currentHealth;
 
     public City (Main _main)
     {
         main = _main;
         city = main.loadImage("city.png");
+        initialHealth = 1000;
+        currentHealth = initialHealth;
 
         int w = city.width * main.width/2560;
         int h = city.height * main.height/1440;

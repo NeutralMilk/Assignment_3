@@ -18,7 +18,7 @@ public class EnemyShip extends GameObject {
         currentHealth = initialHealth;
         q = main.width/32;
     }
-
+    PVector center = new PVector(main.width/2, main.height/2);
     private PVector initialSpawn()
     {
         int position = (int) random(1, 4);
@@ -104,10 +104,10 @@ public class EnemyShip extends GameObject {
 
         //checkDistance finds the closest ship
         checkDistance(pos);
+
+        //relativePos locates where that ship is in relation to the enemy and then move it towards it.
         relativePos();
 
-        //relativePos finds what directions the friendly ship is in
-        //movement moves the enemy in the direction of the friendly
         //keep them on the screen
         if(pos.x > main.width)
         {
@@ -135,16 +135,22 @@ public class EnemyShip extends GameObject {
     {
         for(int i = 0; i < main.units.size(); i++)
         {
+            //closest is the distance between the enemy and the closest friendly unit
             float closest = pos2.dist(main.units.get(0).pos);
 
+            //compare every friendly unit
             GameObject go = main.units.get(i);
 
             //find the closest unit
             //friendlyIndex is the index of the closest unit
             //set the closest to be the first one initially
             friendlyIndex = 0;
-
-            if(pos2.dist(go.pos) < closest)
+            if(pos2.dist(center) < main.battlefield.size*4)
+            {
+                //make friendly index a number bigger than the max amount of friendlies
+                friendlyIndex = 600;
+            }
+            else if(pos2.dist(go.pos) < closest)
             {
                 friendlyIndex = i;
             }//end if
@@ -153,113 +159,64 @@ public class EnemyShip extends GameObject {
 
     public void relativePos()
     {
-        for(int i = 0; i < main.units.size(); i ++)
+        if(friendlyIndex == 600)
         {
-            //change the position to the centre
-            GameObject go = main.units.get(friendlyIndex);
+            if(pos.dist(center) > main.width/16)
+            {
+                if(pos.x < center.x)
+                {
+                    pos.x += q;
+                }//end if
+                if(pos.x > center.x)
+                {
+                    pos.x -= q;
+                }//end if
+                //check the y values
+                if(pos.y < center.y)
+                {
+                    pos.y += q;
+                }//end if
+                if(pos.y > center.y)
+                {
+                    pos.y -= q;
+                }//end if
+            }//end if
+            else
+            {
+                main.city.currentHealth -= (int)random(10,15);
+            }
+        }//end if
+        else
+        {
+            for(int i = 0; i < main.units.size(); i ++)
+            {
+                GameObject go = main.units.get(friendlyIndex);
 
-            //set pos2 x and y to either 0 or 1 to indicate if i is above, below, right or left of the unit
-            //x = 1 means right, x = 0 means left, x = -1 means same x value
-            //y = 1 means above, y = 0 means below, y = - 1 means same y value
+                //check the x values
+                if(pos.dist(go.pos) > main.width/32)
+                {
+                    if(pos.x < go.pos.x)
+                    {
+                        pos.x += q;
+                    }//end if
+                    if(pos.x > go.pos.x)
+                    {
+                        pos.x -= q;
+                    }//end if
+                    //check the y values
+                    if(pos.y < go.pos.y)
+                    {
+                        pos.y += q;
+                    }//end if
+                    if(pos.y > go.pos.y)
+                    {
+                        pos.y -= q;
+                    }//end if
+                }//end if
+            }//end for
+        }
 
-            //check the x values
-            if(pos.x < go.pos.x)
-            {
-                movement(1);
-            }//end if
-            if(pos.x > go.pos.x)
-            {
-                movement(2);
-            }//end if
-            //check the y values
-            if(pos.y < go.pos.y)
-            {
-                movement(3);
-            }//end if
-            if(pos.y > go.pos.y)
-            {
-                movement(4);
-            }//end if
-        }//end for
     }//end relativePos
-
-    public void movement(int direction)
-    {
-        //ifs for movement
-
-        //moves right
-        if(direction == 1)
-        {
-            pos.x += q;
-        }//end if
-
-        //moves left
-        if(direction == 2)
-        {
-            pos.x -= q;
-        }//end if
-
-        //moves up
-        if(direction == 3)
-        {
-            pos.y += q;
-        }//end if
-
-        //moves down
-        if(direction == 4)
-        {
-            pos.y -= q;
-        }//end if
-    }//end movement
-    /*public void movement(PVector relPos)
-    {
-        float a = pos.x + q;
-        float b = pos.x - q;
-        float c = pos.y + q;
-        float d = pos.y - q;
-
-        if(relPos.x == 1)
-        {
-            if(relPos.y == 1)
-            {
-                pos.set(a, d);
-            }
-
-            if(relPos.y == 0)
-            {
-                pos.set(a, c);
-            }
-
-        }//end if
-
-        if(relPos.x == 0)
-        {
-            if(relPos.y == 1)
-            {
-                pos.set(b, d);
-            }
-
-            if(relPos.y == 0)
-            {
-                pos.set(b, c);
-            }
-
-        }//end if
-
-        if(relPos.x == -1)
-        {
-            if(relPos.y == 1)
-            {
-                pos.set(pos.x, d);
-            }
-
-            if(relPos.y == 0)
-            {
-                pos.set(pos.x, c);
-            }
-        }//end if
-
-    }//end movement*/
 
     public void render()
     {

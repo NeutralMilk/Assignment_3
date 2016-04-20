@@ -93,8 +93,14 @@ public class Warship extends GameObject
                     {
                         if(enemy == true)
                         {
-                            currentHealth -= (int)random(20,30);
+
+                            if(pos.dist(main.enemyUnits.get(enemyIndex).pos) < main.battlefield.size*2)
+                            {
+                                currentHealth -= (int)random(20,30);
+                            }
+
                             main.enemyUnits.get(enemyIndex).currentHealth -= (int)(random(80,90));
+
                             enemy = false;
                             clicks++;
                         }

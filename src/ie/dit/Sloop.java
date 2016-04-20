@@ -2,7 +2,6 @@ package ie.dit;
 
 import java.util.ArrayList;
 
-import ddf.minim.Minim;
 import processing.core.*;
 
 public class Sloop extends GameObject
@@ -93,7 +92,10 @@ public class Sloop extends GameObject
 					{
 						if(enemy == true)
 						{
-							currentHealth -= (int)random(20,30);
+							if(pos.dist(main.enemyUnits.get(enemyIndex).pos) < main.battlefield.size*2)
+							{
+								currentHealth -= (int)random(20,30);
+							}
 							main.enemyUnits.get(enemyIndex).currentHealth -= (int)(random(25,35));
 							enemy = false;
 							clicks++;

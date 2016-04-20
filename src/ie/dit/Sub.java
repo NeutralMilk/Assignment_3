@@ -78,7 +78,10 @@ public class Sub extends GameObject
                     {
                         if(enemy == true)
                         {
-                            currentHealth -= (int)random(25,30);
+                            if(pos.dist(main.enemyUnits.get(enemyIndex).pos) < main.battlefield.size*2)
+                            {
+                                currentHealth -= (int)random(20,30);
+                            }
                             main.enemyUnits.get(enemyIndex).currentHealth -= (int)(random(150,180));
                             enemy = false;
                             clicks++;

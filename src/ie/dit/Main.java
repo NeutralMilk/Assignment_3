@@ -57,8 +57,8 @@ public class Main extends PApplet
 
 	public void settings()
 	{
-		//fullScreen();
-        size(1600,900);
+		fullScreen();
+        //size(1600,900);
 	}//end settings
 
 	public void setup()
@@ -120,52 +120,71 @@ public class Main extends PApplet
 			rect(0, 0, width, height);
 		}//end if
 
-		if(mouseX > x && mouseX < x + boxWidth && mouseY > y - boxHeight/1.5 && mouseY < y + boxHeight/3)
-		{
-			fill(75,200,255);
-			if(mousePressed)
-			{
-				menu = false;
-			}//end if
-		}
-		else
-		{
-			fill(68,193,235);
-		}//end else
+        if(city.currentHealth <= 0)
+        {
+            textAlign(CENTER);
+            fill(0);
+            textSize(width/20);
 
-		rect(x, (float) (y - boxHeight/1.5), boxWidth, boxHeight);
+            text("You Lose", width/2, height/2);
+            text("Click To Exit", width/2, height*.75f);
+
+            strokeWeight(1);
+            if(mousePressed)
+            {
+                exit();
+            }
+        }//end if
+
+        else
+        {
+            if(mouseX > x && mouseX < x + boxWidth && mouseY > y - boxHeight/1.5 && mouseY < y + boxHeight/3)
+            {
+                fill(75,200,255);
+                if(mousePressed)
+                {
+                    menu = false;
+                }//end if
+            }
+            else
+            {
+                fill(68,193,235);
+            }//end else
+
+            rect(x, (float) (y - boxHeight/1.5), boxWidth, boxHeight);
 
 
-		if(mouseX > x && mouseX < x + boxWidth && mouseY > y + boxHeight/1.5 && mouseY < y + boxHeight*1.7)
-		{
-			fill(75,200,255);
-			if(mousePressed)
-			{
-				exit();
-			}//end if
-		}
-		else
-		{
-			fill(68,193,235);
-		}//end else
+            if(mouseX > x && mouseX < x + boxWidth && mouseY > y + boxHeight/1.5 && mouseY < y + boxHeight*1.7)
+            {
+                fill(75,200,255);
+                if(mousePressed)
+                {
+                    exit();
+                }//end if
+            }
+            else
+            {
+                fill(68,193,235);
+            }//end else
 
-		rect(x, (float) (y + boxHeight/1.5), boxWidth, boxHeight);
+            rect(x, (float) (y + boxHeight/1.5), boxWidth, boxHeight);
 
-		textAlign(CENTER);
-		fill(0);
-		textSize(width/20);
-		if(firstTime == true)
-		{
-			text("Start Game", width/2, height/2 - boxHeight/2);
-		}//end if
+            textAlign(CENTER);
+            fill(0);
+            textSize(width/20);
+            if(firstTime == true)
+            {
+                text("Start Game", width/2, height/2 - boxHeight/2);
+            }//end if
 
-		else
-		{
-			text("Resume", width/2, height/2 - boxHeight/2);
-		}//end else
+            else
+            {
+                text("Resume", width/2, height/2 - boxHeight/2);
+            }//end else
 
-		text("Exit Game", width/2, (float) (height/2 + boxHeight/1.25));
-		strokeWeight(1);
+            text("Exit Game", width/2, (float) (height/2 + boxHeight/1.25));
+            strokeWeight(1);
+        }//end else
 	}
 
 	private void game()
@@ -335,6 +354,30 @@ public class Main extends PApplet
                 gold+=20;
             }
         }
+
+        if(mouseX > width/2 - battlefield.size && mouseX < width/2 + battlefield.size)
+        {
+            if(mouseY > height/2 - battlefield.size && mouseY < height/2 + battlefield.size)
+            {
+                rectMode(CENTER);
+                strokeWeight(1);
+                stroke(0);
+                fill(255,0 , 0);
+                rect(width/2, height - 40, 600, 20);
+                int healthBar = (int)map(city.currentHealth, 0, city.initialHealth, 0 ,600);
+                fill(0, 255, 0);
+                rect(width/2, height - 40, healthBar, 20);
+                strokeWeight(3);
+                fill(0);
+                text(city.currentHealth, width/2, height - 5);
+                rectMode(CORNER);
+            }//end if
+        }//end if
+
+        if(city.currentHealth <= 0)
+        {
+            menu = true;
+        }
 	}//end game()
 
 	public void keyPressed()
@@ -439,7 +482,7 @@ public class Main extends PApplet
             EnemyShip enemyShip = new EnemyShip(this);
             enemyUnits.add(enemyShip);
             turnCount = 0;
-            spawn = (int) random(4,8);
+            spawn = (int) random(8,10);
         }//end if
     }//ennd spawnEnemy()
 
@@ -499,6 +542,38 @@ public class Main extends PApplet
                             {
                                 battlefield.colourGreen = true;
                             }//end if
+
+                            rectMode(CENTER);
+                            strokeWeight(1);
+                            stroke(0);
+                            fill(255,0 , 0);
+                            rect(width/2, height - 40, 600, 20);
+                            int healthBar = (int)map(go.currentHealth, 0, go.initialHealth, 0 ,600);
+                            fill(0, 255, 0);
+                            rect(width/2, height - 40, healthBar, 20);
+                            strokeWeight(3);
+                            fill(0);
+                            text(go.currentHealth, width/2, height - 5);
+                            rectMode(CORNER);
+                        }//end if
+                    }//end if
+                }//end for
+            }//end for
+        }//end for
+        
+        //shows the enemy health
+        for(int i = 0 ; i < enemyUnits.size(); i ++)
+        {
+            GameObject go = enemyUnits.get(i);
+
+            for(int k = 0; k < w; k++)
+            {
+                for (int j = 0; j < h; j++)
+                {
+                    if ((go.pos.x + mousePos.x) < (go.pos.x*2 + width/64) && (go.pos.x + mousePos.x) > (go.pos.x*2 - width/64))
+                    {
+                        if((go.pos.y + mousePos.y) < (go.pos.y*2 + height/36) && (go.pos.y + mousePos.y) > (go.pos.y*2 - height/36))
+                        {
 
                             rectMode(CENTER);
                             strokeWeight(1);
