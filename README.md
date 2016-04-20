@@ -22,6 +22,9 @@ If a tile is green when you're moving a unit that means it can be moved to it. I
 Enemies are damaged by clicking on the friendly unit you want to attack it with, then clicking the enemy.
 Enemies only do damage if you are in a tile immediately beside them, so keep some distance.
 
+# Video
+https://www.youtube.com/watch?v=veR4RiCnNw8
+
 # Download Link
 https://drive.google.com/open?id=0B4oGH8FaGY7VUTVSczJyZzlqdlk
 
