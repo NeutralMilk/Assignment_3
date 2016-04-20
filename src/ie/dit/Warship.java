@@ -94,6 +94,8 @@ public class Warship extends GameObject
                         if(enemy == true)
                         {
 
+                            main.cannon.play();
+                            main.cannon.rewind();
                             if(pos.dist(main.enemyUnits.get(enemyIndex).pos) < main.battlefield.size*2)
                             {
                                 currentHealth -= (int)random(20,30);

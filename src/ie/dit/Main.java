@@ -1,11 +1,10 @@
 package ie.dit;
 
 import java.util.ArrayList;
+import ddf.minim.AudioPlayer;
 import processing.core.*;
-import ddf.minim.AudioInput;
 import ddf.minim.Minim;
-import ddf.minim.analysis.FFT;
-import ddf.minim.analysis.WindowFunction;
+
 
 public class Main extends PApplet
 {
@@ -16,6 +15,8 @@ public class Main extends PApplet
     //enemy units
     ArrayList<GameObject> enemyUnits = new ArrayList<GameObject>();
 
+    Minim minim;
+    AudioPlayer cannon;
 	Battlefield battlefield;
     Fog fog;
     City city;
@@ -71,6 +72,9 @@ public class Main extends PApplet
         cPosX = new int[w];
         cPosY = new int[h];
         visited = new boolean [w][h];
+
+        minim = new Minim(this);
+        cannon = minim.loadFile("cannon.wav", 2048);
 
 		for(int i = 0; i < w; i ++)
 		{
@@ -229,8 +233,6 @@ public class Main extends PApplet
             units.get(i).update();
         }//end for
 
-
-
         spawnEnemy();
 
 		if(types[0] == true && gold >= 50)
@@ -360,14 +362,13 @@ public class Main extends PApplet
             if(mouseY > height/2 - battlefield.size && mouseY < height/2 + battlefield.size)
             {
                 rectMode(CENTER);
-                strokeWeight(1);
+                strokeWeight(.5f);
                 stroke(0);
                 fill(255,0 , 0);
                 rect(width/2, height - 40, 600, 20);
                 int healthBar = (int)map(city.currentHealth, 0, city.initialHealth, 0 ,600);
                 fill(0, 255, 0);
                 rect(width/2, height - 40, healthBar, 20);
-                strokeWeight(3);
                 fill(0);
                 text(city.currentHealth, width/2, height - 5);
                 rectMode(CORNER);
@@ -544,7 +545,7 @@ public class Main extends PApplet
                             }//end if
 
                             rectMode(CENTER);
-                            strokeWeight(1);
+                            strokeWeight(.5f);
                             stroke(0);
                             fill(255,0 , 0);
                             rect(width/2, height - 40, 600, 20);
@@ -576,14 +577,13 @@ public class Main extends PApplet
                         {
 
                             rectMode(CENTER);
-                            strokeWeight(1);
+                            strokeWeight(.5f);
                             stroke(0);
                             fill(255,0 , 0);
                             rect(width/2, height - 40, 600, 20);
                             int healthBar = (int)map(go.currentHealth, 0, go.initialHealth, 0 ,600);
                             fill(0, 255, 0);
                             rect(width/2, height - 40, healthBar, 20);
-                            strokeWeight(3);
                             fill(0);
                             text(go.currentHealth, width/2, height - 5);
                             rectMode(CORNER);

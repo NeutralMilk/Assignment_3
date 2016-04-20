@@ -1,6 +1,8 @@
 package ie.dit;
 
+import ddf.minim.AudioPlayer;
 import processing.core.*;
+import ddf.minim.Minim;
 
 public abstract class GameObject extends PApplet
 {

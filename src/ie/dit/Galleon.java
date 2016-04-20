@@ -54,10 +54,6 @@ public class Galleon extends GameObject
                             main.visited[i + 1][j] = true;
                             main.visited[i][j - 1] = true;
                             main.visited[i][j + 1] = true;
-                            /*main.visited[i + 1][j + 1] = true;
-                            main.visited[i - 1][j + 1] = true;
-                            main.visited[i + 1][j - 1] = true;
-                            main.visited[i - 1][j - 1] = true;*/
                         }//end if
 
                         pos.x = main.cPosX[i] + main.width / 64;
@@ -93,6 +89,8 @@ public class Galleon extends GameObject
                     {
                         if(enemy == true)
                         {
+                            main.cannon.play();
+                            main.cannon.rewind();
                             if(pos.dist(main.enemyUnits.get(enemyIndex).pos) < main.battlefield.size*2)
                             {
                                 currentHealth -= (int)random(20,30);
@@ -188,6 +186,7 @@ public class Galleon extends GameObject
     {
         switch(move)
         {
+            //follows the mouse
             case 0:
             {
                 main.pushMatrix();
@@ -198,6 +197,7 @@ public class Galleon extends GameObject
                 break;
             }//end case 0
 
+            //goes to pos
             case 1:
             {
                 main.pushMatrix();
@@ -208,6 +208,7 @@ public class Galleon extends GameObject
                 break;
             }//end case 1
 
+            //rotates
             case 2:
             {
                 main.pushMatrix();

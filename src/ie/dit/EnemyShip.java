@@ -1,8 +1,5 @@
 package ie.dit;
 
-import java.util.ArrayList;
-
-import ddf.minim.Minim;
 import processing.core.*;
 
 public class EnemyShip extends GameObject {
@@ -181,6 +178,7 @@ public class EnemyShip extends GameObject {
                     pos.y -= q;
                 }//end if
             }//end if
+
             else
             {
                 main.city.currentHealth -= (int)random(10,15);
